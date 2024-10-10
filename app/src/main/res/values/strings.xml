@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Plantapp2</string>
+    <string name="hello_world">Hello World</string>
+    <string name="plantapp">PlantApp</string>
 </resources>
