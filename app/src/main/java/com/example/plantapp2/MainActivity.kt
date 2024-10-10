@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Plantapp2Theme {
-                    Bed(length = 80, width = 120)
+                    Bed(length = 240, width = 360)
             }
         }
     }
@@ -27,6 +27,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     Plantapp2Theme {
-        Bed(length = 80, width = 120)
+        Bed(length = 240, width = 360)
     }
 }
