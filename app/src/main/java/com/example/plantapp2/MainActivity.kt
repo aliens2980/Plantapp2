@@ -6,24 +6,33 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.example.plantapp2.Data.Datasource
+import com.example.plantapp2.Model.affirmation
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
 
@@ -37,12 +46,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    GreetingImage(
-                        messenger = stringResource(R.string.hello_world),
-                        from = stringResource(R.string.plantapp),
-                        modifier = Modifier.padding(8.dp)
-
-                        )
+                    AffirmationsApp()
                 }
 
             }
@@ -51,82 +55,59 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun GreetingText(messenger: String,from: String ,modifier: Modifier= Modifier) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
-        
-         ) {
-        Text(
-            text = messenger,
-            fontSize = 100.sp,
-            lineHeight = 116.sp,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = from,
-            fontSize = 36.sp,
-            modifier = Modifier
-                .padding(16.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-            
-        )
-    }
 
-}
-@Composable
-fun GreetingImage(messenger: String,from: String, modifier: Modifier= Modifier) {
-    val image= painterResource(R.drawable.horde_background)
-    Box(modifier) {
-        Image(
-            painter = image,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            alpha = 0.5F,
-            modifier = Modifier.fillMaxSize()
-
-        )
-
-        GreetingText(
-            messenger = messenger,
-            from = from,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp)
-        )
-    }
-}
-@Preview(
-    showBackground = true
-            )
-@Composable
-fun GreetingPreview() {
-    Plantapp2Theme {
-        GreetingImage(
-            messenger = stringResource(R.string.hello_world),
-            from = stringResource(R.string.plantapp)
-        )
-    }
-}
 // Do: This function is a descriptive PascalCased noun as a visual UI element
+@Preview
 @Composable
-fun FancyButton(text: String) {}
+fun AffirmationsApp() {
+    val layoutDirection = LocalLayoutDirection.current
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(
+                start = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
+                end = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
+            )
+    ) {
+        AffirmationsList(
+            affirmationLIST = Datasource().loadAffirmations()
+        )
 
-
-// Do: This function is a descriptive PascalCased noun as a non-visual element
-// with presence in the composition
+    }
+}
 @Composable
-fun BackButtonHandler() {}
+fun AffirmationsList(affirmationLIST: List<affirmation>, modifier: Modifier = Modifier){
+    LazyColumn(modifier = modifier ) {
+        items(affirmationLIST) { affirmation ->
+            AffirmationCard(
+                affirmation = affirmation,
+                modifier = Modifier.padding(4.dp)
+            )
 
+        }
+    }
 
-// Don't: This function is a noun but is not PascalCased!
+}
+
 @Composable
-fun fancyButton(text: String) {}
+fun AffirmationCard(affirmation: affirmation, modifier: Modifier = Modifier){
+    Card(modifier = modifier){
+        Column {
+            Image(
+                painter = painterResource(affirmation.imageResourceId),
+                contentDescription = stringResource(affirmation.stringResourceId),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
+                contentScale = ContentScale.Crop
+            )
+            Text(
+                text = LocalContext.current.getString(affirmation.stringResourceId),
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
 
-
-// Don't: This function is PascalCased but is not a noun!
-@Composable
-fun RenderFancyButton(text: String) {}
-
-
+    }
+}
