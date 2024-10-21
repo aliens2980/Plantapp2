@@ -52,6 +52,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
+/**
+ * @author s235064
+ * @param PlantInfoPage
+ * @return the information page of a plant
+ */
+
 //The name of the plant
 @Composable
 fun PlantInfoPage(modifier: Modifier = Modifier) {
