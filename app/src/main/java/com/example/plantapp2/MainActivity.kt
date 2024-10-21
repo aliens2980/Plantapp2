@@ -84,7 +84,7 @@ fun BackgroundImage() {
         .border(BorderStroke(1.dp, Color.Red))
         .background(Color.Blue)
     Image(
-        painter = painterResource(id = R.drawable.daisy_background),
+        painter = painterResource(id = R.drawable.ic_launcher_daisy_background),
         contentDescription = "Background Image",
         contentScale = ContentScale.FillHeight,
         modifier = imageModifier
@@ -138,6 +138,7 @@ fun PlantImage() {
 fun InfoText(information: String, modifier: Modifier = Modifier) {
     val infoBoxModifier = modifier
         .offset(x = 100.dp, y = 400.dp)
+        .background(Color.White)
     Text(
         text = "Information about the: $information",
         modifier = infoBoxModifier,
