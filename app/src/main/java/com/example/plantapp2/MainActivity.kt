@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ){
                     AffirmationsApp()
+
                 }
 
             }
@@ -63,7 +65,7 @@ fun AffirmationsApp() {
     val layoutDirection = LocalLayoutDirection.current
     Surface(
         modifier = Modifier
-            .fillMaxSize()
+            .height(100.dp)
             .statusBarsPadding()
             .padding(
                 start = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
