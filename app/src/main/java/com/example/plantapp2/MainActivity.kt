@@ -84,7 +84,7 @@ fun BackgroundImage() {
         .border(BorderStroke(1.dp, Color.Red))
         .background(Color.Blue)
     Image(
-        painter = painterResource(id = R.drawable.ic_launcher_background),
+        painter = painterResource(id = R.drawable.daisy_background),
         contentDescription = "Background Image",
         contentScale = ContentScale.FillHeight,
         modifier = imageModifier
