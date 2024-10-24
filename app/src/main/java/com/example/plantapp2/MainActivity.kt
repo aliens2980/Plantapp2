@@ -71,6 +71,24 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
         PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
         //Plant photo
         PlantImage()
+        //Watering can image
+        WaterCanImage()
+        //Water can text
+        WaterCanText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        //Sun image
+        SunImage()
+        //Sun text
+        SunText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        //Depth image
+        DepthImage()
+        //Depth text
+        DepthText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        //Grade image
+        GradeImage()
+        //Grade text
+        GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        //Like image
+        LikeImage()
         //Plant information box
         InfoText(information = "Information", modifier = Modifier)   //REMEMBER TO LINK TO API DATA HERE BY A VIEWMODEL SCOPE
     }
@@ -80,7 +98,7 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
 @Composable
 fun BackgroundImage() {
     val imageModifier = Modifier
-        .size(width = 400.dp, height = 900.dp)  //here you can change the background photo size
+        .size(width = 411.dp, height = 913.dp)  //here you can change the background photo size
         .border(BorderStroke(1.dp, Color.Red))
         .background(Color.Blue)
     Image(
@@ -150,9 +168,210 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
     )
 }
 
+//Watering amount image
+@Composable
+fun WaterCanImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 50.dp, y = 800.dp)
+    val imageModifierWaterCan = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.Blue)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.vandkande),
+            contentDescription = "Watering Can Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierWaterCan
+
+        )
+    }
+
+}
+
+
+//Water can text box
+@Composable
+fun WaterCanText(information: String, modifier: Modifier = Modifier) {
+    val waterCanBoxModifier = modifier
+        .offset(x = 140.dp, y = 800.dp)
+        .background(Color.White)
+        .border(BorderStroke(1.dp, Color.Black))
+    Text(
+        text = "Must be watered: $information",
+        modifier = waterCanBoxModifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Serif
+        )
+    )
+}
 
 
 
+
+//Sun image to show how much sun the plant needs
+@Composable
+fun SunImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 50.dp, y = 710.dp)
+    val imageModifierSun = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.Blue)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.sun),
+            contentDescription = "Sun Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierSun
+
+        )
+    }
+}
+
+
+//Sun text box
+@Composable
+fun SunText(information: String, modifier: Modifier = Modifier) {
+    val sunBoxModifier = modifier
+        .offset(x = 140.dp, y = 710.dp)
+        .background(Color.White)
+        .border(BorderStroke(1.dp, Color.Black))
+    Text(
+        text = "Must receive sun: $information",
+        modifier = sunBoxModifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Serif
+        )
+    )
+}
+
+
+
+
+
+//Soil depth image to show how far down it should be planted
+@Composable
+fun DepthImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 50.dp, y = 620.dp)
+    val imageModifierDepth = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.Blue)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.depth),
+            contentDescription = "Sun Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierDepth
+
+        )
+    }
+
+}
+
+
+
+//Depth text box
+@Composable
+fun DepthText(information: String, modifier: Modifier = Modifier) {
+    val depthBoxModifier = modifier
+        .offset(x = 140.dp, y = 620.dp)
+        .background(Color.White)
+        .border(BorderStroke(1.dp, Color.Black))
+    Text(
+        text = "Must be planted at: $information",
+        modifier = depthBoxModifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Serif
+        )
+    )
+}
+
+
+
+
+//Grade scale image to show if its easy or hard
+@Composable
+fun GradeImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 50.dp, y = 530.dp)
+    val imageModifierGrade = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.Blue)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.grade),
+            contentDescription = "Grade Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierGrade
+
+        )
+    }
+
+}
+
+
+//Grade text box
+@Composable
+fun GradeText(information: String, modifier: Modifier = Modifier) {
+    val gradeBoxModifier = modifier
+        .offset(x = 140.dp, y = 530.dp)
+        .background(Color.White)
+        .border(BorderStroke(1.dp, Color.Black))
+    Text(
+        text = "Is graded to be: $information",
+        modifier = gradeBoxModifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Serif
+        )
+    )
+}
+
+
+
+
+
+//Like plant to favourites
+@Composable
+fun LikeImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 320.dp, y = 30.dp)
+    val imageModifierLike = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.Blue)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.like),
+            contentDescription = "Like Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierLike
+
+        )
+    }
+
+}
 
 
     //This is were we activate the view of the page
