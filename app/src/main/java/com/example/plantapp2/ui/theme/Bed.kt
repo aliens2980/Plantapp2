@@ -14,19 +14,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun Bed(length: Int, width: Int, gridSize: Int = 60) {
+fun Bed(length: Int, width: Int, gridSize: Int = 60, viewModel: GridViewModel = viewModel()) {
+    // Calculate the number of rows and columns
+    val numRows = length / gridSize
+    val numColumns = width / gridSize
+
+    // Initialize the grid in the ViewModel
+    viewModel.initializeGrid(numRows, numColumns)
+
     Box(
         modifier = Modifier
             .size(width.dp, length.dp)
-            .background(color = Color(0xFFA52A2A))
+            .background(color = brown)
     ) {
         // Draw the grid lines
         DrawGridLines(gridSize = gridSize)
 
-        // Overlay interactive cells
-        DrawGridCells(length = length, width = width, gridSize = gridSize)
+        // Overlay interactive grid cells
+        DrawGridCells(numRows = numRows, numColumns = numColumns, gridSize = gridSize, viewModel = viewModel)
     }
 }
 
@@ -38,16 +46,18 @@ fun DrawGridLines(gridSize: Int) {
 }
 
 @Composable
-fun DrawGridCells(length: Int, width: Int, gridSize: Int) {
-    // Calculate the number of rows and columns based on the given dimensions and grid size
-    val numRows = length / gridSize
-    val numColumns = width / gridSize
-
+fun DrawGridCells(numRows: Int, numColumns: Int, gridSize: Int, viewModel: GridViewModel) {
     LazyColumn {
         items(numRows) { rowIndex ->
             LazyRow {
                 items(numColumns) { columnIndex ->
-                    GridCell(rowIndex, columnIndex, gridSize)
+                    // Get the clicked state from the ViewModel
+                    val isSelected = viewModel.gridState[rowIndex][columnIndex]
+
+                    GridCell(row = rowIndex, column = columnIndex, gridSize = gridSize, isSelected = isSelected) {
+                        // Toggle the state in the ViewModel when the cell is clicked
+                        viewModel.toggleCell(rowIndex, columnIndex)
+                    }
                 }
             }
         }
@@ -55,16 +65,13 @@ fun DrawGridCells(length: Int, width: Int, gridSize: Int) {
 }
 
 @Composable
-fun GridCell(row: Int, column: Int, gridSize: Int) {
-    var isSelected by remember { mutableStateOf(false) }
-
+fun GridCell(row: Int, column: Int, gridSize: Int, isSelected: Boolean, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .size(gridSize.dp)
-            .background(if (isSelected) Color.Green else brown)
+            .background(if (isSelected) Color.Green else Color.Transparent)
             .clickable {
-                // Toggle the selection state on click
-                isSelected = !isSelected
+                onClick() // Call the onClick callback to toggle state
             }
     )
 }
