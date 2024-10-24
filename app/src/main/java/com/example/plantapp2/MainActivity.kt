@@ -11,17 +11,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -71,6 +78,10 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
         PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
         //Plant photo
         PlantImage()
+        //Plant information box
+        InfoText(information = "Information", modifier = Modifier)   //REMEMBER TO LINK TO API DATA HERE BY A VIEWMODEL SCOPE
+        //Information image
+        InformationImage()
         //Watering can image
         WaterCanImage()
         //Water can text
@@ -89,8 +100,6 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
         GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Like image
         LikeImage()
-        //Plant information box
-        InfoText(information = "Information", modifier = Modifier)   //REMEMBER TO LINK TO API DATA HERE BY A VIEWMODEL SCOPE
     }
 }
 
@@ -135,7 +144,7 @@ fun PlantImage() {
     val imageModifierPlant = Modifier
         .size(width = 200.dp, height = 200.dp)
         .border(BorderStroke(1.dp, Color.Black))
-        .background(Color.Blue)
+        .background(Color.Transparent)
     Box(
         modifier = boxModifier
     ) {
@@ -149,13 +158,34 @@ fun PlantImage() {
     }
 
 }
+//Information image
+@Composable
+fun InformationImage() {
+    val boxModifier = Modifier   //how to move the box with the potato image around
+        .offset(x = 50.dp, y = 440.dp)
+    val imageModifierInformation = Modifier
+        .size(width = 70.dp, height = 70.dp)
+        .border(BorderStroke(1.dp, Color.Black))
+        .background(Color.White)
+    Box(
+        modifier = boxModifier
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.information),
+            contentDescription = "Information Image",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierInformation
+
+        )
+    }
+}
 
 
 //Information text box
 @Composable
 fun InfoText(information: String, modifier: Modifier = Modifier) {
     val infoBoxModifier = modifier
-        .offset(x = 100.dp, y = 400.dp)
+        .offset(x = 140.dp, y = 440.dp)
         .background(Color.White)
     Text(
         text = "Information about the: $information",
@@ -176,7 +206,7 @@ fun WaterCanImage() {
     val imageModifierWaterCan = Modifier
         .size(width = 70.dp, height = 70.dp)
         .border(BorderStroke(1.dp, Color.Black))
-        .background(Color.Blue)
+        .background(Color.White)
     Box(
         modifier = boxModifier
     ) {
@@ -221,7 +251,7 @@ fun SunImage() {
     val imageModifierSun = Modifier
         .size(width = 70.dp, height = 70.dp)
         .border(BorderStroke(1.dp, Color.Black))
-        .background(Color.Blue)
+        .background(Color.White)
     Box(
         modifier = boxModifier
     ) {
@@ -349,26 +379,39 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
 
 
 
-
-//Like plant to favourites
+//Like plant to list of favourites
 @Composable
 fun LikeImage() {
+    var isSelected by remember { mutableStateOf(false) }
     val boxModifier = Modifier   //how to move the box with the potato image around
         .offset(x = 320.dp, y = 30.dp)
     val imageModifierLike = Modifier
         .size(width = 70.dp, height = 70.dp)
-        .border(BorderStroke(1.dp, Color.Black))
-        .background(Color.Blue)
+        //.border(BorderStroke(1.dp, Color.Black))
+        //.background(Color.Transparent)
     Box(
         modifier = boxModifier
+            .clickable{
+                isSelected = !isSelected
+            }
+            //.background(if (isSelected) Color.Red else Color.Transparent)
     ) {
+        if(isSelected)
         Image(
-            painter = painterResource(id = R.drawable.like),
-            contentDescription = "Like Image",
+            painter = painterResource(id = R.drawable.like4),
+            contentDescription = "Like Image Filled",
             contentScale = ContentScale.FillWidth,
             modifier = imageModifierLike
 
-        )
+        ) else
+            Image(
+                painter = painterResource(id = R.drawable.like3),
+                contentDescription = "Like Image Empty",
+                contentScale = ContentScale.FillWidth,
+                modifier = imageModifierLike
+
+            )
+
     }
 
 }
