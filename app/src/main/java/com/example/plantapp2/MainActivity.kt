@@ -155,6 +155,14 @@ fun PlantImage() {
             modifier = imageModifierPlant
 
         )
+        Image(
+            painter = painterResource(id = R.drawable.sparkle),
+            contentDescription = "Plant Image sparkle ",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierPlant
+
+        )
+
     }
 
 }
