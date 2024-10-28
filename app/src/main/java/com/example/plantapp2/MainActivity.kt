@@ -155,17 +155,10 @@ fun PlantImage() {
             modifier = imageModifierPlant
 
         )
-        Image(
-            painter = painterResource(id = R.drawable.sparkle),
-            contentDescription = "Plant Image sparkle ",
-            contentScale = ContentScale.FillWidth,
-            modifier = imageModifierPlant
-
-        )
-
     }
-
 }
+
+
 //Information image
 @Composable
 fun InformationImage() {
@@ -428,7 +421,7 @@ fun LikeImage() {
     //This is were we activate the view of the page
     @Preview
     @Composable
-    fun GreetingPreview() {
+    fun appPreview() {
         Plantapp2Theme {
             PlantInfoPage()
         }
