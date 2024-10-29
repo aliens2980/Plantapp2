@@ -41,7 +41,7 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
         //Our background
-        BackgroundImage()
+        BackgroundImage(url = "background", modifier = Modifier)
         //Other content
         PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
         //Plant photo
@@ -73,16 +73,22 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun BackgroundImage() {
+fun BackgroundImage(url: String, modifier: Modifier) {
+    /*
     val imageModifier = Modifier
         .size(width = 411.dp, height = 913.dp)  //here you can change the background photo size
         //.border(BorderStroke(1.dp, Color.Red))
         .background(Color.Blue)
-    Image(
-        painter = painterResource(id = R.drawable.ic_launcher_daisy_background),
-        contentDescription = "Background Image",
-        contentScale = ContentScale.FillHeight,
-        modifier = imageModifier
+
+     */
+    AsyncImage(
+        model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
+        //painter = painterResource(id = R.drawable.potato),
+        contentDescription = "background",
+        contentScale = ContentScale.FillBounds,   //this makes us able to crop the picture into the size we want by .size
+        modifier = Modifier
+            .size(width = 411.dp, height = 913.dp)
+
     )
 }
 
