@@ -21,12 +21,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.plantapp2.ui.theme.Bed
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
 data class BottomNavItem(
@@ -94,19 +97,20 @@ class MainActivity : ComponentActivity() {
 
                     ) { innerPadding->
                         AffirmationsApp(modifier = Modifier.padding(innerPadding))
+                        Bed(length = 80, width = 120)
 
                     }
 
 
                 }
+            }
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Plantapp2Theme {
-        Bed(length = 80, width = 120)
     }
+
 }
+
+
 
 
 
