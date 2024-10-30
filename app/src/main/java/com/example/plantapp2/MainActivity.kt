@@ -110,7 +110,9 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                                 composable("plantPage"){
-                                    PlantInfoPage(modifier = Modifier.padding(innerPadding))
+                                    PlantInfoPage(modifier = Modifier.padding(innerPadding),
+                                        navController = navController
+                                    )
                                 }
                             }
                             // Add more cases if needed for other items

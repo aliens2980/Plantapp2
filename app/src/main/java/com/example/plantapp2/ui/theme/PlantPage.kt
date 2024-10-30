@@ -9,7 +9,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.plantapp2.R
 
 
@@ -37,9 +43,16 @@ import com.example.plantapp2.R
 
 //The name of the plant
 @Composable
-fun PlantInfoPage(modifier: Modifier = Modifier) {
+fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Go Back")
+        }
+
         //Our background
         BackgroundImage(url = "background", modifier = Modifier)
         //Other content
