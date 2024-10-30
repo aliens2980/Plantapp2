@@ -37,6 +37,7 @@ data class BottomNavItem(
 )
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -99,8 +100,11 @@ class MainActivity : ComponentActivity() {
 
                 }
 
-            }
-        }
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    Plantapp2Theme {
+        Bed(length = 80, width = 120)
     }
 }
 
