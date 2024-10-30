@@ -112,10 +112,12 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                     }
-                    ) {
+
+                    ) { innerPadding->
+                        AffirmationsApp(modifier = Modifier.padding(innerPadding))
 
                     }
-                    //AffirmationsApp()
+
 
                 }
 
@@ -129,11 +131,10 @@ class MainActivity : ComponentActivity() {
 // Do: This function is a descriptive PascalCased noun as a visual UI element
 @Preview
 @Composable
-fun AffirmationsApp() {
+fun AffirmationsApp(modifier: Modifier = Modifier) {
     val layoutDirection = LocalLayoutDirection.current
     Surface(
-        modifier = Modifier
-            .height(100.dp)
+        modifier = modifier
             .statusBarsPadding()
             .padding(
                 start = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
@@ -143,21 +144,18 @@ fun AffirmationsApp() {
         AffirmationsList(
             affirmationLIST = Datasource().loadAffirmations()
         )
-
     }
 }
 @Composable
-fun AffirmationsList(affirmationLIST: List<affirmation>, modifier: Modifier = Modifier){
-    LazyColumn(modifier = modifier ) {
+fun AffirmationsList(affirmationLIST: List<affirmation>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
         items(affirmationLIST) { affirmation ->
             AffirmationCard(
                 affirmation = affirmation,
                 modifier = Modifier.padding(4.dp)
             )
-
         }
     }
-
 }
 
 @Composable
