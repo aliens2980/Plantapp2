@@ -27,7 +27,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.ui.theme.Bed
+import com.example.plantapp2.ui.theme.PlantInfoPage
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
 
@@ -45,6 +49,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Plantapp2Theme {
+                val navController = rememberNavController()
                 val item = listOf(
                     BottomNavItem(
                         title = "Home",
@@ -95,9 +100,21 @@ class MainActivity : ComponentActivity() {
                     }
 
                     ) { innerPadding->
-                        AffirmationsApp(modifier = Modifier.padding(innerPadding))
-                        Bed(length = 80, width = 120)
-
+                        when (selectedIremIndex) {
+                            0 -> Bed(length = 80, width = 120)
+                            1 -> NavHost(navController = navController, startDestination = "affirmations") {
+                                composable("affirmations") {
+                                    AffirmationsApp(
+                                        modifier = Modifier.padding(innerPadding),
+                                        navController = navController
+                                    )
+                                }
+                                composable("plantPage"){
+                                    PlantInfoPage(modifier = Modifier.padding(innerPadding))
+                                }
+                            }
+                            // Add more cases if needed for other items
+                        }
                     }
 
 
