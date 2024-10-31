@@ -2,6 +2,7 @@ package com.example.plantapp2.navigation.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,16 +36,24 @@ fun MainSearch() {
     }
     var active by remember { mutableStateOf(false) }
 
+    data class Plant(
+        val name: String,
+        val type: String,
+        val color: String,
+        val height: Double, // in cm
+        val maxRootNet: Double, // in cm
+    )
+
     //PlaceHolder items for search bar
-    var items = remember {
+    val items = remember {
         mutableStateListOf(
-            "Kartofler",
-            "Jordbær",
-            "Brændnæller",
-            "Gulerødder",
-            "Oliven",
-            "Tomat",
-            "Agurk"
+            Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0),
+            Plant("Jordbær", "Nød", "Rød",25.0,10.0),
+            Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0),
+            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0),
+            Plant("Oliven", "Frugt", "Grøn", 100.0,40.0),
+            Plant("Tomato", "Grøntsag", "Rød",80.0,50.0),
+            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0)
         )
     }
 
@@ -54,7 +63,7 @@ fun MainSearch() {
             query = text,
             onQueryChange = {text = it},
             onSearch = {
-                items.add(text)
+                items.add(Plant(text, "NewType", "Color", 0.0, 0.0))
                 active = false
             },
             active = active,
@@ -79,20 +88,21 @@ fun MainSearch() {
             }
         ) {
             items.forEach {
-                Row (modifier = Modifier.padding(all = 16.dp)){
+                Row(modifier = Modifier.padding(all = 16.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.psychiatry_24px),
                         contentDescription = "plant icon",
                         modifier = Modifier.padding(end = 16.dp)
                     )
-                    Text(
-                        modifier = Modifier.align(alignment = androidx.compose.ui.Alignment.CenterVertically),
-                        text = it)
-
+                    Column {
+                        Text(
+                            modifier = Modifier.align(alignment = androidx.compose.ui.Alignment.CenterVertically),
+                            text = it.name
+                        )
+                        Text(text = it.type)
+                    }
                 }
             }
-
-
         }
     }
 }
