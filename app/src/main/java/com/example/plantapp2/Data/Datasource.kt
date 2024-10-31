@@ -7,16 +7,16 @@ import com.example.plantapp2.R
 class Datasource() {
     fun loadAffirmations(): List<affirmation> {
         return listOf<affirmation>(
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.plantapp, R.drawable.horde_background),
-            affirmation(R.string.plantapp, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background),
-            affirmation(R.string.hello_world, R.drawable.horde_background)
+            affirmation(R.string.potatoes, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.plantapp, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.plantapp, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
+            affirmation(R.string.hello_world, "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg"),
         )
     }
 }
