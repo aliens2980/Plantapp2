@@ -87,7 +87,7 @@ fun MainSearch() {
                 }
             }
         ) {
-            items.forEach {
+            items.forEach { plant ->
                 Row(modifier = Modifier.padding(all = 16.dp)) {
                     Icon(
                         painter = painterResource(id = R.drawable.psychiatry_24px),
@@ -96,10 +96,9 @@ fun MainSearch() {
                     )
                     Column {
                         Text(
-                            modifier = Modifier.align(alignment = androidx.compose.ui.Alignment.CenterVertically),
-                            text = it.name
+                            text = plant.name
                         )
-                        Text(text = it.type)
+                        Text(text = plant.type)
                     }
                 }
             }
