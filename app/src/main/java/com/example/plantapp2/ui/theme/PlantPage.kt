@@ -37,7 +37,7 @@ import com.example.plantapp2.R
 
 /**
  * @author s235064
- * @param PlantInfoPage
+ * @param PlantPage
  * @return the information page of a plant
  */
 
