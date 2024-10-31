@@ -9,7 +9,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -97,17 +99,23 @@ fun BackgroundImage(url: String, modifier: Modifier) {
 @Composable
 fun PageTitle(name: String, modifier: Modifier = Modifier) {
     val textBoxModifier = Modifier
-        .offset(x = 100.dp, y = 65.dp)   //to move the text box
-    Text(
-        text = "Name: $name",
-        modifier = textBoxModifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif
+        .offset(x = 100.dp, y = 65.dp)   // Position the box
+        .background(color = Color.White, shape = RoundedCornerShape(8.dp)) // Box background and rounded corners
+        .padding(horizontal = 16.dp, vertical = 8.dp)  // Padding for spacing inside the box
+
+    Box(modifier = textBoxModifier) {
+        Text(
+            text = "Name: $name",
+            style = TextStyle(   // Customize the text style
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+                color = Color.Black  // Text color for contrast
+            )
         )
-    )
+    }
 }
+
 
 
 @Composable
