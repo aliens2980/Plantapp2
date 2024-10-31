@@ -1,17 +1,40 @@
 package com.example.plantapp2
+import com.example.plantapp2.ui.theme.*
+
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
+
+
+
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * @author s235064
+ * @param tests of plantPage
  */
-class ExampleUnitTest {
+
+
+class ToggleLikeStateTest {
+
+    /**
+     * @author s235064
+     * test toggle state when initially false, should return true
+     */
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun testToggleLikeState_returnTrue() {
+        val initialState = false
+        val result = toggleLikeState(initialState)
+        assertTrue(result)
+
     }
+
+    @Test
+    fun testToggleLikeState_returnFalse() {
+        val initialState = true
+        val result = toggleLikeState(initialState)
+        assertFalse(result)
+    }
+
 }
+
+

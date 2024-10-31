@@ -356,6 +356,10 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
 }
 
 
+//Helper function to test LikeImage
+fun toggleLikeState(currentState: Boolean): Boolean {
+    return !currentState
+}
 
 
 //Like plant to list of favourites
@@ -366,14 +370,10 @@ fun LikeImage() {
         .offset(x = 320.dp, y = 30.dp)
     val imageModifierLike = Modifier
         .size(width = 70.dp, height = 70.dp)
-    //.border(BorderStroke(1.dp, Color.Black))
-    //.background(Color.Transparent)
     Box(
-        modifier = boxModifier
-            .clickable{
-                isSelected = !isSelected
+        modifier = boxModifier.clickable{
+                isSelected = toggleLikeState(isSelected)
             }
-        //.background(if (isSelected) Color.Red else Color.Transparent)
     ) {
         if(isSelected)
             Image(
