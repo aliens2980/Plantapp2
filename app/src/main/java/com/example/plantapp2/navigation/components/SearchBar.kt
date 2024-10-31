@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.ui.res.painterResource
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.R
@@ -48,12 +51,12 @@ fun MainSearch() {
     val items = remember {
         mutableStateListOf(
             Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0, true),
-            Plant("Jordbær", "Nød", "Rød",25.0,10.0, true),
+            Plant("Jordbær", "Nød", "Rød",25.0,10.0, false),
             Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0, true),
-            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0, true),
+            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0, false),
             Plant("Oliven", "Frugt", "Grøn", 100.0,40.0, true),
             Plant("Tomato", "Grøntsag", "Rød",80.0,50.0, true),
-            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, true)
+            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false)
         )
     }
 
@@ -95,9 +98,26 @@ fun MainSearch() {
                         modifier = Modifier.padding(end = 16.dp)
                     )
                     Column {
-                        Text(
-                            text = plant.name
-                        )
+                        Row {
+                            Text(
+                                text = plant.name
+                            )
+                            if(plant.favorite) {
+                                Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = "Favorite Icon",
+                                tint = Color.Red,
+                                modifier = Modifier.padding(start = 8.dp)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.FavoriteBorder,
+                                    contentDescription = "Not Favorite Icon",
+                                    tint = Color.Red,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
+                            }
+                        }
                         Text(text = plant.type)
                     }
                 }
