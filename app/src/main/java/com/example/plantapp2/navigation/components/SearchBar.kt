@@ -22,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.R
@@ -42,18 +41,19 @@ fun MainSearch() {
         val color: String,
         val height: Double, // in cm
         val maxRootNet: Double, // in cm
+        val favorite: Boolean,
     )
 
     //PlaceHolder items for search bar
     val items = remember {
         mutableStateListOf(
-            Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0),
-            Plant("Jordbær", "Nød", "Rød",25.0,10.0),
-            Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0),
-            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0),
-            Plant("Oliven", "Frugt", "Grøn", 100.0,40.0),
-            Plant("Tomato", "Grøntsag", "Rød",80.0,50.0),
-            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0)
+            Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0, true),
+            Plant("Jordbær", "Nød", "Rød",25.0,10.0, true),
+            Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0, true),
+            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0, true),
+            Plant("Oliven", "Frugt", "Grøn", 100.0,40.0, true),
+            Plant("Tomato", "Grøntsag", "Rød",80.0,50.0, true),
+            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, true)
         )
     }
 
@@ -63,7 +63,7 @@ fun MainSearch() {
             query = text,
             onQueryChange = {text = it},
             onSearch = {
-                items.add(Plant(text, "NewType", "Color", 0.0, 0.0))
+                items.add(Plant(text, "NewType", "Color", 0.0, 0.0, true))
                 active = false
             },
             active = active,
