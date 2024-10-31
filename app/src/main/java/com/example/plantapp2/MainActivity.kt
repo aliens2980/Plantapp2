@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
                                 composable("affirmations") {
                                     AffirmationsApp(
                                         modifier = Modifier.padding(innerPadding),
-                                        navController = navController
+                                        navController = navController,
                                     )
                                 }
                                 composable("plantPage") {

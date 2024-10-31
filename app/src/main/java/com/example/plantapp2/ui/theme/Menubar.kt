@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.plantapp2.AffirmationsApp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.navigation.compose.rememberNavController
 
 data class BottomNavItem(
     val title: String,
@@ -83,7 +84,10 @@ fun Menubar() {
         }
 
         ) { innerPadding->
-            AffirmationsApp(modifier = Modifier.padding(innerPadding))
+            AffirmationsApp(
+                modifier = Modifier.padding(innerPadding),
+                navController = rememberNavController(),
+            )
 
         }
 }
