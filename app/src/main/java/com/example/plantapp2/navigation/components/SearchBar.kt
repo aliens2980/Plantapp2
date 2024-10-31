@@ -95,6 +95,7 @@ fun MainSearch() {
                     Icon(
                         painter = painterResource(id = R.drawable.psychiatry_24px),
                         contentDescription = "plant icon",
+                        tint = Color.Green,
                         modifier = Modifier.padding(end = 16.dp)
                     )
                     Column {
