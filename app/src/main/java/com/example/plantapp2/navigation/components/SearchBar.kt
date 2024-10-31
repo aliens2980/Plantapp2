@@ -29,12 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainSearch() {
+fun MainSearch(navController: NavHostController) {
     var text by remember {
         mutableStateOf("")
     }
@@ -65,7 +67,7 @@ fun MainSearch() {
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = {navController.navigate("filter_screen")},
                 containerColor = Color.DarkGray,
                 contentColor = Color.White,
             ) {
@@ -150,5 +152,5 @@ fun MainSearch() {
 @Preview(showBackground = true)
 @Composable
 fun SearchBarPreview (){
-    MainSearch()
+    MainSearch(navController = rememberNavController())
 }
