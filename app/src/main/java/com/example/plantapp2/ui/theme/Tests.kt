@@ -5,7 +5,7 @@ import com.example.plantapp2.ui.theme.toggleLikeState
 import org.junit.Test
 import org.junit.Assert.*
 
-
+//gradle kan nok ikke finde ud af hvor vores tests ligger i
 
 
 /**
