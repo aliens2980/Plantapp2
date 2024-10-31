@@ -1,5 +1,6 @@
 package com.example.plantapp2
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -23,13 +24,14 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.plantapp2.Data.Datasource
 import com.example.plantapp2.Model.affirmation
 
 
 // Do: This function is a descriptive PascalCased noun as a visual UI element
 @Composable
-fun AffirmationsApp(modifier: Modifier = Modifier) {
+fun AffirmationsApp(modifier: Modifier = Modifier, navController: NavController) {
     val layoutDirection = LocalLayoutDirection.current
     Surface(
         modifier = modifier
@@ -40,17 +42,22 @@ fun AffirmationsApp(modifier: Modifier = Modifier) {
             )
     ) {
         AffirmationsList(
-            affirmationLIST = Datasource().loadAffirmations()
+            affirmationLIST = Datasource().loadAffirmations(),
+            navController = navController
         )
     }
 }
 @Composable
-fun AffirmationsList(affirmationLIST: List<affirmation>, modifier: Modifier = Modifier) {
+fun AffirmationsList(affirmationLIST: List<affirmation>, navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(affirmationLIST) { affirmation ->
             AffirmationCard(
                 affirmation = affirmation,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clickable {
+                        navController.navigate("plantPage")
+                    }
             )
         }
     }
