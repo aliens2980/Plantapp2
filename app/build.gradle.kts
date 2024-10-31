@@ -61,22 +61,19 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.coil.compose)
     implementation(libs.testng)
-    implementation(libs.testng)
     implementation(libs.androidx.ui.test.junit4.android)
-    implementation(libs.androidx.ui.test.junit4.android)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    androidTestImplementation(libs.ui.test.junit4) // Update with the latest Compose version
-    debugImplementation(libs.ui.test.manifest)
-    androidTestImplementation(libs.androidx.espresso.core.v350)
-    androidTestImplementation(libs.androidx.junit.v115) // Latest version for JUnit
-    androidTestImplementation(libs.androidx.rules) // Latest version for Test Rules
-    androidTestImplementation(libs.androidx.runner)
+    //testImplementation(libs.junit)
+    //androidTestImplementation(libs.androidx.junit)
+    //androidTestImplementation(libs.androidx.espresso.core)
+    //androidTestImplementation(platform(libs.androidx.compose.bom))
+    //androidTestImplementation(libs.androidx.ui.test.junit4)
+    //debugImplementation(libs.androidx.ui.tooling)
+    //debugImplementation(libs.androidx.ui.test.manifest)
+    //androidTestImplementation(libs.ui.test.junit4) // Update with the latest Compose version
+    //debugImplementation(libs.ui.test.manifest)
+    //androidTestImplementation(libs.androidx.espresso.core.v350)
+    //androidTestImplementation(libs.androidx.junit.v115) // Latest version for JUnit
+    //androidTestImplementation(libs.androidx.rules) // Latest version for Test Rules
+    //androidTestImplementation(libs.androidx.runner)
 
 }
