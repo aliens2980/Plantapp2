@@ -383,32 +383,3 @@ fun LikeImage() {
 
 
 
-    //Old code
-    /*
-    Box(
-        modifier = boxModifier
-            .clickable{
-                isSelected = !isSelected
-            }
-
-    ) {
-        if(isSelected)
-            Image(
-                painter = painterResource(id = R.drawable.like4),
-                contentDescription = "Like Image Filled",
-                contentScale = ContentScale.FillWidth,
-                modifier = imageModifierLike
-
-            ) else
-            Image(
-                painter = painterResource(id = R.drawable.like3),
-                contentDescription = "Like Image Empty",
-                contentScale = ContentScale.FillWidth,
-                modifier = imageModifierLike
-
-            )
-
-    }
-    */
-
-
