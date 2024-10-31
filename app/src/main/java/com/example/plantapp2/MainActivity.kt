@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Plantapp2Theme {
-                    Bed(length = 240, width = 360)
+                Bed(length = 240, width = 360)
 
                 val navController = rememberNavController()
                 val item = listOf(
@@ -71,50 +71,54 @@ class MainActivity : ComponentActivity() {
                         unselectedIcon = Icons.Outlined.Settings
                     ),
 
-                )
+                    )
                 var selectedIremIndex by rememberSaveable {
                     mutableStateOf(0)
                 }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
-                ){
-                    Scaffold(bottomBar ={
-                            NavigationBar {
-                                item.forEachIndexed { index, item ->
-                                    NavigationBarItem(
-                                        selected = selectedIremIndex == index,
-                                        onClick = {
-                                            selectedIremIndex = index
-                                            //navController.navigate(item.title)
-                                        },
-                                        label = {
-                                            Text(text = item.title)
-                                        },
-                                        icon = {
-                                            Icon(
-                                                imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
-                                                contentDescription = item.title
-                                            )
+                ) {
+                    Scaffold(bottomBar = {
+                        NavigationBar {
+                            item.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedIremIndex == index,
+                                    onClick = {
+                                        selectedIremIndex = index
+                                        //navController.navigate(item.title)
+                                    },
+                                    label = {
+                                        Text(text = item.title)
+                                    },
+                                    icon = {
+                                        Icon(
+                                            imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
+                                            contentDescription = item.title
+                                        )
 
-                                        }
-                                    )
-                                }
+                                    }
+                                )
                             }
+                        }
                     }
 
-                    ) { innerPadding->
+                    ) { innerPadding ->
                         when (selectedIremIndex) {
-                            0 -> Bed(length = 80, width = 120)
-                            1 -> NavHost(navController = navController, startDestination = "affirmations") {
+                            0 -> Bed(length = 240, width = 360)
+                            1 -> NavHost(
+                                navController = navController,
+                                startDestination = "affirmations"
+                            ) {
                                 composable("affirmations") {
                                     AffirmationsApp(
                                         modifier = Modifier.padding(innerPadding),
                                         navController = navController
                                     )
                                 }
-                                composable("plantPage"){
-                                    PlantInfoPage(modifier = Modifier.padding(innerPadding),
+                                composable("plantPage") {
+                                    PlantInfoPage(
+                                        modifier = Modifier.padding(innerPadding),
                                         navController = navController
                                     )
                                 }
@@ -127,11 +131,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Plantapp2Theme {
-        Bed(length = 240, width = 360)
+    }
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        Plantapp2Theme {
+            Bed(length = 240, width = 360)
+        }
     }
 }
