@@ -27,14 +27,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.plantapp2.ui.theme.Menubar
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
-data class BottomNavItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector
 
-)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,62 +38,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Plantapp2Theme {
-                val item = listOf(
-                    BottomNavItem(
-                        title = "Home",
-                        selectedIcon = Icons.Filled.Home,
-                        unselectedIcon = Icons.Outlined.Home
-                    ),
-                    BottomNavItem(
-                        title = "Search",
-                        selectedIcon = Icons.Filled.Search,
-                        unselectedIcon = Icons.Outlined.Search
-                    ),
-                    BottomNavItem(
-                        title = "Settings",
-                        selectedIcon = Icons.Filled.Settings,
-                        unselectedIcon = Icons.Outlined.Settings
-                    ),
 
-                )
-                var selectedIremIndex by rememberSaveable {
-                    mutableStateOf(0)
-                }
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ){
-                    Scaffold(bottomBar ={
-                            NavigationBar {
-                                item.forEachIndexed { index, item ->
-                                    NavigationBarItem(
-                                        selected = selectedIremIndex == index,
-                                        onClick = {
-                                            selectedIremIndex = index
-                                            //navController.navigate(item.title)
-                                        },
-                                        label = {
-                                            Text(text = item.title)
-                                        },
-                                        icon = {
-                                            Icon(
-                                                imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
-                                                contentDescription = item.title
-                                            )
-
-                                        }
-                                    )
-                                }
-                            }
-                    }
-
-                    ) { innerPadding->
-                        AffirmationsApp(modifier = Modifier.padding(innerPadding))
-
-                    }
-
-
-                }
 
             }
         }
