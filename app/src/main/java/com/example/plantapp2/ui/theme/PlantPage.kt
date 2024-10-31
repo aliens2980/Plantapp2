@@ -41,7 +41,7 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
         //Our background
-        BackgroundImage(url = "background", modifier = Modifier)
+        BackgroundImage(url = "Background", modifier = Modifier)
         //Other content
         PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
         //Plant photo
@@ -59,11 +59,11 @@ fun PlantInfoPage(modifier: Modifier = Modifier) {
         //Sun text
         SunText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Depth image
-        DepthImage(url = "depth", modifier = Modifier)
+        DepthImage(url = "Depth", modifier = Modifier)
         //Depth text
         DepthText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Grade image
-        GradeImage(url = "grade", modifier = Modifier)
+        GradeImage(url = "Grade", modifier = Modifier)
         //Grade text
         GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Like image
@@ -84,7 +84,7 @@ fun BackgroundImage(url: String, modifier: Modifier) {
     AsyncImage(
         model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
         //painter = painterResource(id = R.drawable.potato),
-        contentDescription = "background",
+        contentDescription = "Background Image",
         contentScale = ContentScale.FillBounds,   //this makes us able to crop the picture into the size we want by .size
         modifier = Modifier
             .size(width = 411.dp, height = 913.dp)
@@ -179,7 +179,7 @@ fun WaterCanImage(url: String, modifier: Modifier) {
         AsyncImage(
             model = "https://cdn.create.vista.com/api/media/small/249600986/stock-vector-blue-watering-can-icon-sign-flat-style-design-vector-illustration",
             //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "Information Image",
+            contentDescription = "Watercan Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 70.dp, height = 70.dp)
@@ -222,7 +222,7 @@ fun SunImage(url: String, modifier: Modifier) {
         AsyncImage(
             model = "https://static.vecteezy.com/system/resources/previews/007/956/515/non_2x/animated-sun-icon-in-white-background-vector.jpg",
             //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "Information Image",
+            contentDescription = "Sun Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 70.dp, height = 70.dp)
@@ -265,7 +265,7 @@ fun DepthImage(url: String, modifier: Modifier) {
         AsyncImage(
             model = "https://cdn.create.vista.com/api/media/small/557110558/stock-vector-shovel-icon-white-background-line-style-vector-illustration",
             //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "depth Image",
+            contentDescription = "Depth Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 70.dp, height = 70.dp)
@@ -313,7 +313,7 @@ fun GradeImage(url: String, modifier: Modifier) {
         AsyncImage(
             model = "https://images.pond5.com/low-risk-gauge-level-animation-footage-236417204_iconl.jpeg",
             //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "grade Image",
+            contentDescription = "Grade Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 70.dp, height = 70.dp)
@@ -343,6 +343,9 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
 }
 
 
+fun toggleLikeState(currentState: Boolean): Boolean {
+    return !currentState
+}
 
 
 //Like plant to list of favourites
@@ -353,14 +356,41 @@ fun LikeImage() {
         .offset(x = 320.dp, y = 30.dp)
     val imageModifierLike = Modifier
         .size(width = 70.dp, height = 70.dp)
-    //.border(BorderStroke(1.dp, Color.Black))
-    //.background(Color.Transparent)
+
+    Box(
+        modifier = boxModifier.clickable {
+            isSelected = toggleLikeState(isSelected)
+        }
+    ) {
+        if (isSelected)
+        Image(
+            painter = painterResource(id = R.drawable.like4),
+            contentDescription = "Like Image Filled",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierLike
+
+        ) else
+        Image(
+            painter = painterResource(id = R.drawable.like3),
+            contentDescription = "Like Image Empty",
+            contentScale = ContentScale.FillWidth,
+            modifier = imageModifierLike
+
+        )
+    }
+
+}
+
+
+
+    //Old code
+    /*
     Box(
         modifier = boxModifier
             .clickable{
                 isSelected = !isSelected
             }
-        //.background(if (isSelected) Color.Red else Color.Transparent)
+
     ) {
         if(isSelected)
             Image(
@@ -379,5 +409,6 @@ fun LikeImage() {
             )
 
     }
+    */
 
-}
+
