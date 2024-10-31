@@ -1,16 +1,8 @@
 package com.example.plantapp2.ui.theme
 
-import com.example.plantapp2.ui.theme.PlantInfoPage
 import org.junit.Test
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.*
-import org.junit.Rule
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-
-
-
 
 
 
