@@ -144,35 +144,79 @@ fun FilterScreen(navController: NavHostController) {
                 Text("Brun")
             }
 
-            Text("Højde:",
+            Text(
+                "Højde:",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp))
+                    fontSize = 14.sp
+                )
+            )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                        checked = filterHeight != null && filterHeight!! < 26.0,
-                        onCheckedChange = { filterHeight = if (it) 26.0 else null })
-                Text("<= 25.0 cm")
+                    checked = filterHeight != null && filterHeight!! < 26.0,
+                    onCheckedChange = {
+                        filterHeight = if (filterHeight != null && filterHeight!! < 26.0) {
+                            null
+                        } else if (it) {
+                            25.9
+                        } else {
+                            null
+                        }
+                    }
+                )
+                Text("< 26.0 cm")
                 Checkbox(
                     checked = filterHeight != null && filterHeight!! > 26.0,
-                    onCheckedChange = { filterHeight = if (it) 26.0 else null })
-                Text("> 25.0 cm")
+                    onCheckedChange = {
+                        filterHeight = if (filterHeight != null && filterHeight!! > 26.0) {
+                            null
+                        } else if (it) {
+                            26.1
+                        } else {
+                            null
+                        }
+                    }
+                )
+                Text("> 26.0 cm")
             }
 
-            Text("Max Rodnet:",
+
+            Text(
+                "Max Rodnet:",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp))
+                    fontSize = 14.sp
+                )
+            )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                        checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0,
-                        onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
-                Text("<= 30.0 cm")
+                    checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0,
+                    onCheckedChange = {
+                        filterMaxRootNet = if (filterMaxRootNet != null && filterMaxRootNet!! < 31.0) {
+                            null
+                        } else if (it) {
+                            30.9
+                        } else {
+                            null
+                        }
+                    }
+                )
+                Text("< 31.0 cm")
                 Checkbox(
-                        checked = filterMaxRootNet != null && filterMaxRootNet!! > 31.0,
-                        onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
-                Text("> 30.0 cm")
+                    checked = filterMaxRootNet != null && filterMaxRootNet!! > 31.0,
+                    onCheckedChange = {
+                        filterMaxRootNet = if (filterMaxRootNet != null && filterMaxRootNet!! > 31.0) {
+                            null
+                        } else if (it) {
+                            31.1
+                        } else {
+                            null
+                        }
+                    }
+                )
+                Text("> 31.0 cm")
             }
+
 
             Card(
                 modifier = Modifier
