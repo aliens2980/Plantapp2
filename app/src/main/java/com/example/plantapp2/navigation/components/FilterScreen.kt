@@ -126,7 +126,7 @@ fun FilterScreen(navController: NavHostController) {
 
             Column(modifier = Modifier.padding(top = 16.dp)) {
                 sortedPlants.forEach { plant ->
-                    Text(text = "${plant.name} - ${plant.type}")
+                    Text(text = "${plant.name}")
                 }
             }
         }
