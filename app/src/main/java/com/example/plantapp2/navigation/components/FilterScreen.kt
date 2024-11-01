@@ -203,18 +203,18 @@ fun FilterScreen(navController: NavHostController) {
                 )
                 Text("< 31.0 cm")
                 Checkbox(
-                    checked = filterMaxRootNet != null && filterMaxRootNet!! > 31.0,
+                    checked = filterMaxRootNet != null && filterMaxRootNet!! >= 31.0,
                     onCheckedChange = {
-                        filterMaxRootNet = if (filterMaxRootNet != null && filterMaxRootNet!! > 31.0) {
+                        filterMaxRootNet = if (filterMaxRootNet != null && filterMaxRootNet!! >= 31.0) {
                             null
                         } else if (it) {
-                            31.1
+                            31.0
                         } else {
                             null
                         }
                     }
                 )
-                Text("> 31.0 cm")
+                Text("≥ 31.0 cm")
             }
 
 
