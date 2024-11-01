@@ -1,48 +1,38 @@
 package com.example.plantapp2.navigation.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.Composable
-import androidx.compose.material3.Text
-import androidx.navigation.NavHostController
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Checkbox
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.material3.Scaffold
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
 @Composable
@@ -73,33 +63,7 @@ fun FilterScreen(navController: NavHostController) {
                 (filterHeight == null || (filterHeight!! > 0 && plant.height >= filterHeight!!)) &&
                 (filterMaxRootNet == null || (filterMaxRootNet!! > 0 && plant.maxRootNet >= filterMaxRootNet!!))
     }
-    //var sortedPlants =  plants.filter{it.type == "Grøntsag"}
 
-    //var sortedPlants =  plants.filter{it.type == "Nød"}
-
-    //var sortedPlants =  plants.filter{it.type == "Urt"}
-
-    //var sortedPlants =  plants.filter{it.type == "Frugt"}
-
-    //var sortedPlants =  plants.filter{it.color == "Grøn"}
-
-    //var sortedPlants =  plants.filter{it.color == "Rød"}
-
-    //var sortedPlants =  plants.filter{it.color == "Orange"}
-
-    //var sortedPlants =  plants.filter{it.color == "Brun"}
-
-    //var sortedPlants =  plants.filter{it.height <26.0}
-
-    //var sortedPlants =  plants.filter{it.height >26.0}
-
-    //var sortedPlants =  plants.filter{it.maxRootNet <31.0}
-
-    //var sortedPlants =  plants.filter{it.maxRootNet >31.0}
-
-    //var sortedPlants =  plants.filter{it.favorite}
-
-    //var sortedPlants =  plants.filter{!it.favorite}
     Scaffold { contentPadding ->
         Row (modifier = Modifier.padding(4.dp)) {
             IconButton(onClick = {navController.popBackStack()},
@@ -126,7 +90,7 @@ fun FilterScreen(navController: NavHostController) {
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp)
             )
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = filterFavorite, onCheckedChange = { filterFavorite = it })
             }
 
@@ -137,14 +101,22 @@ fun FilterScreen(navController: NavHostController) {
                     fontSize = 14.sp)
             )
 
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Checkbox(checked = filterType == "Grøntsag", onCheckedChange = { filterType = if (it) "Grøntsag" else "" })
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                        checked = filterType == "Grøntsag",
+                        onCheckedChange = { filterType = if (it) "Grøntsag" else "" })
                 Text("Grøntsag")
-                Checkbox(checked = filterType == "Nød", onCheckedChange = { filterType = if (it) "Nød" else "" })
+                Checkbox(
+                        checked = filterType == "Nød",
+                        onCheckedChange = { filterType = if (it) "Nød" else "" })
                 Text("Nød")
-                Checkbox(checked = filterType == "Urt", onCheckedChange = { filterType = if (it) "Urt" else "" })
+                Checkbox(
+                        checked = filterType == "Urt",
+                        onCheckedChange = { filterType = if (it) "Urt" else "" })
                 Text("Urt")
-                Checkbox(checked = filterType == "Frugt", onCheckedChange = { filterType = if (it) "Frugt" else "" })
+                Checkbox(
+                        checked = filterType == "Frugt",
+                        onCheckedChange = { filterType = if (it) "Frugt" else "" })
                 Text("Frugt")
             }
 
@@ -153,14 +125,22 @@ fun FilterScreen(navController: NavHostController) {
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp))
 
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Checkbox(checked = filterColor == "Grøn", onCheckedChange = { filterColor = if (it) "Grøn" else "" })
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                        checked = filterColor == "Grøn",
+                        onCheckedChange = { filterColor = if (it) "Grøn" else "" })
                 Text("Grøn")
-                Checkbox(checked = filterColor == "Rød", onCheckedChange = { filterColor = if (it) "Rød" else "" })
+                Checkbox(
+                        checked = filterColor == "Rød",
+                        onCheckedChange = { filterColor = if (it) "Rød" else "" })
                 Text("Rød")
-                Checkbox(checked = filterColor == "Orange", onCheckedChange = { filterColor = if (it) "Orange" else "" })
+                Checkbox(
+                        checked = filterColor == "Orange",
+                        onCheckedChange = { filterColor = if (it) "Orange" else "" })
                 Text("Orange")
-                Checkbox(checked = filterColor == "Brun", onCheckedChange = { filterColor = if (it) "Brun" else "" })
+                Checkbox(
+                        checked = filterColor == "Brun",
+                        onCheckedChange = { filterColor = if (it) "Brun" else "" })
                 Text("Brun")
             }
 
@@ -168,22 +148,30 @@ fun FilterScreen(navController: NavHostController) {
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp))
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Checkbox(checked = filterHeight != null && filterHeight!! < 26.0, onCheckedChange = { filterHeight = if (it) 26.0 else null })
-                Text("< 26.0 cm")
-                Checkbox(checked = filterHeight != null && filterHeight!! > 26.0, onCheckedChange = { filterHeight = if (it) 26.0 else null })
-                Text("> 26.0 cm")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                        checked = filterHeight != null && filterHeight!! < 26.0,
+                        onCheckedChange = { filterHeight = if (it) 26.0 else null })
+                Text("<= 25.0 cm")
+                Checkbox(
+                    checked = filterHeight != null && filterHeight!! > 26.0,
+                    onCheckedChange = { filterHeight = if (it) 26.0 else null })
+                Text("> 25.0 cm")
             }
 
             Text("Max Rodnet:",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp))
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Checkbox(checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0, onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
-                Text("< 31.0 cm")
-                Checkbox(checked = filterMaxRootNet != null && filterMaxRootNet!! > 31.0, onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
-                Text("> 31.0 cm")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                        checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0,
+                        onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
+                Text("<= 30.0 cm")
+                Checkbox(
+                        checked = filterMaxRootNet != null && filterMaxRootNet!! > 31.0,
+                        onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
+                Text("> 30.0 cm")
             }
 
             Card(
