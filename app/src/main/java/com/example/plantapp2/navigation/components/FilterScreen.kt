@@ -26,7 +26,36 @@ fun FilterScreen(navController: NavHostController) {
             Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false)
         )
     }
-    var sortedPlants =  plants.filter{it.type == "Grøntsag"}
+    //var sortedPlants =  plants.filter{it.type == "Grøntsag"}
+
+    //var sortedPlants =  plants.filter{it.type == "Nød"}
+
+    //var sortedPlants =  plants.filter{it.type == "Urt"}
+
+    //var sortedPlants =  plants.filter{it.type == "Frugt"}
+
+    //var sortedPlants =  plants.filter{it.color == "Grøn"}
+
+    //var sortedPlants =  plants.filter{it.color == "Rød"}
+
+    //var sortedPlants =  plants.filter{it.color == "Orange"}
+
+    //var sortedPlants =  plants.filter{it.color == "Brun"}
+
+    //var sortedPlants =  plants.filter{it.height <26.0}
+
+    //var sortedPlants =  plants.filter{it.height >26.0}
+
+    //var sortedPlants =  plants.filter{it.maxRootNet <31.0}
+
+    //var sortedPlants =  plants.filter{it.maxRootNet >31.0}
+
+    var sortedPlants =  plants.filter{it.favorite}
+
+    //var sortedPlants =  plants.filter{!it.favorite}
+
+
+
 
     Column(modifier = Modifier.padding(16.dp)) {
         sortedPlants.forEach { plant ->
