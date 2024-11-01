@@ -26,7 +26,7 @@ fun FilterScreen(navController: NavHostController) {
             Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false)
         )
     }
-    var sortedPlants =  plants.sortedBy {it.type}
+    var sortedPlants =  plants.filter{it.type == "Grøntsag"}
 
     Column(modifier = Modifier.padding(16.dp)) {
         sortedPlants.forEach { plant ->
@@ -41,8 +41,8 @@ data class Plant(
     val name: String,
     val type: String,
     val color: String,
-    val height: Double, // in cm
-    val maxRootNet: Double, // in cm
+    val height: Double,
+    val maxRootNet: Double,
     val favorite: Boolean,
 )
 
