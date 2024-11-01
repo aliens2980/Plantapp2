@@ -1,0 +1,52 @@
+{
+  "Krydderurter": [
+    {
+      "name": "purløg",
+      "size": "small",
+      "thrives_with": ["timian", "basilikum", "persille"]
+    },
+    {
+      "name": "timian",
+      "size": "small",
+      "thrives_with": ["purløg", "basilikum", "persille"]
+    },
+    {
+      "name": "basilikum",
+      "size": "small",
+      "thrives_with": ["purløg", "timian", "persille"]
+    },
+    {
+      "name": "persille",
+      "size": "small",
+      "thrives_with": ["purløg", "timian", "basilikum"]
+    }
+  ],
+  "Chili": [
+    {
+      "name": "chili",
+      "size": "medium",
+      "thrives_with": ["tomat", "basilikum"]
+    }
+  ],
+  "Bælgfrugter": [
+    {
+      "name": "bælgfrugter",
+      "size": "medium",
+      "thrives_with": ["gulerødder", "tomat"]
+    }
+  ],
+  "Tomat": [
+    {
+      "name": "tomat",
+      "size": "medium",
+      "thrives_with": ["basilikum", "chili"]
+    }
+  ],
+  "Gulerødder": [
+    {
+      "name": "gulerødder",
+      "size": "medium",
+      "thrives_with": ["bælgfrugter", "purløg"]
+    }
+  ]
+}
