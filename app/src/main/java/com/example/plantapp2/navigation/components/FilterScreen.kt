@@ -1,5 +1,9 @@
 package com.example.plantapp2.navigation.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.Text
 import androidx.navigation.NavHostController
@@ -17,7 +21,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.graphics.Color
 
 
 @Composable
@@ -25,13 +50,13 @@ fun FilterScreen(navController: NavHostController) {
 
     val plants = remember {
         mutableStateListOf(
-            Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0, true),
-            Plant("Jordbær", "Nød", "Rød", 25.0, 10.0, false),
-            Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0, true),
-            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0, false),
-            Plant("Oliven", "Frugt", "Grøn", 100.0, 40.0, true),
-            Plant("Tomato", "Grøntsag", "Rød", 80.0, 50.0, true),
-            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false)
+            Plant("Kartofler", "Grøntsag", "Brun", 10.0, 20.0, true, "\uD83E\uDD54"),
+            Plant("Jordbær", "Nød", "Rød", 25.0, 10.0, false,"\uD83C\uDF53"),
+            Plant("Brændnæller", "Urt", "Grøn", 30.0, 30.0, true,"\uD83C\uDF3F"),
+            Plant("Gulerødder", "Grøntsag", "Orange", 10.0, 40.0, false,"\uD83E\uDD55"),
+            Plant("Oliven", "Frugt", "Grøn", 100.0, 40.0, true,"\uD83E\uDED2"),
+            Plant("Tomato", "Grøntsag", "Rød", 80.0, 50.0, true,"\uD83C\uDF45"),
+            Plant("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false,"\uD83E\uDD52")
         )
     }
 
@@ -76,15 +101,42 @@ fun FilterScreen(navController: NavHostController) {
 
     //var sortedPlants =  plants.filter{!it.favorite}
     Scaffold { contentPadding ->
-        Column(modifier = Modifier.padding(contentPadding).padding(16.dp)) {
-            Text("Filter your search results")
-
-            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                Checkbox(checked = filterFavorite, onCheckedChange = { filterFavorite = it })
-                Text("Favorite")
+        Row (modifier = Modifier.padding(4.dp)) {
+            IconButton(onClick = {navController.popBackStack()},
+                modifier = Modifier.padding(0.dp))
+            {
+                Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = "go back")
             }
 
-            Text("Type:")
+            Box( modifier = Modifier.padding(4.dp)){
+                Text("Filtrer dine søgeresultater",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 22.sp),
+                        modifier = Modifier.padding(top = 10.dp) // Adjust this value to change how much lower the text is
+                )
+            }
+        }
+
+        Column(modifier = Modifier.padding(contentPadding).padding(32.dp)) {
+            Spacer(modifier = Modifier.height(30.dp)) // Add a spacer to move all items down
+
+            Text("Kun Favoriter:",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp)
+            )
+            Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                Checkbox(checked = filterFavorite, onCheckedChange = { filterFavorite = it })
+            }
+
+            Text(
+                "Type:",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp)
+            )
+
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Checkbox(checked = filterType == "Grøntsag", onCheckedChange = { filterType = if (it) "Grøntsag" else "" })
                 Text("Grøntsag")
@@ -96,7 +148,11 @@ fun FilterScreen(navController: NavHostController) {
                 Text("Frugt")
             }
 
-            Text("Color:")
+            Text("Farve:",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp))
+
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Checkbox(checked = filterColor == "Grøn", onCheckedChange = { filterColor = if (it) "Grøn" else "" })
                 Text("Grøn")
@@ -108,7 +164,10 @@ fun FilterScreen(navController: NavHostController) {
                 Text("Brun")
             }
 
-            Text("Height:")
+            Text("Højde:",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp))
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Checkbox(checked = filterHeight != null && filterHeight!! < 26.0, onCheckedChange = { filterHeight = if (it) 26.0 else null })
                 Text("< 26.0 cm")
@@ -116,7 +175,10 @@ fun FilterScreen(navController: NavHostController) {
                 Text("> 26.0 cm")
             }
 
-            Text("Max Root Net:")
+            Text("Max Rodnet:",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp))
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                 Checkbox(checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0, onCheckedChange = { filterMaxRootNet = if (it) 31.0 else null })
                 Text("< 31.0 cm")
@@ -124,9 +186,25 @@ fun FilterScreen(navController: NavHostController) {
                 Text("> 31.0 cm")
             }
 
-            Column(modifier = Modifier.padding(top = 16.dp)) {
-                sortedPlants.forEach { plant ->
-                    Text(text = "${plant.name}")
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp),
+                shape = RoundedCornerShape(8.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFE0F7FA)) // Light green color
+
+            ) {
+                Column(modifier = Modifier.padding(top = 0.dp)) {
+                    sortedPlants.forEach { plant ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Spacer(modifier = Modifier.height(30.dp)) // Add a spacer to move all items down
+
+                            Text(text = "- ${plant.name} ${plant.emoji}")
+                        }
+                    }
                 }
             }
         }
@@ -140,6 +218,7 @@ data class Plant(
     val height: Double,
     val maxRootNet: Double,
     val favorite: Boolean,
+    val emoji: String,
 )
 
 @Preview(showBackground = true)
