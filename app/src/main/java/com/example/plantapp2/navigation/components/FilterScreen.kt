@@ -164,7 +164,7 @@ fun FilterScreen(navController: NavHostController) {
                         }
                     }
                 )
-                Text("< 26.0 cm")
+                Text("< 25.0 cm")
                 Checkbox(
                     checked = filterHeight != null && filterHeight!! > 26.0,
                     onCheckedChange = {
@@ -177,7 +177,7 @@ fun FilterScreen(navController: NavHostController) {
                         }
                     }
                 )
-                Text("> 26.0 cm")
+                Text("> 25.0 cm")
             }
 
 
@@ -201,7 +201,7 @@ fun FilterScreen(navController: NavHostController) {
                         }
                     }
                 )
-                Text("< 31.0 cm")
+                Text("< 30.0 cm")
                 Checkbox(
                     checked = filterMaxRootNet != null && filterMaxRootNet!! >= 31.0,
                     onCheckedChange = {
@@ -214,7 +214,7 @@ fun FilterScreen(navController: NavHostController) {
                         }
                     }
                 )
-                Text("≥ 31.0 cm")
+                Text("≥ 30.0 cm")
             }
 
 
