@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.plantapp2.navigation.components.PlantPickerContent
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
 class MainActivity : ComponentActivity() {
@@ -15,21 +14,29 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Plantapp2Theme {
-                PlantPickerContent()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Greeting(
+                        name = "Android",
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun Greeting() {
-    PlantPickerContent()
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello $name!",
+        modifier = modifier
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Plantapp2Theme {
-        Greeting()
+        Greeting("Android")
     }
 }
