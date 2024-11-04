@@ -7,10 +7,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -57,6 +62,8 @@ import kotlinx.coroutines.tasks.await
 fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     // State for storing the image URL and loading state
     var imageUrl by remember { mutableStateOf<String?>(null) }
+    var name by remember { mutableStateOf<String?>(null) }
+    var info by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val firestore = FirebaseFirestore.getInstance()
@@ -70,6 +77,8 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
                 .get()
                 .await()
             imageUrl = result.getString("img") // Fetch the URL field from Firestore
+            name = result.getString("name") //Fetch name from Firestore
+            info = result.getString("info") //Fetch info from Firestore
         } catch (e: Exception) {
             errorMessage = "Failed to load image: ${e.message}" // Capture error message
         } finally {
@@ -82,24 +91,23 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
 
         BackgroundImage(url = "background", modifier = Modifier)
-        //Other content
-        PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
-        //Plant photo
-        when {
-            isLoading -> Text(text = "Loading...", modifier = Modifier.align(Alignment.Center))
-            errorMessage != null -> Text(
-                text = errorMessage ?: "",
-                color = Color.Red,
-                modifier = Modifier.align(Alignment.Center)
-            )
-            imageUrl != null -> {
-                // Display the retrieved image at the top using the TopImage composable
-                PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter))
+
+        //Plant name
+        when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter))
             }
         }
-       // PlantImage(url = url, modifier = Modifier)
+
+        //Plant photo
+        when { imageUrl != null -> { PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter))
+            }
+        }
+
         //Plant information box
-        InfoText(information = "Information", modifier = Modifier)   //REMEMBER TO LINK TO API DATA HERE BY A VIEWMODEL SCOPE
+        when { info != null -> { InfoText(information = info!!, modifier = Modifier)
+            }
+        }
+
+
         //Information image
         InformationImage(url = "info", modifier = Modifier)
         //Watering can image
@@ -118,22 +126,10 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         LikeImage()
         //The back button
         BackButton(navController = navController)
-        //async image test of two pics
-        //OverlayImages(backUrl = "back", frontUrl = "front", modifier = Modifier)
     }
 }
 
 
-
-@Composable
-fun TopImage(url: String, modifier: Modifier) {
-    AsyncImage(
-        model = url,
-        contentDescription = "Top Image",
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier.size(width = 411.dp, height = 200.dp) // Adjust height as needed
-    )
-}
 
 @Composable
 fun BackgroundImage(url: String, modifier: Modifier) {
@@ -151,7 +147,7 @@ fun BackgroundImage(url: String, modifier: Modifier) {
 
 //The page title text box
 @Composable
-fun PageTitle(name: String, modifier: Modifier = Modifier) {
+fun PageTitle(name: String, modifier: Modifier) {
     val textBoxModifier = Modifier
         .offset(x = 70.dp, y = 65.dp)   //to move the text box
     Text(
@@ -175,25 +171,16 @@ fun PlantImage(url: String, modifier: Modifier) {
     Box(
         modifier = boxModifier
     ) {
-        //AsyncImage(
-            //model = "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg",
-
-            //painter = painterResource(id = R.drawable.potato),
-            //contentDescription = "Plant Image",
-            //contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
-            //modifier = Modifier
-            //    .size(width = 200.dp, height = 200.dp)
-
-        //)
         //NEW DATABASE IMAGE
         AsyncImage(
             model = url,
-            contentDescription = "Top Image",
+            contentDescription = "PlantImage",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(width = 411.dp, height = 200.dp) // Adjust height as needed
+            modifier = Modifier.size(width = 200.dp, height = 200.dp) // Adjust height as needed
         )
     }
 }
+
 
 
 //Information image
@@ -220,18 +207,28 @@ fun InformationImage(url: String, modifier: Modifier) {
 //Information text box
 @Composable
 fun InfoText(information: String, modifier: Modifier = Modifier) {
-    val infoBoxModifier = modifier
-        .offset(x = 140.dp, y = 340.dp)
-        .background(Color.White)
+    BoxWithConstraints(
+        modifier = modifier
+            .offset(x = 140.dp, y = 340.dp)
+            .background(Color.White)
+            .padding(8.dp)
+    ) {
+        val maxWidth = 200.dp
+        val maxHeight = maxHeight
+
     Text(
         text = "Information about the: $information",
-        modifier = infoBoxModifier,
+        modifier = Modifier
+            .widthIn(max = maxWidth)
+            .heightIn(max = maxHeight)
+            .padding(4.dp),
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 12.sp,
             fontWeight = FontWeight.Light,
             fontFamily = FontFamily.Serif
         )
     )
+    }
 }
 
 //Watering amount image
