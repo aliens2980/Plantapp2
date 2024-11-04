@@ -110,14 +110,16 @@ fun BackgroundImage(url: String, modifier: Modifier) {
 @Composable
 fun PageTitle(name: String, modifier: Modifier = Modifier) {
     val textBoxModifier = Modifier
-        .offset(x = 100.dp, y = 65.dp)   //to move the text box
+        .offset(x = 70.dp, y = 65.dp)   //to move the text box
     Text(
         text = "Name: $name",
         modifier = textBoxModifier,
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif
+            fontFamily = FontFamily.Serif,
+            color = Color.White
+
         )
     )
 }
@@ -126,7 +128,7 @@ fun PageTitle(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun PlantImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 100.dp, y = 100.dp)
+        .offset(x = 70.dp, y = 100.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -366,8 +368,8 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 @Composable
 fun LikeImage() {
     var isSelected by remember { mutableStateOf(false) }
-    val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 320.dp, y = 30.dp)
+    val boxModifier = Modifier   //how to move the box with the like image around
+        .offset(x = 290.dp, y = 30.dp)
     val imageModifierLike = Modifier
         .size(width = 70.dp, height = 70.dp)
     Box(
