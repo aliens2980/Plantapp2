@@ -64,6 +64,9 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     var imageUrl by remember { mutableStateOf<String?>(null) }
     var name by remember { mutableStateOf<String?>(null) }
     var info by remember { mutableStateOf<String?>(null) }
+    var water by remember { mutableStateOf<Int?>(null) }
+    var gradeText by remember { mutableStateOf<String?>(null) }
+    var sun by remember { mutableStateOf<Int?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val firestore = FirebaseFirestore.getInstance()
@@ -79,49 +82,54 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
             imageUrl = result.getString("img") // Fetch the URL field from Firestore
             name = result.getString("name") //Fetch name from Firestore
             info = result.getString("info") //Fetch info from Firestore
+            water = result.getLong("water")?.toInt()
+            gradeText = result.getString("gradeText")
+            sun = result.getLong("sun")?.toInt()
         } catch (e: Exception) {
             errorMessage = "Failed to load image: ${e.message}" // Capture error message
         } finally {
             isLoading = false // Set loading state to false
         }
     }
+
+
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
         //Our background
-
-
         BackgroundImage(url = "background", modifier = Modifier)
 
         //Plant name
-        when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter))
-            }
-        }
+        when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter)) }}
 
         //Plant photo
-        when { imageUrl != null -> { PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter))
-            }
-        }
+        when { imageUrl != null -> { PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter)) }}
 
         //Plant information box
-        when { info != null -> { InfoText(information = info!!, modifier = Modifier)
-            }
-        }
+        when { info != null -> { InfoText(information = info!!, modifier = Modifier) }}
 
 
         //Information image
         InformationImage(url = "info", modifier = Modifier)
         //Watering can image
         WaterCanImage(url = "Watercan", modifier = Modifier)
+
         //Water can text
-        WaterCanText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        when { water != null -> { WaterCanText(information = water!!, modifier = Modifier) }}
+
         //Sun image
         SunImage(url = "Sun", modifier = Modifier)
+
         //Sun text
-        SunText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        when { sun != null -> { SunText(information = sun!!, modifier = Modifier)}}
+
+
         //Depth image
         GradeImage(url = "grade", modifier = Modifier)
+
         //Grade text
-        GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
+        when { gradeText != null -> { GradeText(information = gradeText!!, modifier = Modifier)}}
+
+
         //Like image
         LikeImage()
         //The back button
@@ -135,7 +143,6 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 fun BackgroundImage(url: String, modifier: Modifier) {
     AsyncImage(
         model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
-        //painter = painterResource(id = R.drawable.potato),
         contentDescription = "background",
         contentScale = ContentScale.FillBounds,   //this makes us able to crop the picture into the size we want by .size
         modifier = Modifier
@@ -253,25 +260,34 @@ fun WaterCanImage(url: String, modifier: Modifier) {
 }
 
 
+
 //Water can text box
 @Composable
-fun WaterCanText(information: String, modifier: Modifier = Modifier) {
-    val waterCanBoxModifier = modifier
-        .offset(x = 140.dp, y = 520.dp)
-        .background(Color.White)
-        .border(BorderStroke(1.dp, Color.Black))
-    Text(
-        text = "Must be watered: $information",
-        modifier = waterCanBoxModifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
+fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
+    BoxWithConstraints(
+        modifier = modifier
+            .offset(x = 140.dp, y = 520.dp)
+            .background(Color.White)
+            .border(BorderStroke(1.dp, Color.Black))
+            .padding(8.dp)
+    ) {
+        val maxWidth = 200.dp
+        val maxHeight = maxHeight
+
+        Text(
+            text = "Must be watered (days): $information",
+            modifier = Modifier
+                .widthIn(max = maxWidth)
+                .heightIn(max = maxHeight)
+                .padding(4.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Serif
+            )
         )
-    )
+    }
 }
-
-
 
 
 //Sun image to show how much sun the plant needs
@@ -297,20 +313,30 @@ fun SunImage(url: String, modifier: Modifier) {
 
 //Sun text box
 @Composable
-fun SunText(information: String, modifier: Modifier = Modifier) {
-    val sunBoxModifier = modifier
-        .offset(x = 140.dp, y = 610.dp)
-        .background(Color.White)
-        .border(BorderStroke(1.dp, Color.Black))
-    Text(
-        text = "Must receive sun: $information",
-        modifier = sunBoxModifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
+fun SunText(information: Int, modifier: Modifier = Modifier) {
+    BoxWithConstraints(
+        modifier = modifier
+            .offset(x = 140.dp, y = 610.dp)
+            .background(Color.White)
+            .border(BorderStroke(1.dp, Color.Black))
+            .padding(8.dp)
+    ) {
+        val maxWidth = 200.dp
+        val maxHeight = maxHeight
+
+        Text(
+            text = "Must receive sun: $information",
+            modifier = Modifier
+                .widthIn(max = maxWidth)
+                .heightIn(max = maxHeight)
+                .padding(4.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Serif
+            )
         )
-    )
+    }
 }
 
 
@@ -343,19 +369,29 @@ fun GradeImage(url: String, modifier: Modifier) {
 //Grade text box
 @Composable
 fun GradeText(information: String, modifier: Modifier = Modifier) {
-    val gradeBoxModifier = modifier
-        .offset(x = 140.dp, y = 430.dp)
-        .background(Color.White)
-        .border(BorderStroke(1.dp, Color.Black))
-    Text(
-        text = "Is graded to be: $information",
-        modifier = gradeBoxModifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
+    BoxWithConstraints(
+        modifier = modifier
+            .offset(x = 140.dp, y = 430.dp)
+            .background(Color.White)
+            .border(BorderStroke(1.dp, Color.Black))
+            .padding(8.dp)
+    ) {
+        val maxWidth = 200.dp
+        val maxHeight = maxHeight
+
+        Text(
+            text = "Is graded to be: $information",
+            modifier = Modifier
+                .widthIn(max = maxWidth)
+                .heightIn(max = maxHeight)
+                .padding(4.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Serif
+            )
         )
-    )
+    }
 }
 
 
