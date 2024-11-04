@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.plantapp2"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.plantapp2"
@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
