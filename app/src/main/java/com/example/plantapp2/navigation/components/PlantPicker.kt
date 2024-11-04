@@ -80,8 +80,6 @@ fun PlantPickerContent() {
         )
     }
 
-
-
     Column(
         modifier = Modifier.fillMaxSize()
             .background(color = Color.Black),
@@ -100,6 +98,7 @@ fun PlantPickerContent() {
                     .width(120.dp)
                     .background(Color.LightGray)
                     .align(Alignment.Center)
+
                     .clickable {
                         selectedPlant?.let { updateCurrentItem(it) }
                         println("Box clicked:")
@@ -117,9 +116,14 @@ fun PlantPickerContent() {
                     }
                 } else {
                     Box( //placeholder
+
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Color.Cyan)
+                            .clickable {
+
+                                println("Hej")
+                            }
                     )
                 }
             }
@@ -129,7 +133,6 @@ fun PlantPickerContent() {
             state = rememberCarouselState {
                 item.count()
                 },
-
             itemWidth = 100.dp,
             itemSpacing = 12.dp,
             contentPadding = PaddingValues(start = 12.dp),
