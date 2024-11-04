@@ -48,19 +48,26 @@ import kotlinx.coroutines.tasks.await
 //The name of the plant
 @Composable
 fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
-    // State for storing the image URL
+    // State for storing the image URL and loading state
     var imageUrl by remember { mutableStateOf<String?>(null) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
     val firestore = FirebaseFirestore.getInstance()
 
     // Load image URL from Firestore when this Composable is first displayed
     LaunchedEffect(Unit) {
-        // Replace "plants" and "imageUrl" with your actual collection and document field
-        val result = firestore.collection("plants")
-            .document("0")
-            .get()
-            .await()
-
-        imageUrl = result.getString("gradeImg") // Fetch the URL field from Firestore
+        try {
+            // Fetch the image URL from Firestore
+            val result = firestore.collection("plants")
+                .document("0")
+                .get()
+                .await()
+            imageUrl = result.getString("img") // Fetch the URL field from Firestore
+        } catch (e: Exception) {
+            errorMessage = "Failed to load image: ${e.message}" // Capture error message
+        } finally {
+            isLoading = false // Set loading state to false
+        }
     }
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
@@ -75,11 +82,25 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         //    TopImage(url = url, modifier = Modifier.align(Alignment.TopCenter))
         //}
         //Our background
+
+
         BackgroundImage(url = "background", modifier = Modifier)
         //Other content
         PageTitle(name = "Potato", modifier = Modifier.align(Alignment.Center))
         //Plant photo
-        PlantImage(url = "Potato", modifier = Modifier)
+        when {
+            isLoading -> Text(text = "Loading...", modifier = Modifier.align(Alignment.Center))
+            errorMessage != null -> Text(
+                text = errorMessage ?: "",
+                color = Color.Red,
+                modifier = Modifier.align(Alignment.Center)
+            )
+            imageUrl != null -> {
+                // Display the retrieved image at the top using the TopImage composable
+                PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter))
+            }
+        }
+       // PlantImage(url = url, modifier = Modifier)
         //Plant information box
         InfoText(information = "Information", modifier = Modifier)   //REMEMBER TO LINK TO API DATA HERE BY A VIEWMODEL SCOPE
         //Information image
@@ -176,7 +197,7 @@ fun PlantImage(url: String, modifier: Modifier) {
         AsyncImage(
             model = url,
             contentDescription = "Top Image",
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier.size(width = 411.dp, height = 200.dp) // Adjust height as needed
         )
     }
