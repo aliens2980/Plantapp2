@@ -381,8 +381,7 @@ fun LikeImage() {
                 painter = painterResource(id = R.drawable.like4),
                 contentDescription = "Like Image Filled",
                 contentScale = ContentScale.FillWidth,
-                modifier = imageModifierLike
-
+                modifier = imageModifierLike,
             ) else
             Image(
                 painter = painterResource(id = R.drawable.like3),

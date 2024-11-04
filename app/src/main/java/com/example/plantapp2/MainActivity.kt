@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
             Plantapp2Theme {
                 Bed(length = 240, width = 360)
 
@@ -123,6 +124,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
+
                             // Add more cases if needed for other items
                         }
                     }
