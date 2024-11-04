@@ -72,10 +72,6 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         //Sun text
         SunText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Depth image
-        DepthImage(url = "depth", modifier = Modifier)
-        //Depth text
-        DepthText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
-        //Grade image
         GradeImage(url = "grade", modifier = Modifier)
         //Grade text
         GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
@@ -186,7 +182,7 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun WaterCanImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 700.dp)
+        .offset(x = 50.dp, y = 520.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -208,7 +204,7 @@ fun WaterCanImage(url: String, modifier: Modifier) {
 @Composable
 fun WaterCanText(information: String, modifier: Modifier = Modifier) {
     val waterCanBoxModifier = modifier
-        .offset(x = 140.dp, y = 700.dp)
+        .offset(x = 140.dp, y = 520.dp)
         .background(Color.White)
         .border(BorderStroke(1.dp, Color.Black))
     Text(
@@ -263,53 +259,6 @@ fun SunText(information: String, modifier: Modifier = Modifier) {
         )
     )
 }
-
-
-
-
-
-//Soil depth image to show how far down it should be planted
-@Composable
-fun DepthImage(url: String, modifier: Modifier) {
-    val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 520.dp)
-    Box(
-        modifier = boxModifier
-    ) {
-        AsyncImage(
-            model = "https://cdn.create.vista.com/api/media/small/557110558/stock-vector-shovel-icon-white-background-line-style-vector-illustration",
-            //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "depth Image",
-            contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
-            modifier = Modifier
-                .size(width = 70.dp, height = 70.dp)
-
-        )
-    }
-
-}
-
-
-
-//Depth text box
-@Composable
-fun DepthText(information: String, modifier: Modifier = Modifier) {
-    val depthBoxModifier = modifier
-        .offset(x = 140.dp, y = 520.dp)
-        .background(Color.White)
-        .border(BorderStroke(1.dp, Color.Black))
-    Text(
-        text = "Must be planted at: $information",
-        modifier = depthBoxModifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
-        )
-    )
-}
-
-
 
 
 //Grade scale image to show if its easy or hard
