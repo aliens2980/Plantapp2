@@ -36,11 +36,17 @@ import androidx.navigation.NavController
 import com.example.plantapp2.R
 
 
+
+
 /**
  * @author s235064
  * @param PlantPage
  * @return the information page of a plant
  */
+
+
+
+
 
 //The name of the plant
 @Composable
@@ -77,9 +83,11 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         LikeImage()
         //The back button
         BackButton(navController = navController)
-
+        //async image test of two pics
+        //OverlayImages(backUrl = "back", frontUrl = "front", modifier = Modifier)
     }
 }
+
 
 
 
@@ -409,3 +417,45 @@ fun BackButton(navController: NavController) {
         }
     }
 }
+
+
+
+//TESTER OF TWO IMAGES ON TOP OF EACHOTHER
+/*
+@Composable
+fun OverlayImagesHelper() {
+    OverlayImages(
+        backUrl = "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg",
+        frontUrl = "https://plus.unsplash.com/premium_photo-1670271544153-dd9933f0f119?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Ymx1ZSUyMHRleHR1cmV8ZW58MHx8MHx8fDA%3D",
+        modifier = Modifier
+    )
+}
+
+@Composable
+fun OverlayImages(
+    backUrl: String,
+    frontUrl: String,
+    modifier: Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
+        AsyncImage(
+            model = backUrl,
+            contentDescription = "background url",
+            modifier = Modifier
+                .size(200.dp, 200.dp)
+                .align(Alignment.Center)
+        )
+        AsyncImage(
+            model = frontUrl,
+            contentDescription = "front url",
+            modifier = Modifier
+                .size(50.dp,50.dp)
+                .align(Alignment.Center)
+        )
+    }
+}
+
+*/
