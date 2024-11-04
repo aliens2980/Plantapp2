@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -46,13 +47,6 @@ import com.example.plantapp2.R
 fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
-        ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Go Back")
-        }
-
         //Our background
         BackgroundImage(url = "background", modifier = Modifier)
         //Other content
@@ -81,19 +75,16 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         GradeText(information = "Information", modifier = Modifier) //REMEMBER TO LINK TO API DATA HERE
         //Like image
         LikeImage()
+        //The back button
+        BackButton(navController = navController)
+
     }
 }
 
 
+
 @Composable
 fun BackgroundImage(url: String, modifier: Modifier) {
-    /*
-    val imageModifier = Modifier
-        .size(width = 411.dp, height = 913.dp)  //here you can change the background photo size
-        //.border(BorderStroke(1.dp, Color.Red))
-        .background(Color.Blue)
-
-     */
     AsyncImage(
         model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
         //painter = painterResource(id = R.drawable.potato),
@@ -110,14 +101,16 @@ fun BackgroundImage(url: String, modifier: Modifier) {
 @Composable
 fun PageTitle(name: String, modifier: Modifier = Modifier) {
     val textBoxModifier = Modifier
-        .offset(x = 100.dp, y = 65.dp)   //to move the text box
+        .offset(x = 70.dp, y = 65.dp)   //to move the text box
     Text(
         text = "Name: $name",
         modifier = textBoxModifier,
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif
+            fontFamily = FontFamily.Serif,
+            color = Color.White
+
         )
     )
 }
@@ -126,7 +119,7 @@ fun PageTitle(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun PlantImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 100.dp, y = 100.dp)
+        .offset(x = 70.dp, y = 100.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -147,7 +140,7 @@ fun PlantImage(url: String, modifier: Modifier) {
 @Composable
 fun InformationImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 440.dp)
+        .offset(x = 50.dp, y = 340.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -168,7 +161,7 @@ fun InformationImage(url: String, modifier: Modifier) {
 @Composable
 fun InfoText(information: String, modifier: Modifier = Modifier) {
     val infoBoxModifier = modifier
-        .offset(x = 140.dp, y = 440.dp)
+        .offset(x = 140.dp, y = 340.dp)
         .background(Color.White)
     Text(
         text = "Information about the: $information",
@@ -185,7 +178,7 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun WaterCanImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 800.dp)
+        .offset(x = 50.dp, y = 700.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -207,7 +200,7 @@ fun WaterCanImage(url: String, modifier: Modifier) {
 @Composable
 fun WaterCanText(information: String, modifier: Modifier = Modifier) {
     val waterCanBoxModifier = modifier
-        .offset(x = 140.dp, y = 800.dp)
+        .offset(x = 140.dp, y = 700.dp)
         .background(Color.White)
         .border(BorderStroke(1.dp, Color.Black))
     Text(
@@ -228,7 +221,7 @@ fun WaterCanText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun SunImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 710.dp)
+        .offset(x = 50.dp, y = 610.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -249,7 +242,7 @@ fun SunImage(url: String, modifier: Modifier) {
 @Composable
 fun SunText(information: String, modifier: Modifier = Modifier) {
     val sunBoxModifier = modifier
-        .offset(x = 140.dp, y = 710.dp)
+        .offset(x = 140.dp, y = 610.dp)
         .background(Color.White)
         .border(BorderStroke(1.dp, Color.Black))
     Text(
@@ -271,7 +264,7 @@ fun SunText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun DepthImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 620.dp)
+        .offset(x = 50.dp, y = 520.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -294,7 +287,7 @@ fun DepthImage(url: String, modifier: Modifier) {
 @Composable
 fun DepthText(information: String, modifier: Modifier = Modifier) {
     val depthBoxModifier = modifier
-        .offset(x = 140.dp, y = 620.dp)
+        .offset(x = 140.dp, y = 520.dp)
         .background(Color.White)
         .border(BorderStroke(1.dp, Color.Black))
     Text(
@@ -315,7 +308,7 @@ fun DepthText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun GradeImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 530.dp)
+        .offset(x = 50.dp, y = 430.dp)
     val imageModifierGrade = Modifier
         .size(width = 70.dp, height = 70.dp)
         .border(BorderStroke(1.dp, Color.Black))
@@ -341,7 +334,7 @@ fun GradeImage(url: String, modifier: Modifier) {
 @Composable
 fun GradeText(information: String, modifier: Modifier = Modifier) {
     val gradeBoxModifier = modifier
-        .offset(x = 140.dp, y = 530.dp)
+        .offset(x = 140.dp, y = 430.dp)
         .background(Color.White)
         .border(BorderStroke(1.dp, Color.Black))
     Text(
@@ -366,8 +359,8 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 @Composable
 fun LikeImage() {
     var isSelected by remember { mutableStateOf(false) }
-    val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 320.dp, y = 30.dp)
+    val boxModifier = Modifier   //how to move the box with the like image around
+        .offset(x = 280.dp, y = 30.dp)
     val imageModifierLike = Modifier
         .size(width = 70.dp, height = 70.dp)
     Box(
@@ -393,4 +386,26 @@ fun LikeImage() {
 
     }
 
+}
+
+
+@Composable
+fun BackButton(navController: NavController) {
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                //.align(Alignment.TopStart)
+                .padding(16.dp)
+                .offset(4.dp, 15.dp)  //to move it by specific coordinates
+        ) {
+            Icon(
+                imageVector = Icons.Default.Clear,
+                contentDescription = "Go Back",
+                modifier = Modifier.size(100.dp)
+            )
+        }
+    }
 }
