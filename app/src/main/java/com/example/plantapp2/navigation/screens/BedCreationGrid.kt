@@ -1,5 +1,5 @@
 package com.example.plantapp2.navigation.screens
-
+/*
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -318,3 +318,4 @@ fun calculateDoubleTapOffset(
     )
 }
 
+*/
