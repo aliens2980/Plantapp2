@@ -53,15 +53,20 @@ fun FilterScreen(navController: NavHostController) {
     var filterFavorite by remember { mutableStateOf(false) }
     var filterType by remember { mutableStateOf("") }
     var filterColor by remember { mutableStateOf("") }
-    var filterHeight by remember { mutableStateOf<Double?>(null) }
+    var filtermaxHeight by remember { mutableStateOf<Double?>(null) }
+    var filterminHeight by remember { mutableStateOf<Double?>(null) }
     var filterMaxRootNet by remember { mutableStateOf<Double?>(null) }
+    var filterminMaxRootNet by remember { mutableStateOf<Double?>(null) }
+
 
     val sortedPlants = plants.filter { plant ->
         (!filterFavorite || plant.favorite) &&
                 (filterType.isEmpty() || plant.type == filterType) &&
                 (filterColor.isEmpty() || plant.color == filterColor) &&
-                (filterHeight == null || (filterHeight!! > 0 && plant.height >= filterHeight!!)) &&
-                (filterMaxRootNet == null || (filterMaxRootNet!! > 0 && plant.maxRootNet >= filterMaxRootNet!!))
+                (filterminHeight == null || (filterminHeight!! > 0 && plant.height <= filterminHeight!!)) &&
+                (filtermaxHeight == null || (filtermaxHeight!! > 0 && plant.height >= filtermaxHeight!!)) &&
+                (filterMaxRootNet == null || (filterMaxRootNet!! > 0 && plant.maxRootNet >= filterMaxRootNet!!)) &&
+                (filterminMaxRootNet == null || (filterminMaxRootNet!! > 0 && plant.maxRootNet <= filterminMaxRootNet!!))
     }
 
     Scaffold { contentPadding ->
@@ -153,9 +158,9 @@ fun FilterScreen(navController: NavHostController) {
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                    checked = filterHeight != null && filterHeight!! < 26.0,
+                    checked = filterminHeight != null && filterminHeight!! < 26.0,
                     onCheckedChange = {
-                        filterHeight = if (filterHeight != null && filterHeight!! < 26.0) {
+                        filterminHeight = if (filterminHeight != null && filterminHeight!! < 26.0) {
                             null
                         } else if (it) {
                             25.9
@@ -166,9 +171,9 @@ fun FilterScreen(navController: NavHostController) {
                 )
                 Text("< 25.0 cm")
                 Checkbox(
-                    checked = filterHeight != null && filterHeight!! > 26.0,
+                    checked = filtermaxHeight != null && filtermaxHeight!! > 26.0,
                     onCheckedChange = {
-                        filterHeight = if (filterHeight != null && filterHeight!! > 26.0) {
+                        filtermaxHeight = if (filtermaxHeight != null && filtermaxHeight!! > 26.0) {
                             null
                         } else if (it) {
                             26.1
@@ -190,9 +195,9 @@ fun FilterScreen(navController: NavHostController) {
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                    checked = filterMaxRootNet != null && filterMaxRootNet!! < 31.0,
+                    checked = filterminMaxRootNet != null && filterminMaxRootNet!! < 31.0,
                     onCheckedChange = {
-                        filterMaxRootNet = if (filterMaxRootNet != null && filterMaxRootNet!! < 31.0) {
+                        filterminMaxRootNet = if (filterminMaxRootNet != null && filterminMaxRootNet!! < 31.0) {
                             null
                         } else if (it) {
                             30.9
