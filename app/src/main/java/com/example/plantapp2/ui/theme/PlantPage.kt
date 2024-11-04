@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.plantapp2.R
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 
 /**
@@ -41,9 +44,24 @@ import com.example.plantapp2.R
  * @return the information page of a plant
  */
 
+
 //The name of the plant
 @Composable
 fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
+    // State for storing the image URL
+    var imageUrl by remember { mutableStateOf<String?>(null) }
+    val firestore = FirebaseFirestore.getInstance()
+
+    // Load image URL from Firestore when this Composable is first displayed
+    LaunchedEffect(Unit) {
+        // Replace "plants" and "imageUrl" with your actual collection and document field
+        val result = firestore.collection("plants")
+            .document("0")
+            .get()
+            .await()
+
+        imageUrl = result.getString("gradeImg") // Fetch the URL field from Firestore
+    }
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
         IconButton(
@@ -53,6 +71,9 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Go Back")
         }
 
+        //imageUrl?.let { url ->
+        //    TopImage(url = url, modifier = Modifier.align(Alignment.TopCenter))
+        //}
         //Our background
         BackgroundImage(url = "background", modifier = Modifier)
         //Other content
@@ -84,6 +105,15 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun TopImage(url: String, modifier: Modifier) {
+    AsyncImage(
+        model = url,
+        contentDescription = "Top Image",
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.size(width = 411.dp, height = 200.dp) // Adjust height as needed
+    )
+}
 
 @Composable
 fun BackgroundImage(url: String, modifier: Modifier) {
@@ -132,14 +162,22 @@ fun PlantImage(url: String, modifier: Modifier) {
     Box(
         modifier = boxModifier
     ) {
-        AsyncImage(
-            model = "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg",
-            //painter = painterResource(id = R.drawable.potato),
-            contentDescription = "Plant Image",
-            contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
-            modifier = Modifier
-                .size(width = 200.dp, height = 200.dp)
+        //AsyncImage(
+            //model = "https://cdn.britannica.com/08/194708-050-56FF816A/potatoes.jpg",
 
+            //painter = painterResource(id = R.drawable.potato),
+            //contentDescription = "Plant Image",
+            //contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
+            //modifier = Modifier
+            //    .size(width = 200.dp, height = 200.dp)
+
+        //)
+        //NEW DATABASE IMAGE
+        AsyncImage(
+            model = url,
+            contentDescription = "Top Image",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.size(width = 411.dp, height = 200.dp) // Adjust height as needed
         )
     }
 }
