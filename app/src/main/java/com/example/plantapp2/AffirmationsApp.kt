@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.plantapp2.Data.Datasource
-import com.example.plantapp2.Model.affirmation
+import com.example.plantapp2.Models.affirmation
 
 
 // Do: This function is a descriptive PascalCased noun as a visual UI element

@@ -1,6 +1,6 @@
 package com.example.plantapp2.Data
 
-import com.example.plantapp2.Model.affirmation
+import com.example.plantapp2.Models.affirmation
 import com.example.plantapp2.R
 
 

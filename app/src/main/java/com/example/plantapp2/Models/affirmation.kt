@@ -1,4 +1,4 @@
-package com.example.plantapp2.Model
+package com.example.plantapp2.Models
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
