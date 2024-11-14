@@ -104,6 +104,7 @@ fun MainSearch(navController: NavHostController) {
                             modifier = Modifier.clickable {
                                 if (text.isNotEmpty()) {
                                     text = ""
+                                    active = false
                                 } else {
                                     active = false
                                 }
