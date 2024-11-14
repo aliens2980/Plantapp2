@@ -9,12 +9,30 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+
+
+/**
+ * @author s235109
+ * @param PlantBed
+ * @return A grid in which each space is clickable.
+ */
+
+@Composable
+fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
+    Box(
+        modifier = Modifier.fillMaxSize(), // Outer Box to take up full screen
+        contentAlignment = Alignment.Center // Align content in the center
+    ) {
+        Bed(length = length, width = width, gridSize = gridSize)
+    }
+}
 
 @Composable
 fun Bed(length: Int, width: Int, gridSize: Int = 60, viewModel: GridViewModel = viewModel()) {
