@@ -6,10 +6,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
@@ -22,9 +26,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -91,88 +98,121 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         }
     }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Row for BackButton and LikeImage
+        Row(
+            modifier = Modifier
+                //.fillMaxWidth()
+                .padding(vertical = 30.dp) // Padding around the row
+                .background(Color.Yellow),
+            horizontalArrangement = Arrangement.SpaceBetween, // Push elements to corners
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Back button (left corner)
+            BackButton(
+                navController = navController,
+                modifier = Modifier
+                    .size(40.dp) // Adjust button size if needed
 
-    //Our box layer to allow layering
-    Box(modifier = Modifier.fillMaxSize()) {
-        //Our background
-        BackgroundImage( modifier = Modifier)
+            )
 
+            // Like button (right corner)
+            LikeIcon(
+                modifier = Modifier
+                    .size(40.dp) // Adjust button size if needed
+
+            )
+        }
+
+
+        //Main content
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .padding(top = 50.dp),  //DONT CHANGE, will make the scroll stop working
+            horizontalAlignment = Alignment.Start
 
-        ){
-            // Plant name
-            name?.let { PageTitle(name = it, modifier = Modifier.align(Alignment.CenterHorizontally)) }
+            ) {
 
-            // Plant photo
-            imageUrl?.let { PlantImage(url = it, modifier = Modifier.align(Alignment.CenterHorizontally)) }
+            //Plant name
+            when {
+                name != null -> {
+                    PageTitle(
+                        name = name!!,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 10.dp, bottom = 4.dp)
 
-            // Plant information box
-            info?.let { InfoText(information = it, modifier = Modifier.padding(16.dp)) }
+                    )
+                }
+            }
 
-            // Information image
-            InformationImage(url = "info", modifier = Modifier)
+            //Plant photo
+            when {
+                imageUrl != null -> {
+                    PlantImage(
+                        url = imageUrl!!,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(16.dp)
+                    )
 
-            // Watering can image and text
+                }
+            }
+
+
+            //Information image
+            InformationImage(
+                url = "info",
+                modifier = Modifier
+                    .padding(bottom = 1.dp)
+            )
+
+            //Plant information box
+            when {
+                info != null -> {
+                    InfoText(
+                        information = info!!,
+                        modifier = Modifier
+                    )
+                }
+            }
+
+            //Watering can image
             WaterCanImage(url = "Watercan", modifier = Modifier)
-            water?.let { WaterCanText(information = it, modifier = Modifier) }
 
-            // Sun image and text
+            //Water can text
+            when {
+                water != null -> {
+                    WaterCanText(information = water!!, modifier = Modifier)
+                }
+            }
+
+            //Sun image
             SunImage(url = "Sun", modifier = Modifier)
-            sun?.let { SunText(information = it, modifier = Modifier) }
 
-            // Depth image and grade text
+            //Sun text
+            when {
+                sun != null -> {
+                    SunText(information = sun!!, modifier = Modifier)
+                }
+            }
+
+
+            //Depth image
             GradeImage(url = "grade", modifier = Modifier)
-            gradeText?.let { GradeText(information = it, modifier = Modifier) }
 
-            // Like image
-            LikeImage()
-
-            // Back button
-            BackButton(navController = navController)
-
-
-
-           /*
-        //Plant name
-        when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter)) }}
-
-        //Plant photo
-        when { imageUrl != null -> { PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter)) }}
-
-        //Plant information box
-        when { info != null -> { InfoText(information = info!!, modifier = Modifier) }}
-
-
-        //Information image
-        InformationImage(url = "info", modifier = Modifier)
-        //Watering can image
-        WaterCanImage(url = "Watercan", modifier = Modifier)
-
-        //Water can text
-        when { water != null -> { WaterCanText(information = water!!, modifier = Modifier) }}
-
-        //Sun image
-        SunImage(url = "Sun", modifier = Modifier)
-
-        //Sun text
-        when { sun != null -> { SunText(information = sun!!, modifier = Modifier)}}
-
-
-        //Depth image
-        GradeImage(url = "grade", modifier = Modifier)
-
-        //Grade text
-        when { gradeText != null -> { GradeText(information = gradeText!!, modifier = Modifier)}}
-
-
-        //Like image
-        LikeImage()
-        //The back button
-        BackButton(navController = navController)
-*/
+            //Grade text
+            when {
+                gradeText != null -> {
+                    GradeText(information = gradeText!!, modifier = Modifier)
+                }
+            }
 
         }
     }
@@ -180,6 +220,244 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
 
 
+
+
+
+
+@Composable
+fun PageTitle(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Name: $name",
+        modifier = modifier,
+            //.padding(top = 50.dp, bottom = 4.dp), // Add spacing below the title
+        style = TextStyle(
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
+        )
+    )
+}
+
+@Composable
+fun PlantImage(url: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(200.dp) // Set the size directly
+            .padding(bottom = 16.dp) // Add spacing below the image
+    ) {
+        AsyncImage(
+            model = url,
+            contentDescription = "PlantImage",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize() // Fill the box
+        )
+    }
+}
+
+
+@Composable
+fun InformationImage(url: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(70.dp) // Fixed size
+            .padding(bottom = 16.dp) // Add spacing
+    ) {
+        AsyncImage(
+            model = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXye4JJDMVlIFZm6MDBiQLabIMtHhGQjNguw&s",
+            contentDescription = "Information Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize() // Fill the box
+        )
+    }
+}
+
+@Composable
+fun InfoText(information: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Information about the: $information",
+        modifier = modifier
+            .fillMaxWidth() // Use the available width
+            .padding(16.dp), // Add padding around the text
+        style = TextStyle(
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
+        )
+    )
+}
+
+@Composable
+fun WaterCanImage(url: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(70.dp) // Fixed size
+            .padding(bottom = 8.dp) // Add spacing below the image
+    ) {
+        AsyncImage(
+            model = "https://cdn.create.vista.com/api/media/small/249600986/stock-vector-blue-watering-can-icon-sign-flat-style-design-vector-illustration",
+            contentDescription = "Watering Can Image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize() // Fill the box
+        )
+    }
+}
+
+@Composable
+fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
+    Text(
+        text = "Must be watered (days): $information",
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        style = TextStyle(
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
+        )
+    )
+}
+
+
+
+//Sun image to show how much sun the plant needs
+@Composable
+fun SunImage(url: String, modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .size(70.dp) // Fixed size
+            .padding(bottom = 8.dp) // Add spacing below the image
+    ) {
+        AsyncImage(
+            model = "https://static.vecteezy.com/system/resources/previews/007/956/515/non_2x/animated-sun-icon-in-white-background-vector.jpg",
+            //painter = painterResource(id = R.drawable.potato),
+            contentDescription = "Information Image",
+            contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
+            modifier = Modifier
+                .size(width = 70.dp, height = 70.dp)
+
+        )
+    }
+}
+
+
+//Sun text box
+@Composable
+fun SunText(information: Int, modifier: Modifier = Modifier) {
+        Text(
+            text = "Must receive sun: $information",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
+            )
+        )
+}
+
+
+
+//Grade scale image to show if its easy or hard
+@Composable
+fun GradeImage(url: String, modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .size(70.dp) // Fixed size
+            .padding(bottom = 8.dp) // Add spacing below the image
+    ) {
+        AsyncImage(
+            model = "https://images.pond5.com/low-risk-gauge-level-animation-footage-236417204_iconl.jpeg",
+            //painter = painterResource(id = R.drawable.potato),
+            contentDescription = "grade Image",
+            contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
+            modifier = Modifier
+                .size(width = 70.dp, height = 70.dp)
+
+        )
+    }
+
+}
+
+
+//Grade text box
+@Composable
+fun GradeText(information: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Is graded to be: $information",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
+            )
+        )
+}
+
+
+
+//Helper function to test LikeImage
+fun toggleLikeState(currentState: Boolean): Boolean {
+    return !currentState
+}
+
+
+
+//Like plant to list of favourites
+@Composable
+fun LikeIcon(modifier: Modifier = Modifier) {
+    var isSelected by remember { mutableStateOf(false) }
+
+    Icon(
+        imageVector = if (isSelected) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+        contentDescription = if (isSelected) "Liked" else "Not Liked",
+        tint = if (isSelected) Color.Red else Color.Gray, // Change color based on state
+        modifier = modifier
+            .size(40.dp) // Set the size of the icon
+            .clickable { isSelected = toggleLikeState(isSelected) } // Toggle state on click
+    )
+}
+
+
+@Composable
+fun BackButton(navController: NavController, modifier: Modifier = Modifier) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize() // Fill the available space for proper alignment
+    ) {
+        IconButton(
+            onClick = { navController.popBackStack() },
+            //modifier = Modifier
+                //.padding(16.dp)
+                //.offset(4.dp, 15.dp)  //to move it by specific coordinates
+        ) {
+            Icon(
+                imageVector = Icons.Default.Clear,
+                contentDescription = "Go Back",
+                modifier = Modifier
+            )
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 
 @Composable
@@ -500,7 +778,7 @@ fun BackButton(navController: NavController) {
     }
 }
 
-
+*/
 
 //TESTER OF TWO IMAGES ON TOP OF EACHOTHER
 /*
