@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -54,10 +57,6 @@ import kotlinx.coroutines.tasks.await
 
 
 
-
-
-
-//The name of the plant
 @Composable
 fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     // State for storing the image URL and loading state
@@ -96,8 +95,47 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     //Our box layer to allow layering
     Box(modifier = Modifier.fillMaxSize()) {
         //Our background
-        BackgroundImage(url = "background", modifier = Modifier)
+        BackgroundImage( modifier = Modifier)
 
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+
+        ){
+            // Plant name
+            name?.let { PageTitle(name = it, modifier = Modifier.align(Alignment.CenterHorizontally)) }
+
+            // Plant photo
+            imageUrl?.let { PlantImage(url = it, modifier = Modifier.align(Alignment.CenterHorizontally)) }
+
+            // Plant information box
+            info?.let { InfoText(information = it, modifier = Modifier.padding(16.dp)) }
+
+            // Information image
+            InformationImage(url = "info", modifier = Modifier)
+
+            // Watering can image and text
+            WaterCanImage(url = "Watercan", modifier = Modifier)
+            water?.let { WaterCanText(information = it, modifier = Modifier) }
+
+            // Sun image and text
+            SunImage(url = "Sun", modifier = Modifier)
+            sun?.let { SunText(information = it, modifier = Modifier) }
+
+            // Depth image and grade text
+            GradeImage(url = "grade", modifier = Modifier)
+            gradeText?.let { GradeText(information = it, modifier = Modifier) }
+
+            // Like image
+            LikeImage()
+
+            // Back button
+            BackButton(navController = navController)
+
+
+
+           /*
         //Plant name
         when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter)) }}
 
@@ -134,19 +172,22 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
         LikeImage()
         //The back button
         BackButton(navController = navController)
+*/
+
+        }
     }
 }
 
 
 
+
+
 @Composable
-fun BackgroundImage(url: String, modifier: Modifier) {
-    AsyncImage(
-        model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
-        contentDescription = "background",
-        contentScale = ContentScale.FillBounds,   //this makes us able to crop the picture into the size we want by .size
+fun BackgroundImage(modifier: Modifier) {
+    Box(
         modifier = Modifier
             .size(width = 411.dp, height = 913.dp)
+            .background(Color.LightGray)
 
     )
 }
@@ -163,8 +204,8 @@ fun PageTitle(name: String, modifier: Modifier) {
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-            color = Color.White
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
 
         )
     )
@@ -217,7 +258,7 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 340.dp)
-            .background(Color.White)
+            //.background(Color.White)
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -232,7 +273,8 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 12.sp,
             fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
         )
     )
     }
@@ -267,8 +309,8 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 520.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -283,7 +325,8 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
@@ -317,8 +360,8 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 610.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -333,7 +376,8 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
@@ -372,8 +416,8 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 430.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -388,7 +432,8 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
