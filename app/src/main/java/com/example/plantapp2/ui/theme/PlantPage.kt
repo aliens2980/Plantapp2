@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -30,6 +31,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -94,9 +97,14 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
 
     //Our box layer to allow layering
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.LightGray)
+
+    ) {
         //Our background
-        BackgroundImage(url = "background", modifier = Modifier)
+        //BackgroundImage(url = "background", modifier = Modifier)
 
         //Plant name
         when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter)) }}
@@ -109,22 +117,22 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
 
         //Information image
-        InformationImage(url = "info", modifier = Modifier)
+        InformationImage(modifier = Modifier)
         //Watering can image
-        WaterCanImage(url = "Watercan", modifier = Modifier)
+        WaterCanImage(modifier = Modifier)
 
         //Water can text
         when { water != null -> { WaterCanText(information = water!!, modifier = Modifier) }}
 
         //Sun image
-        SunImage(url = "Sun", modifier = Modifier)
+        SunImage(modifier = Modifier)
 
         //Sun text
         when { sun != null -> { SunText(information = sun!!, modifier = Modifier)}}
 
 
         //Depth image
-        GradeImage(url = "grade", modifier = Modifier)
+        GradeImage(modifier = Modifier)
 
         //Grade text
         when { gradeText != null -> { GradeText(information = gradeText!!, modifier = Modifier)}}
@@ -139,19 +147,6 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
 
 
-@Composable
-fun BackgroundImage(url: String, modifier: Modifier) {
-    AsyncImage(
-        model = "https://t4.ftcdn.net/jpg/00/14/74/45/360_F_14744561_RJDuXs5eCrpEHMTg3qduWKRy5ExJJc1b.jpg",
-        contentDescription = "background",
-        contentScale = ContentScale.FillBounds,   //this makes us able to crop the picture into the size we want by .size
-        modifier = Modifier
-            .size(width = 411.dp, height = 913.dp)
-
-    )
-}
-
-
 //The page title text box
 @Composable
 fun PageTitle(name: String, modifier: Modifier) {
@@ -163,14 +158,52 @@ fun PageTitle(name: String, modifier: Modifier) {
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-            color = Color.White
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
 
         )
     )
 }
 
 
+
+
+@Composable
+fun PlantImage(url: String, modifier: Modifier = Modifier) {
+    val boxModifier = Modifier
+        .offset(x = 70.dp, y = 100.dp) // Adjust position of the frame and image
+    Box(
+        modifier = boxModifier
+    ) {
+        // Frame with shadow
+        Box(
+            modifier = Modifier
+                .size(width = 220.dp, height = 220.dp) // Frame size slightly larger than the image
+                .clip(RoundedCornerShape(16.dp)) // Rounded corners for the frame
+                .background(Color.White) // Frame background color
+                .shadow(
+                    elevation = 8.dp, // Shadow size
+                    shape = RoundedCornerShape(16.dp), // Match the shape of the frame
+                    ambientColor = Color.Gray.copy(alpha = 0.6f), // Shadow color
+                    spotColor = Color.Black.copy(alpha = 0.3f)
+                )
+        )
+
+        // Plant image inside the frame
+        AsyncImage(
+            model = url,
+            contentDescription = "PlantImage",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(width = 200.dp, height = 200.dp) // Adjust height as needed
+                .clip(RoundedCornerShape(12.dp)) // Match the shape but slightly smaller for padding
+        )
+    }
+}
+
+
+
+/*
 @Composable
 fun PlantImage(url: String, modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
@@ -187,20 +220,19 @@ fun PlantImage(url: String, modifier: Modifier) {
         )
     }
 }
-
+*/
 
 
 //Information image
 @Composable
-fun InformationImage(url: String, modifier: Modifier) {
+fun InformationImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
         .offset(x = 50.dp, y = 340.dp)
     Box(
         modifier = boxModifier
     ) {
-        AsyncImage(
-            model = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXye4JJDMVlIFZm6MDBiQLabIMtHhGQjNguw&s",
-            //painter = painterResource(id = R.drawable.potato),
+        Image(
+            painter = painterResource(id = R.drawable.book),
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
@@ -217,7 +249,6 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 340.dp)
-            .background(Color.White)
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -232,7 +263,8 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 12.sp,
             fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Serif
+            fontFamily = FontFamily.Default,
+            color = Color.DarkGray
         )
     )
     }
@@ -240,15 +272,14 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
 
 //Watering amount image
 @Composable
-fun WaterCanImage(url: String, modifier: Modifier) {
+fun WaterCanImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
         .offset(x = 50.dp, y = 520.dp)
     Box(
         modifier = boxModifier
     ) {
-        AsyncImage(
-            model = "https://cdn.create.vista.com/api/media/small/249600986/stock-vector-blue-watering-can-icon-sign-flat-style-design-vector-illustration",
-            //painter = painterResource(id = R.drawable.potato),
+        Image(
+            painter = painterResource(id = R.drawable.watercan),
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
@@ -256,7 +287,6 @@ fun WaterCanImage(url: String, modifier: Modifier) {
 
         )
     }
-
 }
 
 
@@ -267,8 +297,8 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 520.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -283,7 +313,8 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
@@ -292,15 +323,14 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
 
 //Sun image to show how much sun the plant needs
 @Composable
-fun SunImage(url: String, modifier: Modifier) {
+fun SunImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
         .offset(x = 50.dp, y = 610.dp)
     Box(
         modifier = boxModifier
     ) {
-        AsyncImage(
-            model = "https://static.vecteezy.com/system/resources/previews/007/956/515/non_2x/animated-sun-icon-in-white-background-vector.jpg",
-            //painter = painterResource(id = R.drawable.potato),
+        Image(
+            painter = painterResource(id = R.drawable.sun),
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
@@ -317,8 +347,8 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 610.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -333,7 +363,8 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
@@ -342,7 +373,7 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
 
 //Grade scale image to show if its easy or hard
 @Composable
-fun GradeImage(url: String, modifier: Modifier) {
+fun GradeImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
         .offset(x = 50.dp, y = 430.dp)
     val imageModifierGrade = Modifier
@@ -352,9 +383,8 @@ fun GradeImage(url: String, modifier: Modifier) {
     Box(
         modifier = boxModifier
     ) {
-        AsyncImage(
-            model = "https://images.pond5.com/low-risk-gauge-level-animation-footage-236417204_iconl.jpeg",
-            //painter = painterResource(id = R.drawable.potato),
+        Image(
+            painter = painterResource(id = R.drawable.grade),
             contentDescription = "grade Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
@@ -372,8 +402,8 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
             .offset(x = 140.dp, y = 430.dp)
-            .background(Color.White)
-            .border(BorderStroke(1.dp, Color.Black))
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
@@ -388,7 +418,8 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Serif
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
             )
         )
     }
