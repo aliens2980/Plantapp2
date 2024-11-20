@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.plantapp2.Data.LocalPlant
-
+import com.example.plantapp2.Data.generateSamplePlants
 
 class MainPlantDragViewModel : ViewModel() {
     private val _localPlants = MutableLiveData<List<LocalPlant>>()
@@ -14,14 +14,18 @@ class MainPlantDragViewModel : ViewModel() {
     val favoritePlants: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> plant.isFavorite } }
     val compatiblePlants: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> !plant.isFavorite } }
 
-    private val _showFavoritePlants = MutableLiveData(true) // Default to showing favorite plants
+    private val _showFavoritePlants = MutableLiveData(true)
     val showFavoritePlants: LiveData<Boolean> = _showFavoritePlants
+
+    init {
+        populatePlants()
+    }
+
+    private fun populatePlants() {
+        _localPlants.value = generateSamplePlants()
+    }
 
     fun togglePlantList(showFavorites: Boolean) {
         _showFavoritePlants.value = showFavorites
-    }
-
-    fun updateLocalPlants(newPlants: List<LocalPlant>) {
-        _localPlants.value = newPlants
     }
 }

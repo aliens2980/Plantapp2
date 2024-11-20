@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import com.example.plantapp2.R
 
 
-@Composable
 fun generateSamplePlants(): List<LocalPlant> {
     return listOf(
         LocalPlant(name = "Rose", image = R.drawable.ic_launcher_foreground, isFavorite = false, size = 1, compatiblePlants = listOf("Lavender", "Sunflower")),
