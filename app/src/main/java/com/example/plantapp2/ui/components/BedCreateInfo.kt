@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun BedCreationInfo() {
     var bedLength by remember { mutableStateOf("") }
-    var bedHeight by remember { mutableStateOf("") }
+    var bedWidth by remember { mutableStateOf("") }
 
     Scaffold(
         modifier = Modifier.fillMaxWidth(),
@@ -52,7 +52,7 @@ fun BedCreationInfo() {
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .padding(bottom = 40.dp)
+                    .padding(top = 50.dp)
                     .fillMaxWidth(), // Ensure the Box fills the width of the screen
                 contentAlignment = Alignment.Center // Align content within the Box
             ) {
@@ -72,7 +72,7 @@ fun BedCreationInfo() {
                             }
                         },
                         placeholder = {
-                            Text(text = "Bed length")
+                            Text(text = "Bed length in cm")
                         },
                         modifier = Modifier
                             .weight(1f) // Distribute space evenly between TextFields
@@ -81,15 +81,15 @@ fun BedCreationInfo() {
                     )
 
                     TextField(
-                        value = bedHeight,
+                        value = bedWidth,
                         onValueChange = { input ->
                             // Allow only numbers
                             if (input.all { it.isDigit() }) {
-                                bedHeight = input
+                                bedWidth = input
                             }
                         },
                         placeholder = {
-                            Text(text = "Bed length")
+                            Text(text = "Bed width in cm")
                         },
                         modifier = Modifier
                             .weight(1f) // Distribute space evenly between TextFields
@@ -97,6 +97,18 @@ fun BedCreationInfo() {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) // Set numeric keyboard
                     )
                 }
+                Text(
+                    modifier = Modifier.padding(top = 90.dp),
+                    text = "Length: $bedLength cm.    Width: $bedWidth cm",
+                    color = Color.Black,
+                    fontSize = 16.sp
+                )
+                Text(
+                    modifier = Modifier.padding(top = 190.dp, start = 16.dp, end = 16.dp),
+                    text = "If your bed is not rectangular, you can change the shape below. Otherwise, give it a name and save it!",
+                    color = Color.Black,
+                    fontSize = 16.sp
+                )
             }
         }
     )
