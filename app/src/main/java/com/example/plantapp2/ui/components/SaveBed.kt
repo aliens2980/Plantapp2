@@ -26,4 +26,25 @@ fun SaveBed() {
                         .align(Alignment.CenterHorizontally),
                 )
                 Button(
-        
+                    onClick = { /* Handle button click */ },
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(Color.Green),
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Save",
+                        color = Color.Black
+                    )
+
+                }
+            }
+        }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SaveBedPreview() {
+    SaveBed()
+}
