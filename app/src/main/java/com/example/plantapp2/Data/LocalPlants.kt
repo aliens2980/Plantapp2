@@ -22,4 +22,10 @@ data class Bed(
 
 data class CellPlant(
     val localPlant: LocalPlant,
- 
+    val placeInBed: PlaceInBed
+)
+
+data class PlaceInBed(
+    val row: Int,
+    val column: Int
+)

@@ -47,4 +47,15 @@ fun FavoritePlantCard(plant: LocalPlant) {
                     .clip(RoundedCornerShape(8.dp))
             )
             // Spacer to add vertical spacing between image and text
-       
+            Spacer(modifier = Modifier.height(8.dp))
+            // Plant Name
+            Text(
+                text = plant.name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
