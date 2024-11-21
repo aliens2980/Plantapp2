@@ -26,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.plantapp2.Data.Datasource
-import com.example.plantapp2.Models.affirmation
+import com.example.plantapp2.Models.Affirmation
 
 
 // Do: This function is a descriptive PascalCased noun as a visual UI element
@@ -48,7 +48,7 @@ fun AffirmationsApp(modifier: Modifier = Modifier, navController: NavController)
     }
 }
 @Composable
-fun AffirmationsList(affirmationLIST: List<affirmation>, navController: NavController, modifier: Modifier = Modifier) {
+fun AffirmationsList(affirmationLIST: List<Affirmation>, navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(affirmationLIST) { affirmation ->
             AffirmationCard(
@@ -64,7 +64,7 @@ fun AffirmationsList(affirmationLIST: List<affirmation>, navController: NavContr
 }
 
 @Composable
-fun AffirmationCard(affirmation: affirmation, modifier: Modifier = Modifier){
+fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier){
     Card(modifier = modifier){
         Column {
             Image(
