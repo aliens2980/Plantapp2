@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -35,6 +34,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.ui.theme.Bed
 import com.example.plantapp2.ui.theme.CenteredBed
 import com.example.plantapp2.ui.theme.PlantInfoPage
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
 
@@ -142,4 +144,10 @@ class MainActivity : ComponentActivity() {
             CenteredBed(length = 240, width = 360)
         }
     }
+}/*
+            val navController = rememberNavController()
+            PlantNavGraph(navController = navController)
+        }
+    }
 }
+*/
