@@ -31,14 +31,13 @@ fun MainDragPlantComponent(viewModel: MainPlantDragViewModel) {
         // Toggle Buttons
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(
                 onClick = { viewModel.togglePlantList(true) },
                 colors = ButtonDefaults.buttonColors(
-                    if (showFavoritePlants) Color.Blue else Color.Gray
+                    if (showFavoritePlants) Color.Green else Color.LightGray
                 )
             ) {
                 Text("Favorite Plants")
@@ -46,7 +45,7 @@ fun MainDragPlantComponent(viewModel: MainPlantDragViewModel) {
             Button(
                 onClick = { viewModel.togglePlantList(false) },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (!showFavoritePlants) Color.Blue else Color.Gray
+                    containerColor = if (!showFavoritePlants) Color.Green else Color.LightGray
                 )
             ) {
                 Text("Compatible Plants")
@@ -88,4 +87,16 @@ fun CompatiblePlantsScroll(plants: List<LocalPlant>) {
             .fillMaxWidth()
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizont
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ){
+        items(plants) { plant ->
+            FavoritePlantCard(plant)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainDragPlantComponentPreview() {
+    MainDragPlantComponent(viewModel = MainPlantDragViewModel())
+}

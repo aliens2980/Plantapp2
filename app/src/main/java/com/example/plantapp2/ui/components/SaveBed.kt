@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,29 +17,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SaveBed() {
+fun SaveBed(viewModel: BedCreationViewModel) {
+    val bedName by viewModel.bedName.collectAsState()
+
     Scaffold(
         modifier = Modifier.fillMaxWidth(),
         content = { innerPadding ->
-            Column {
-                Text(
-                    text = "Name and save bed",
+            Column(modifier = Modifier.padding(innerPadding)) {
+                TextField(
+                    value = bedName,
+                    onValueChange = { viewModel.updateBedName(it) },
+                    placeholder = { Text("Enter bed name") },
                     modifier = Modifier
-                        .padding(innerPadding)
-                        .align(Alignment.CenterHorizontally),
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 )
                 Button(
-                    onClick = { /* Handle button click */ },
+                    onClick = { viewModel.saveBed() },
                     colors = androidx.compose.material3.ButtonDefaults.buttonColors(Color.Green),
                     modifier = Modifier
-                        .padding(innerPadding)
                         .padding(16.dp)
+                        .align(Alignment.CenterHorizontally)
                 ) {
-                    Text(
-                        text = "Save",
-                        color = Color.Black
-                    )
-
+                    Text("Save", color = Color.Black)
                 }
             }
         }
@@ -46,5 +49,5 @@ fun SaveBed() {
 @Preview(showBackground = true)
 @Composable
 fun SaveBedPreview() {
-    SaveBed()
+    SaveBed(viewModel = BedCreationViewModel())
 }

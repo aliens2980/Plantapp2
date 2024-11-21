@@ -98,7 +98,6 @@ class MainActivity : ComponentActivity() {
                                             imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
                                             contentDescription = item.title
                                         )
-
                                     }
                                 )
                             }
