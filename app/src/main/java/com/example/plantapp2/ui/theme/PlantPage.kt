@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -16,7 +17,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
@@ -54,9 +58,6 @@ import kotlinx.coroutines.tasks.await
  * @param PlantPage
  * @return the information page of a plant
  */
-
-
-
 
 
 
@@ -100,7 +101,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.LightGray)
+            .background(Color(0xFFDAD7CD)) //the background color of the page
 
     ) {
         //Our background
@@ -146,17 +147,16 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 }
 
 
-
-//The page title text box
+//The name of the plant
 @Composable
 fun PageTitle(name: String, modifier: Modifier) {
     val textBoxModifier = Modifier
-        .offset(x = 70.dp, y = 65.dp)   //to move the text box
+        .offset(x = 50.dp, y = 300.dp)   //to move the text box
     Text(
-        text = "Name: $name",
+        text = " $name",
         modifier = textBoxModifier,
         style = TextStyle(   //to edit and customize the text inside
-            fontSize = 24.sp,
+            fontSize = 35.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Default,
             color = Color.DarkGray
@@ -170,36 +170,34 @@ fun PageTitle(name: String, modifier: Modifier) {
 
 @Composable
 fun PlantImage(url: String, modifier: Modifier = Modifier) {
-    val boxModifier = Modifier
-        .offset(x = 70.dp, y = 100.dp) // Adjust position of the frame and image
-    Box(
-        modifier = boxModifier
-    ) {
-        // Frame with shadow
+       // Frame with shadow
         Box(
             modifier = Modifier
-                .size(width = 220.dp, height = 220.dp) // Frame size slightly larger than the image
-                .clip(RoundedCornerShape(16.dp)) // Rounded corners for the frame
-                .background(Color.White) // Frame background color
+                .offset(x=70.dp, y = 70.dp)  //its exact position
+                .size(220.dp) // Frame size slightly larger than the image
+                .clip(CircleShape) // Rounded corners for the frame
+                .background(Color(0xFF344e41)) // Frame background color
                 .shadow(
                     elevation = 8.dp, // Shadow size
-                    shape = RoundedCornerShape(16.dp), // Match the shape of the frame
+                    shape = CircleShape, // Match the shape of the frame
                     ambientColor = Color.Gray.copy(alpha = 0.6f), // Shadow color
                     spotColor = Color.Black.copy(alpha = 0.3f)
-                )
-        )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
 
-        // Plant image inside the frame
-        AsyncImage(
-            model = url,
-            contentDescription = "PlantImage",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(width = 200.dp, height = 200.dp) // Adjust height as needed
-                .clip(RoundedCornerShape(12.dp)) // Match the shape but slightly smaller for padding
-        )
+            // Plant image inside the frame
+            AsyncImage(
+                model = url,
+                contentDescription = "PlantImage",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(width = 200.dp, height = 200.dp) // Adjust height as needed
+                    .clip(CircleShape) // Match the shape but slightly smaller for padding
+            )
+        }
     }
-}
+
 
 
 
@@ -434,7 +432,7 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 
 //Like plant to list of favourites
 @Composable
-fun LikeImage() {
+fun LikeImage(modifier: Modifier = Modifier) {
     var isSelected by remember { mutableStateOf(false) }
     val boxModifier = Modifier   //how to move the box with the like image around
         .offset(x = 280.dp, y = 30.dp)
