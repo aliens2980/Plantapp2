@@ -24,6 +24,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -36,12 +39,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,6 +74,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     // State for storing the image URL and loading state
     var imageUrl by remember { mutableStateOf<String?>(null) }
     var name by remember { mutableStateOf<String?>(null) }
+    var nameLatin by remember { mutableStateOf<String?>(null) }   //FIX IT UP ON FIREBASE
     var info by remember { mutableStateOf<String?>(null) }
     var water by remember { mutableStateOf<Int?>(null) }
     var gradeText by remember { mutableStateOf<String?>(null) }
@@ -85,10 +93,11 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
                 .await()
             imageUrl = result.getString("img") // Fetch the URL field from Firestore
             name = result.getString("name") //Fetch name from Firestore
+            nameLatin = result.getString("nameLatin") //fetch latin name from Firestore
             info = result.getString("info") //Fetch info from Firestore
             water = result.getLong("water")?.toInt()
             gradeText = result.getString("gradeText")
-            sun = result.getLong("sun")?.toInt()
+            sun = result.getLong("sun")?.toInt()  //chage to best matches
         } catch (e: Exception) {
             errorMessage = "Failed to load image: ${e.message}" // Capture error message
         } finally {
@@ -109,6 +118,10 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
         //Plant name
         when { name != null -> { PageTitle(name = name!!, modifier = Modifier.align(Alignment.TopCenter)) }}
+
+
+        //Plant name latin
+        when { nameLatin != null -> { PageTitleLatin(nameLatin = nameLatin!!, modifier = Modifier.align(Alignment.TopCenter)) }}
 
         //Plant photo
         when { imageUrl != null -> { PlantImage(url = imageUrl!!, modifier = Modifier.align(Alignment.TopCenter)) }}
@@ -151,7 +164,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 @Composable
 fun PageTitle(name: String, modifier: Modifier) {
     val textBoxModifier = Modifier
-        .offset(x = 50.dp, y = 300.dp)   //to move the text box
+        .offset(x = 20.dp, y = 260.dp)   //to move the text box
     Text(
         text = " $name",
         modifier = textBoxModifier,
@@ -163,69 +176,84 @@ fun PageTitle(name: String, modifier: Modifier) {
 
         )
     )
+
 }
 
 
+//The name of the plant
+@Composable
+fun PageTitleLatin(nameLatin: String, modifier: Modifier) {
+    val textBoxModifier = Modifier
+        .offset(x = 20.dp, y = 299.dp)   //to move the text box
+    Text(
+        text = " $nameLatin",
+        modifier = textBoxModifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 20.sp,
+            fontFamily = FontFamily.Cursive,
+            color = Color.DarkGray
+
+        )
+    )
+
+}
 
 
 @Composable
 fun PlantImage(url: String, modifier: Modifier = Modifier) {
-       // Frame with shadow
+    Box(
+        modifier = Modifier
+            .offset(x = 150.dp, y = 30.dp) // Position the entire component
+            .size(240.dp) // Outer frame size (largest border)
+            .clip(CircleShape) // Ensures the shape is circular
+            .background(Color.Transparent) // Transparent background to ensure proper layering
+            .drawBehind {
+                // Draw the dotted border
+                drawCircle(
+                    color = Color(0xFF344e41), // Dotted border color
+                    radius = size.minDimension / 2, // Use half the size for a perfect circle
+                    style = Stroke(
+                        width = 4.dp.toPx(), // Dotted border thickness
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f) // Dotted effect
+                    )
+                )
+            },
+        contentAlignment = Alignment.Center // Ensures all child elements are centered
+    ) {
+        // Solid border with shadow
         Box(
             modifier = Modifier
-                .offset(x=70.dp, y = 70.dp)  //its exact position
-                .size(220.dp) // Frame size slightly larger than the image
-                .clip(CircleShape) // Rounded corners for the frame
-                .background(Color(0xFF344e41)) // Frame background color
+                .size(220.dp) // Slightly smaller for the solid border
+                .clip(CircleShape) // Ensures the solid border is circular
+                .background(Color(0xFF344e41)) // Solid border color
                 .shadow(
-                    elevation = 8.dp, // Shadow size
-                    shape = CircleShape, // Match the shape of the frame
-                    ambientColor = Color.Gray.copy(alpha = 0.6f), // Shadow color
+                    elevation = 8.dp, // Shadow for the solid border
+                    shape = CircleShape,
+                    ambientColor = Color.Gray.copy(alpha = 0.6f),
                     spotColor = Color.Black.copy(alpha = 0.3f)
                 ),
             contentAlignment = Alignment.Center
         ) {
-
-            // Plant image inside the frame
+            // Plant image inside the solid border
             AsyncImage(
                 model = url,
-                contentDescription = "PlantImage",
+                contentDescription = "Plant Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(width = 200.dp, height = 200.dp) // Adjust height as needed
-                    .clip(CircleShape) // Match the shape but slightly smaller for padding
+                    .size(200.dp) // Image size
+                    .clip(CircleShape) // Circular clipping for the image
             )
         }
     }
-
-
-
-
-/*
-@Composable
-fun PlantImage(url: String, modifier: Modifier) {
-    val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 70.dp, y = 100.dp)
-    Box(
-        modifier = boxModifier
-    ) {
-        //NEW DATABASE IMAGE
-        AsyncImage(
-            model = url,
-            contentDescription = "PlantImage",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(width = 200.dp, height = 200.dp) // Adjust height as needed
-        )
-    }
 }
-*/
 
 
-//Information image
+
+//Information image about the best matched plants
 @Composable
 fun InformationImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 340.dp)
+        .offset(x = 20.dp, y = 360.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -234,26 +262,26 @@ fun InformationImage(modifier: Modifier) {
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
-                .size(width = 70.dp, height = 70.dp)
+                .size(width = 45.dp, height = 45.dp)
 
         )
     }
 }
 
 
-//Information text box
+//Information text box about the best matched plants
 @Composable
 fun InfoText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
-            .offset(x = 140.dp, y = 340.dp)
+            .offset(x = 65.dp, y =355.dp)
             .padding(8.dp)
     ) {
         val maxWidth = 200.dp
         val maxHeight = maxHeight
 
     Text(
-        text = "Information about the: $information",
+        text = " $information",
         modifier = Modifier
             .widthIn(max = maxWidth)
             .heightIn(max = maxHeight)
@@ -272,7 +300,7 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
 @Composable
 fun WaterCanImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 520.dp)
+        .offset(x = 15.dp, y = 510.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -281,7 +309,7 @@ fun WaterCanImage(modifier: Modifier) {
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
-                .size(width = 70.dp, height = 70.dp)
+                .size(width = 50.dp, height = 50.dp)
 
         )
     }
@@ -294,7 +322,7 @@ fun WaterCanImage(modifier: Modifier) {
 fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
-            .offset(x = 140.dp, y = 520.dp)
+            .offset(x = 65.dp, y = 520.dp)
             //.background(Color.White)
             //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
@@ -323,7 +351,7 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
 @Composable
 fun SunImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 610.dp)
+        .offset(x = 20.dp, y = 600.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -332,7 +360,7 @@ fun SunImage(modifier: Modifier) {
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
-                .size(width = 70.dp, height = 70.dp)
+                .size(width = 45.dp, height = 45.dp)
 
         )
     }
@@ -344,7 +372,7 @@ fun SunImage(modifier: Modifier) {
 fun SunText(information: Int, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
-            .offset(x = 140.dp, y = 610.dp)
+            .offset(x = 65.dp, y = 600.dp)
             //.background(Color.White)
             //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
@@ -353,7 +381,7 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
         val maxHeight = maxHeight
 
         Text(
-            text = "Must receive sun: $information",
+            text = "Must receive sun (hours): $information",
             modifier = Modifier
                 .widthIn(max = maxWidth)
                 .heightIn(max = maxHeight)
@@ -373,7 +401,7 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
 @Composable
 fun GradeImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
-        .offset(x = 50.dp, y = 430.dp)
+        .offset(x = 20.dp, y = 440.dp)
     val imageModifierGrade = Modifier
         .size(width = 70.dp, height = 70.dp)
         .border(BorderStroke(1.dp, Color.Black))
@@ -386,7 +414,7 @@ fun GradeImage(modifier: Modifier) {
             contentDescription = "grade Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
-                .size(width = 70.dp, height = 70.dp)
+                .size(width = 45.dp, height = 45.dp)
 
         )
     }
@@ -399,7 +427,7 @@ fun GradeImage(modifier: Modifier) {
 fun GradeText(information: String, modifier: Modifier = Modifier) {
     BoxWithConstraints(
         modifier = modifier
-            .offset(x = 140.dp, y = 430.dp)
+            .offset(x = 65.dp, y = 440.dp)
             //.background(Color.White)
             //.border(BorderStroke(1.dp, Color.Black))
             .padding(8.dp)
@@ -430,43 +458,47 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 }
 
 
-//Like plant to list of favourites
 @Composable
-fun LikeImage(modifier: Modifier = Modifier) {
-    var isSelected by remember { mutableStateOf(false) }
-    val boxModifier = Modifier   //how to move the box with the like image around
-        .offset(x = 280.dp, y = 30.dp)
-    val imageModifierLike = Modifier
-        .size(width = 70.dp, height = 70.dp)
-    Box(
-        modifier = boxModifier.clickable{
-                isSelected = toggleLikeState(isSelected)
-            }
-    ) {
-        if(isSelected)
-            Image(
-                painter = painterResource(id = R.drawable.like4),
-                contentDescription = "Like Image Filled",
-                contentScale = ContentScale.FillWidth,
-                modifier = imageModifierLike,
-            ) else
-            Image(
-                painter = painterResource(id = R.drawable.like3),
-                contentDescription = "Like Image Empty",
-                contentScale = ContentScale.FillWidth,
-                modifier = imageModifierLike
+fun LikeImage(modifier : Modifier = Modifier){
+    var isSelect by remember { mutableStateOf(false) }
+    val iconModifier = Modifier
+        .size(50.dp)
+        .clickable { isSelect = !isSelect }
 
+    Box(modifier = Modifier) {
+        if (isSelect) {
+            Icon(
+                imageVector = Icons.Filled.Favorite,
+                contentDescription = "Like",
+                tint = Color.Red,
+                modifier = Modifier
+                    .size(50.dp)
+                    .align(Alignment.TopEnd)
+                    .offset(x = 290.dp, y = 270.dp)
+                    .clickable { isSelect = !isSelect }
             )
-
+        } else {
+            Icon(
+                imageVector = Icons.Outlined.FavoriteBorder,
+                contentDescription = "Unlike",
+                tint = Color.DarkGray,
+                modifier = Modifier
+                    .size(50.dp)
+                    .align(Alignment.TopEnd)
+                    .offset(x = 290.dp, y = 270.dp)
+                    .clickable { isSelect = !isSelect }
+            )
+        }
     }
-
 }
 
 
 @Composable
 fun BackButton(navController: NavController) {
     Box (
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+
     ) {
         IconButton(
             onClick = { navController.popBackStack() },
@@ -477,8 +509,10 @@ fun BackButton(navController: NavController) {
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
+                tint = Color.DarkGray,
                 contentDescription = "Go Back",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(100.dp),
+
             )
         }
     }
