@@ -1,4 +1,4 @@
-package com.example.plantapp2.navigation.components
+package com.example.plantapp2.ui.theme.FilterAndSearch
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

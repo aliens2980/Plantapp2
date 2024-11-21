@@ -1,4 +1,4 @@
-package com.example.plantapp2.navigation.components
+package com.example.plantapp2.ui.theme.FilterAndSearch
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
