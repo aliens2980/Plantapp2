@@ -1,18 +1,19 @@
-package com.example.plantapp2.ui.components
+package com.example.plantapp2.ui.components.bedChooser
+
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.example.plantapp2.Data.Bed
 import com.example.plantapp2.Data.LocalPlant
 import com.example.plantapp2.Data.generateSamplePlants
 
-class MainPlantDragViewModel : ViewModel() {
-    private val _localPlants = MutableLiveData<List<LocalPlant>>()
-    val localPlants: LiveData<List<LocalPlant>> = _localPlants
+class ChoosePlantViewModel : ViewModel() {
+    private val _localBed = MutableLiveData<List<Bed>>()
+    private val localPlants: LiveData<List<LocalPlant>> = _localPlants
 
-    val favoritePlants: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> plant.isFavorite } }
-    val compatiblePlants: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> !plant.isFavorite } }
+    val bedList: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> plant.isFavorite } }
 
     private val _showFavoritePlants = MutableLiveData(true)
     val showFavoritePlants: LiveData<Boolean> = _showFavoritePlants
@@ -29,4 +30,3 @@ class MainPlantDragViewModel : ViewModel() {
         _showFavoritePlants.value = showFavorites
     }
 }
-

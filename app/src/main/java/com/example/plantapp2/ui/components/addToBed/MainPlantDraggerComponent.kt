@@ -1,4 +1,4 @@
-package com.example.plantapp2.ui.components
+package com.example.plantapp2.ui.components.addToBed
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,7 +51,7 @@ fun MainDragPlantComponent(viewModel: MainPlantDragViewModel) {
                 Text("Compatible Plants")
             }
         }
-        if (favoritePlants.size == 0) {
+        if (favoritePlants.isEmpty()) {
             Text(text = "Find your favorite plants in the plant library! When a plant is added as a favorite, it will appear here. Then you can start adding plants to the bed.")
         }
 

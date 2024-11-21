@@ -1,9 +1,10 @@
-package com.example.plantapp2.ui.components
+package com.example.plantapp2.ui.components.createBed
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -17,17 +18,25 @@ fun MainBedCreationScreen(viewModel: BedCreationViewModel = viewModel()) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         content = { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize() // Ensure the Column takes the full size of the screen
+                    .padding(innerPadding)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween // Distribute components vertically
+            ) {
+                // BedCreationInfo at the top
                 BedCreationInfo(viewModel = viewModel)
-                Spacer(modifier = Modifier.height(16.dp))
-                SaveBed(viewModel = viewModel)
+
             }
         }
     )
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun MainBedCreationScreenPreview() {
-    MainBedCreationScreen()
+    val mockViewModel = BedCreationViewModel(/* provide any required mocked dependencies here */)
+    MainBedCreationScreen(viewModel = mockViewModel)
 }

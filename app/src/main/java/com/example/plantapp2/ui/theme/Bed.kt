@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
     Box(
-        modifier = Modifier.fillMaxSize(), // Outer Box to take up full screen
+        modifier = Modifier.fillMaxWidth(), // Outer Box to take up full screen
         contentAlignment = Alignment.Center // Align content in the center
     ) {
         Bed(length = length, width = width, gridSize = gridSize)
