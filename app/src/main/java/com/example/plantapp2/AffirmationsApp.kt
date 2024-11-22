@@ -65,13 +65,10 @@ fun AffirmationsApp(modifier: Modifier = Modifier, navController: NavController)
             )
     ) {
         if (isLoading) {
-            // Show a loading indicator
             Text(text = "Loading...")
         } else if (errorMessage != null) {
-            // Show an error message
             Text(text = errorMessage ?: "Unknown error")
         } else {
-            // Show the list of affirmations
             AffirmationsList(
                 affirmationLIST = affirmations,
                 navController = navController
