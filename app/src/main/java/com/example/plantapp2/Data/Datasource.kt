@@ -3,7 +3,7 @@ package com.example.plantapp2.Data
 import com.example.plantapp2.Models.Affirmation
 import com.example.plantapp2.R
 
-
+/**
 class Datasource() {
     fun loadAffirmations(): List<Affirmation> {
         return listOf<Affirmation>(
@@ -20,3 +20,4 @@ class Datasource() {
         )
     }
 }
+    */

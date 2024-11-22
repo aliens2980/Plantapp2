@@ -1,5 +1,4 @@
 package com.example.plantapp2
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -17,34 +16,64 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.plantapp2.Data.Datasource
+import coil.compose.AsyncImage
 import com.example.plantapp2.Models.Affirmation
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 
 // Do: This function is a descriptive PascalCased noun as a visual UI element
 @Composable
 fun AffirmationsApp(modifier: Modifier = Modifier, navController: NavController) {
     val layoutDirection = LocalLayoutDirection.current
+    var affirmations by remember { mutableStateOf<List<Affirmation>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val firestore = FirebaseFirestore.getInstance()
+
+    LaunchedEffect(Unit) {
+        try {
+            val result = firestore.collection("plants").get().await()
+            val fetchedAffirmations =
+                result.documents.mapNotNull { it.toObject(Affirmation::class.java) }
+            affirmations = fetchedAffirmations
+        } catch (e: Exception) {
+            errorMessage = "Failed to load affirmations: ${e.message}"
+        } finally {
+            isLoading = false
+        }
+    }
+
     Surface(
         modifier = modifier
             .statusBarsPadding()
             .padding(
-                start = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
-                end = WindowInsets.safeDrawing.asPaddingValues().calculateStartPadding(layoutDirection),
+                start = WindowInsets.safeDrawing.asPaddingValues()
+                    .calculateStartPadding(layoutDirection),
+                end = WindowInsets.safeDrawing.asPaddingValues()
+                    .calculateStartPadding(layoutDirection),
             )
     ) {
-        AffirmationsList(
-            affirmationLIST = Datasource().loadAffirmations(),
-            navController = navController
-        )
+        if (isLoading) {
+            Text(text = "Loading...")
+        } else if (errorMessage != null) {
+            Text(text = errorMessage ?: "Unknown error")
+        } else {
+            AffirmationsList(
+                affirmationLIST = affirmations,
+                navController = navController
+            )
+        }
     }
 }
 @Composable
@@ -67,16 +96,16 @@ fun AffirmationsList(affirmationLIST: List<Affirmation>, navController: NavContr
 fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier){
     Card(modifier = modifier){
         Column {
-            Image(
-                painter = painterResource(affirmation.imageResourceId),
-                contentDescription = stringResource(affirmation.stringResourceId),
+            AsyncImage(
+                model = affirmation.img,
+                contentDescription = affirmation.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp),
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = LocalContext.current.getString(affirmation.stringResourceId),
+                text = affirmation.name,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineSmall
             )
