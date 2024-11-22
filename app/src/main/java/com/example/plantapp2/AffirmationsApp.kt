@@ -51,6 +51,7 @@ fun AffirmationsApp(modifier: Modifier = Modifier, navController: NavController)
             errorMessage = "Failed to load affirmations: ${e.message}"
         } finally {
             isLoading = false
+
         }
     }
 
