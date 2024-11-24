@@ -56,7 +56,8 @@ fun Plantapp2Theme(content: @Composable () -> Unit) {
     MaterialTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = Color(0xFFDAD7CD)
+            //color = MaterialTheme.colorScheme.background
         ) {
             content()
         }
