@@ -105,6 +105,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(Color(0xFFDAD7CD)) //the background color of the page
 
     ) {

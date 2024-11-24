@@ -1,5 +1,6 @@
 package com.example.plantapp2.ui.theme
 
+import android.os.Bundle
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
@@ -26,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -44,6 +47,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -70,30 +74,71 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             .verticalScroll(rememberScrollState()) // Main vertical scrolling for the page
             .background(Color(0xFFDAD7CD))
     ) {
-        Spacer(modifier = Modifier.height(90.dp)) // Space at the top
 
-        // Top Section: Bed
+        Spacer(modifier = Modifier.height(1.dp)) // Space at the top
+
+        //The veggie image and title
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+
+        ){
+            BedPageTitle(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+
+            )
+            BundleDeco(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+
+            )
+        }
+
+
+
+        //Top section: Title
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp) // Add horizontal padding
+        ) {
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        }
+
+
+        // Top Section: Garden Bed
         Box(
             modifier = Modifier
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center // Center the grid horizontally
         ) {
+
+
             Bed(length = length, width = width, gridSize = gridSize)
         }
 
         Spacer(modifier = Modifier.height(30.dp)) // Space between sections
 
-        // Middle Section: Title and other components
+
+        // Middle Section: Favourites title and other components
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp) // Add horizontal padding
         ) {
             DottedLine()
+            Spacer(modifier = Modifier.height(1.dp))
+            GreenLine()
             Spacer(modifier = Modifier.height(10.dp))
             FavouritesTitle(modifier = Modifier.padding(start = 16.dp)) // Slight offset for alignment
             Spacer(modifier = Modifier.height(10.dp))
+            GreenLine()
+            Spacer(modifier = Modifier.height(2.dp))
             DottedLine()
+
             Spacer(modifier = Modifier.height(300.dp)) // Space for extra content
             testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image
         }
@@ -116,6 +161,8 @@ fun Bed(length: Int, width: Int, gridSize: Int = 60, viewModel: GridViewModel = 
             .padding(6.dp)  //adds the space between the bed and the outer walls of the page
             //.background(color = brown)
             .testTag("Grid")
+            .clip(RoundedCornerShape(6.dp))
+            .shadow(8.dp, RoundedCornerShape(6.dp))
     )
     {
         // Draw the grid lines
@@ -192,11 +239,6 @@ fun GridCell(
 
 
 
-
-
-
-
-
 fun DrawScope.drawGridLines(gridSize: Int) {
     val step = gridSize.dp.toPx() // Convert grid size from dp to px
     val width = size.width
@@ -235,7 +277,7 @@ fun FavouritesTitle(modifier: Modifier) {
         style = TextStyle(   //to edit and customize the text inside
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Default,
+            fontFamily = FontFamily.Cursive,
             color = Color.DarkGray
 
         )
@@ -295,141 +337,52 @@ fun testImage(modifier: Modifier) {
 
 
 
-
-//UDKOMMENTERET GAMMEL KODE
-
-
-
-/*
-
-//Controls the entire setup of the page! Only alter the placements of things in this one!
 @Composable
-fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFDAD7CD))
-            .verticalScroll(rememberScrollState())
-    )
-    {
+fun BedPageTitle(modifier: Modifier) {
+        Text(
+            text = "My Garden",
+            modifier = modifier
+                .offset(x=10.dp, y=75.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 35.sp,
+                fontWeight = FontWeight.ExtraBold,
+                fontFamily = FontFamily.Default,
+                color = Color(0xFF344e41)
 
-        Column (
-            modifier = Modifier
-
-        ) {
-
-
-            //Top section
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Bed(length = length, width = width, gridSize = gridSize)
-
-            }
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-
-            //Middle section
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.CenterStart
-
-            ){
-                Column (
-                    modifier = Modifier.offset(x=10.dp, y=10.dp)
-                ) {
-                    DottedLine()
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    FavouritesTitle(
-                        modifier = Modifier
-                            .offset(x = 10.dp, y = 10.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    DottedLine()
-                }
-
-            }
-
-        }
-
-    }
-
-}
-
-*/
-
-
-/*
-@Composable
-fun DrawGridCells(numRows: Int, numColumns: Int, gridSize: Int, viewModel: GridViewModel) {
-    LazyColumn {
-        items(numRows) { rowIndex ->
-            LazyRow {
-                items(numColumns) { columnIndex ->
-                    // Get the clicked state from the ViewModel
-                    val isSelected = viewModel.gridState[rowIndex][columnIndex]
-
-                    GridCell(
-                        row = rowIndex,
-                        column = columnIndex,
-                        gridSize = gridSize,
-                        imageId =  R.drawable.dirt,  //remove if not working
-                        isSelected = isSelected) {
-                        // Toggle the state in the ViewModel when the cell is clicked
-                        viewModel.toggleCell(rowIndex, columnIndex)
-                    }
-                }
-            }
-        }
-    }
-}
-*/
-
-
-
-
-/*
-@Composable
-fun GridCell(
-    row: Int,
-    column: Int,
-    gridSize: Int,
-    imageId: Int,
-    isSelected: Boolean,
-    onClick: () -> Unit
-
-) {
-
-    Box(
-        modifier = Modifier
-            .size(gridSize.dp)
-            .background(if (isSelected) Color.Green else Color.Transparent)
-            .clickable { onClick() }
-            .testTag("Cell-$row-$column") // Add a unique tag for each cell
-    ) {
-        //image background for each cell (not ideal solution right now)
-        Image (
-            painter = painterResource(id = R.drawable.dirt),
-            contentDescription = "Grid cell image",
-            contentScale = ContentScale.FillHeight,
-            modifier = Modifier
-                .padding(0.dp)
-                .size(gridSize.dp-4.dp)
-                .fillMaxSize()
-                //.clipToBounds()
+            )
         )
-
-
     }
+
+
+
+
+@Composable
+fun GreenLine() {
+    Canvas (
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(4.dp)
+    ){
+        drawLine(
+            color = Color(0xFF344E41), // Green color for the line
+            start = androidx.compose.ui.geometry.Offset(0f, size.height / 2), // Start at the left
+            end = androidx.compose.ui.geometry.Offset(size.width, size.height / 2), // End at the right
+            strokeWidth = 4.dp.toPx() // Thickness of the line
+        )
+    }
+
+}
+
+@Composable
+fun BundleDeco(modifier: Modifier) {
+    Image(
+        painter = painterResource(id = R.drawable.bundle),
+        contentDescription = null,
+        modifier = Modifier
+            .size(140.dp)
+            .offset(x=210.dp, y=20.dp)
+    )
 }
 
 
- */
+
