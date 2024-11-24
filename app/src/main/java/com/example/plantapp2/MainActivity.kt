@@ -54,6 +54,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
+
             Plantapp2Theme {
                 CenteredBed(length = 240, width = 360)
 
@@ -137,6 +138,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
@@ -144,7 +148,7 @@ class MainActivity : ComponentActivity() {
             CenteredBed(length = 240, width = 360)
         }
     }
-}/*
+} /*
             val navController = rememberNavController()
             PlantNavGraph(navController = navController)
         }
