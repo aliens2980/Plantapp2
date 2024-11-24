@@ -92,6 +92,88 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     bottomBar = {
                         NavigationBar(
+                            containerColor = Color(0xFFDAD7CD)
+                        ) {
+                            items.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedItemIndex == index,
+                                    onClick = { selectedItemIndex = index },
+                                    label = { Text(text = item.title) },
+                                    icon = {
+                                        Icon(
+                                            imageVector = if (selectedItemIndex == index) item.selectedIcon else item.unselectedIcon,
+                                            contentDescription = item.title
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = if (selectedItemIndex == 0) "centeredBed" else "affirmations",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0xFFDAD7CD))
+                            .padding(innerPadding)
+                    ) {
+                        composable("centeredBed") {
+                            CenteredBed(length = 240, width = 360)
+                        }
+                        composable("affirmations") {
+                            AffirmationsApp(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = navController
+                            )
+                        }
+                        composable("plantPage") {
+                            PlantInfoPage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = navController
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+/*
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            Plantapp2Theme {
+                val navController = rememberNavController()
+                val items = listOf(
+                    BottomNavItem(
+                        title = "Home",
+                        selectedIcon = Icons.Filled.Home,
+                        unselectedIcon = Icons.Outlined.Home
+                    ),
+                    BottomNavItem(
+                        title = "Search",
+                        selectedIcon = Icons.Filled.Search,
+                        unselectedIcon = Icons.Outlined.Search
+                    ),
+                    BottomNavItem(
+                        title = "Settings",
+                        selectedIcon = Icons.Filled.Settings,
+                        unselectedIcon = Icons.Outlined.Settings
+                    )
+                )
+                var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar(
                             containerColor = Color(0xFFDAD7CD) // Match the background color
                         ) {
                             items.forEachIndexed { index, item ->
@@ -149,6 +231,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
+*/
 
 
