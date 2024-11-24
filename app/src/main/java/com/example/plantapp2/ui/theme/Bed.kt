@@ -115,8 +115,6 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center // Center the grid horizontally
         ) {
-
-
             Bed(length = length, width = width, gridSize = gridSize)
         }
 
@@ -317,7 +315,7 @@ fun DottedLine() {
 
 
 
-//Sun image to show how much sun the plant needs
+//Remove when favourites list is needed
 @Composable
 fun testImage(modifier: Modifier) {
     val boxModifier = Modifier   //how to move the box with the potato image around
@@ -347,7 +345,7 @@ fun BedPageTitle(modifier: Modifier) {
                 fontSize = 35.sp,
                 fontWeight = FontWeight.ExtraBold,
                 fontFamily = FontFamily.Default,
-                color = Color(0xFF344e41)
+                color = Color.DarkGray
 
             )
         )

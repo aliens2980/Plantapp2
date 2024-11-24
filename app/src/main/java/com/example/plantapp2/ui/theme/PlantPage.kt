@@ -68,150 +68,150 @@ import kotlinx.coroutines.tasks.await
  */
 
 
-@Composable
-fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
-    var imageUrl by remember { mutableStateOf<String?>(null) }
-    var name by remember { mutableStateOf<String?>(null) }
-    var nameLatin by remember { mutableStateOf<String?>(null) }
-    var info by remember { mutableStateOf<String?>(null) }
-    var water by remember { mutableStateOf<Int?>(null) }
-    var gradeText by remember { mutableStateOf<String?>(null) }
-    var sun by remember { mutableStateOf<Int?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    val firestore = FirebaseFirestore.getInstance()
+    @Composable
+    fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
+        var imageUrl by remember { mutableStateOf<String?>(null) }
+        var name by remember { mutableStateOf<String?>(null) }
+        var nameLatin by remember { mutableStateOf<String?>(null) }
+        var info by remember { mutableStateOf<String?>(null) }
+        var water by remember { mutableStateOf<Int?>(null) }
+        var gradeText by remember { mutableStateOf<String?>(null) }
+        var sun by remember { mutableStateOf<Int?>(null) }
+        var isLoading by remember { mutableStateOf(true) }
+        var errorMessage by remember { mutableStateOf<String?>(null) }
+        val firestore = FirebaseFirestore.getInstance()
 
-    // Load plant data
-    LaunchedEffect(Unit) {
-        try {
-            val result = firestore.collection("plants")
-                .document("0")
-                .get()
-                .await()
-            imageUrl = result.getString("img")
-            name = result.getString("name")
-            nameLatin = result.getString("nameLatin")
-            info = result.getString("info")
-            water = result.getLong("water")?.toInt()
-            gradeText = result.getString("gradeText")
-            sun = result.getLong("sun")?.toInt()
-        } catch (e: Exception) {
-            errorMessage = "Failed to load data: ${e.message}"
-        } finally {
-            isLoading = false
-        }
-    }
-
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(Color(0xFFDAD7CD))
-            .padding(horizontal = 8.dp) // Uniform padding for the entire page
-    ) {
-        Spacer(modifier = Modifier.height(2.dp))
-
-        // Back Button
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.Start)
-        ) {
-            BackButton(navController = navController)
-        }
-
-        Spacer(modifier = Modifier.height(1.dp))
-
-        // Plant Image
-        imageUrl?.let {
-            PlantImage(url = it, modifier = Modifier
-            )
-        }
-
-        Spacer(modifier = Modifier.height(5.dp))
-
-        // Plant Name and Latin Name
-        name?.let { plantName ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp, end = 4.dp) // Align to the start with some padding
-            ) {
-                PageTitle(name = plantName, modifier = Modifier.align(Alignment.Start))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-
-                    nameLatin?.let { latinName ->
-                        PageTitleLatin(
-                            nameLatin = latinName,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(120.dp))
-
-                    LikeImage(modifier = Modifier.size(50.dp))
-                }
-
+        // Load plant data
+        LaunchedEffect(Unit) {
+            try {
+                val result = firestore.collection("plants")
+                    .document("0")
+                    .get()
+                    .await()
+                imageUrl = result.getString("img")
+                name = result.getString("name")
+                nameLatin = result.getString("nameLatin")
+                info = result.getString("info")
+                water = result.getLong("water")?.toInt()
+                gradeText = result.getString("gradeText")
+                sun = result.getLong("sun")?.toInt()
+            } catch (e: Exception) {
+                errorMessage = "Failed to load data: ${e.message}"
+            } finally {
+                isLoading = false
             }
         }
-
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         Column(
-            modifier = Modifier
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(Color(0xFFDAD7CD))
+                .padding(horizontal = 8.dp) // Uniform padding for the entire page
         ) {
-            // Info Section
-            info?.let {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    InformationImage(modifier = Modifier.size(48.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    InfoText(information = it)
+            Spacer(modifier = Modifier.height(2.dp))
+
+            // Back Button
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Start)
+            ) {
+                BackButton(navController = navController, modifier = Modifier)
+            }
+
+            Spacer(modifier = Modifier.height(1.dp))
+
+            // Plant Image
+            imageUrl?.let {
+                PlantImage(url = it, modifier = Modifier
+                )
+            }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // Plant Name and Latin Name
+            name?.let { plantName ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 4.dp, end = 4.dp) // Align to the start with some padding
+                ) {
+                    PageTitle(name = plantName, modifier = Modifier.align(Alignment.Start))
+
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+
+                        nameLatin?.let { latinName ->
+                            PageTitleLatin(
+                                nameLatin = latinName,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(120.dp))
+
+                        LikeImage(modifier = Modifier.size(50.dp))
+                    }
+
                 }
             }
 
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Grading Section
-            gradeText?.let {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    GradeImage(modifier = Modifier.size(48.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    GradeText(information = it)
+            Column(
+                modifier = Modifier
+            ) {
+                // Info Section
+                info?.let {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        InformationImage(modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        InfoText(information = it)
+                    }
+                }
+
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Grading Section
+                gradeText?.let {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        GradeImage(modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        GradeText(information = it)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Watering Section
+                water?.let {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        WaterCanImage(modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        WaterCanText(information = it)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Sunlight Section
+                sun?.let {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        SunImage(modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        SunText(information = it)
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Watering Section
-            water?.let {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    WaterCanImage(modifier = Modifier.size(48.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    WaterCanText(information = it)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Sunlight Section
-            sun?.let {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    SunImage(modifier = Modifier.size(48.dp))
-                    Spacer(modifier = Modifier.width(8.dp))
-                    SunText(information = it)
-                }
-            }
+            Spacer(modifier = Modifier.height(32.dp))
         }
-
-        Spacer(modifier = Modifier.height(32.dp))
     }
-}
 
 
 /*
@@ -797,7 +797,7 @@ fun LikeImage(modifier : Modifier = Modifier){
 
 
 @Composable
-fun BackButton(navController: NavController) {
+fun BackButton(navController: NavController, modifier: Modifier) {
     Box (
         modifier = Modifier
             .fillMaxSize()
@@ -807,8 +807,8 @@ fun BackButton(navController: NavController) {
             onClick = { navController.popBackStack() },
             modifier = Modifier
                 //.align(Alignment.TopStart)
-                .padding(16.dp)
-                .offset(4.dp, 15.dp)  //to move it by specific coordinates
+                //.padding(16.dp)
+                //.offset(4.dp, 15.dp)  //to move it by specific coordinates
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
