@@ -12,5 +12,18 @@ data class Plant(
     val prio: String = "",
     val sun: Int? = null,
     val water: Int? = null
-)
+) {
+    fun doesMatchSearchQuery(query: String): Boolean {
+        val matchingCombinations = listOf(
+        "${name.first()}",
+        "$name ${depth.toString()}",
+        "${nameLatin.first()}",
+        "$name $prio",
+        "$name ${sun.toString()}"
+        )
+        return matchingCombinations.any {
+            it.contains(query, ignoreCase = true)
+        }
+    }
+}
 
