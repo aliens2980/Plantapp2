@@ -1,11 +1,11 @@
 package com.example.plantapp2.ui.theme
 
+import android.os.Bundle
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -22,12 +22,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,13 +48,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
+import com.example.plantapp2.data.FirebaseCallback
+import com.example.plantapp2.data.Response
+import com.example.plantapp2.plants.PlantsViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -69,7 +70,19 @@ import kotlinx.coroutines.tasks.await
 
 
     @Composable
+
     fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
+
+        lateinit var viewModel: PlantsViewModel
+
+        fun getResponseUsingCallback() {
+            viewModel.getResponseUsingCallback(object : FirebaseCallback {
+                override fun onResponse(response: Response) {
+                    print(response)
+                }
+            })
+        }
+
         var imageUrl by remember { mutableStateOf<String?>(null) }
         var name by remember { mutableStateOf<String?>(null) }
         var nameLatin by remember { mutableStateOf<String?>(null) }

@@ -1,8 +1,6 @@
-package com.example.plantapp2.Models
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+package com.example.plantapp2.data
 
-data class Affirmation(
+data class Plant(
     val depth: Int? = null,
     val gradeImg: String = "",
     val gradeText: String = "",
@@ -15,3 +13,4 @@ data class Affirmation(
     val sun: Int? = null,
     val water: Int? = null
 )
+
