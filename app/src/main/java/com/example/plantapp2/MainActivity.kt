@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.plantapp2.ui.theme.Bed
 import com.example.plantapp2.ui.theme.CenteredBed
 import com.example.plantapp2.ui.theme.PlantInfoPage
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,8 +43,6 @@ import com.example.plantapp2.plants.PlantsScreen
 //import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
-
-//import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
 
 
 data class BottomNavItem(
@@ -74,7 +74,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 */
 
 class MainActivity : ComponentActivity() {
@@ -244,4 +243,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-        */
+*/
