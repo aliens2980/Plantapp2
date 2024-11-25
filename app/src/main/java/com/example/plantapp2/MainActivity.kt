@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -47,18 +50,28 @@ data class BottomNavItem(
 
 )
 
-class MainActivity : ComponentActivity() {
 
+@Composable
+fun Plantapp2Theme(content: @Composable () -> Unit) {
+    MaterialTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = Color(0xFFDAD7CD)
+            //color = MaterialTheme.colorScheme.background
+        ) {
+            content()
+        }
+    }
+}
+
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
             Plantapp2Theme {
-                CenteredBed(length = 240, width = 360)
-
                 val navController = rememberNavController()
-                val item = listOf(
+                val items = listOf(
                     BottomNavItem(
                         title = "Home",
                         selectedIcon = Icons.Filled.Home,
@@ -73,42 +86,121 @@ class MainActivity : ComponentActivity() {
                         title = "Settings",
                         selectedIcon = Icons.Filled.Settings,
                         unselectedIcon = Icons.Outlined.Settings
-                    ),
-
                     )
-                var selectedIremIndex by rememberSaveable {
-                    mutableStateOf(0)
-                }
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Scaffold(bottomBar = {
-                        NavigationBar {
-                            item.forEachIndexed { index, item ->
+                )
+                var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar(
+                            containerColor = Color(0xFFDAD7CD)
+                        ) {
+                            items.forEachIndexed { index, item ->
                                 NavigationBarItem(
-                                    selected = selectedIremIndex == index,
-                                    onClick = {
-                                        selectedIremIndex = index
-                                        //navController.navigate(item.title)
-                                    },
-                                    label = {
-                                        Text(text = item.title)
-                                    },
+                                    selected = selectedItemIndex == index,
+                                    onClick = { selectedItemIndex = index },
+                                    label = { Text(text = item.title) },
                                     icon = {
                                         Icon(
-                                            imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
+                                            imageVector = if (selectedItemIndex == index) item.selectedIcon else item.unselectedIcon,
                                             contentDescription = item.title
                                         )
-
                                     }
                                 )
                             }
                         }
                     }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = if (selectedItemIndex == 0) "centeredBed" else "affirmations",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0xFFDAD7CD))
+                            .padding(innerPadding)
+                    ) {
+                        composable("centeredBed") {
+                            CenteredBed(length = 240, width = 360)
+                        }
+                        composable("affirmations") {
+                            AffirmationsApp(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = navController
+                            )
+                        }
+                        composable("plantPage") {
+                            PlantInfoPage(
+                                modifier = Modifier.fillMaxSize(),
+                                navController = navController
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
-                    ) { innerPadding ->
-                        when (selectedIremIndex) {
+
+
+
+
+/*
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            Plantapp2Theme {
+                val navController = rememberNavController()
+                val items = listOf(
+                    BottomNavItem(
+                        title = "Home",
+                        selectedIcon = Icons.Filled.Home,
+                        unselectedIcon = Icons.Outlined.Home
+                    ),
+                    BottomNavItem(
+                        title = "Search",
+                        selectedIcon = Icons.Filled.Search,
+                        unselectedIcon = Icons.Outlined.Search
+                    ),
+                    BottomNavItem(
+                        title = "Settings",
+                        selectedIcon = Icons.Filled.Settings,
+                        unselectedIcon = Icons.Outlined.Settings
+                    )
+                )
+                var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+
+                Scaffold(
+                    bottomBar = {
+                        NavigationBar(
+                            containerColor = Color(0xFFDAD7CD) // Match the background color
+                        ) {
+                            items.forEachIndexed { index, item ->
+                                NavigationBarItem(
+                                    selected = selectedItemIndex == index,
+                                    onClick = { selectedItemIndex = index },
+                                    label = { Text(text = item.title) },
+                                    icon = {
+                                        Icon(
+                                            imageVector = if (selectedItemIndex == index) item.selectedIcon else item.unselectedIcon,
+                                            contentDescription = item.title
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                ) { innerPadding ->
+                    // Ensure the background color is consistent
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0xFFDAD7CD)) // Match the background color
+                            .padding(innerPadding) // Padding to respect the scaffold's inner area
+                    ) {
+                        when (selectedItemIndex) {
                             0 -> CenteredBed(length = 240, width = 360)
                             1 -> NavHost(
                                 navController = navController,
@@ -116,38 +208,30 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 composable("affirmations") {
                                     AffirmationsApp(
-                                        modifier = Modifier.padding(innerPadding),
-                                        navController = navController,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(Color(0xFFDAD7CD)), // Match the background color
+                                        navController = navController
                                     )
                                 }
                                 composable("plantPage") {
                                     PlantInfoPage(
-                                        modifier = Modifier.padding(innerPadding),
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(Color(0xFFDAD7CD)), // Match the background color
                                         navController = navController
                                     )
                                 }
                             }
-
                             // Add more cases if needed for other items
                         }
                     }
-
-
                 }
             }
         }
     }
-    @Preview(showBackground = true)
-    @Composable
-    fun GreetingPreview() {
-        Plantapp2Theme {
-            CenteredBed(length = 240, width = 360)
-        }
-    }
-}/*
-            val navController = rememberNavController()
-            PlantNavGraph(navController = navController)
-        }
-    }
 }
+
 */
+
+
