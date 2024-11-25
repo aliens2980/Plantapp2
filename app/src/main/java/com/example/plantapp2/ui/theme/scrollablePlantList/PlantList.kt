@@ -38,7 +38,7 @@ fun PlantList(
                     .fillMaxWidth() // Ensure card spans the full width
                     .padding(8.dp)
                     .clickable {
-                        navController.navigate("plantPage")
+                        navController.navigate("plantPage/${plant.name}")
                     }
             )
         }

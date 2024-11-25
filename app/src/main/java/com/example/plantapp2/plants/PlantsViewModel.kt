@@ -24,6 +24,10 @@ class PlantsViewModel (
 */
     fun getResponseUsingLiveData() = repository.getResponseFromFirestoreUsingLiveData()
 
+    suspend fun getPlantDetailsByName(name: String): Plant? {
+        return repository.getPlantByName(name)
+    }
+
 
 /*
     private val _searchText = MutableStateFlow("")
