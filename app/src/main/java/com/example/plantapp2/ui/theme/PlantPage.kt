@@ -56,7 +56,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
-import com.example.plantapp2.data.FirebaseCallback
+//import com.example.plantapp2.data.FirebaseCallback
 import com.example.plantapp2.data.Response
 import com.example.plantapp2.plants.PlantsViewModel
 import com.google.firebase.firestore.FirebaseFirestore

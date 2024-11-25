@@ -5,7 +5,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import com.example.plantapp2.data.FirebaseCallback
+//import com.example.plantapp2.data.FirebaseCallback
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.data.Response
 import com.example.plantapp2.utils.Constants.PLANTS_REF
@@ -15,6 +15,7 @@ class PlantsRepository(
     private val rootRef: FirebaseFirestore = FirebaseFirestore.getInstance(),
     private val plantRef: CollectionReference = rootRef.collection(PLANTS_REF)
 ) {
+    /*
     fun getResponseFromFirestoreUsingCallback(callback: FirebaseCallback) {
         plantRef.get().addOnCompleteListener { task ->
             val response = Response()
@@ -30,7 +31,7 @@ class PlantsRepository(
             }
             callback.onResponse(response)
         }
-    }
+    } */
 
     fun getResponseFromFirestoreUsingLiveData() : MutableLiveData<Response> {
         val mutableLiveData = MutableLiveData<Response>()
@@ -50,6 +51,8 @@ class PlantsRepository(
         }
         return mutableLiveData
     }
+
+    /*
 
     suspend fun getResponseFromFirestoreUsingCoroutines(): Response {
         val response = Response()
@@ -74,4 +77,5 @@ class PlantsRepository(
         }
         emit(response)
     }
+     */
 }
