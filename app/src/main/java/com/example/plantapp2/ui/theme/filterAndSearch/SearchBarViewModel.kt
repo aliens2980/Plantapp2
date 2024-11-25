@@ -24,8 +24,8 @@ class SearchBarViewModel: ViewModel() {
 
     private val _plants = MutableStateFlow(plant)
     val plantss = searchText
-        .debounce(500L)
-        .onEach { _isSearching.update { true } }
+        //.debounce(500L)
+        //.onEach { _isSearching.update { true } }
         .combine(_plants) {text, plantss ->
             if(text.isBlank()) {
                 plantss
@@ -35,7 +35,7 @@ class SearchBarViewModel: ViewModel() {
                 }
             }
         }
-        .onEach { _isSearching.update { false } }
+        //.onEach { _isSearching.update { false } }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
