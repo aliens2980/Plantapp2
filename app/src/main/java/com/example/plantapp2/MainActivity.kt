@@ -39,6 +39,7 @@ import com.example.plantapp2.ui.theme.CenteredBed
 import com.example.plantapp2.ui.theme.PlantInfoPage
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.plantapp2.plants.PlantsScreen
 //import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
@@ -64,6 +65,16 @@ fun Plantapp2Theme(content: @Composable () -> Unit) {
     }
 }
 
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            PlantsScreen()
+        }
+    }
+}
+
+/*
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -233,5 +244,5 @@ class MainActivity : ComponentActivity() {
 }
 
 */
-
+*/
 

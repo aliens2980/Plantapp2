@@ -1,6 +1,7 @@
 package com.example.plantapp2.ui.theme
 
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -75,6 +76,7 @@ import kotlinx.coroutines.tasks.await
 
         lateinit var viewModel: PlantsViewModel
 
+    /*
         fun getResponseUsingCallback() {
             viewModel.getResponseUsingCallback(object : FirebaseCallback {
                 override fun onResponse(response: Response) {
@@ -82,6 +84,11 @@ import kotlinx.coroutines.tasks.await
                 }
             })
         }
+*/
+
+
+
+
 
         var imageUrl by remember { mutableStateOf<String?>(null) }
         var name by remember { mutableStateOf<String?>(null) }
