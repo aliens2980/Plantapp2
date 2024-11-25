@@ -1,14 +1,19 @@
 package com.example.plantapp2.ui.theme.filterAndSearch
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.plantapp2.data.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import com.example.plantapp2.plants.PlantsViewModel
 /*
 class SearchbarView2: ViewModel() {
+    //val response by viewModel.getResponseUsingLiveData().observeAsState()
 
 
     private val _searchText = MutableStateFlow("")
@@ -17,7 +22,7 @@ class SearchbarView2: ViewModel() {
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
-    private val _plants = MutableStateFlow(AffirmationLIST)
+    private val _plants = MutableStateFlow()
     val plantss = searchText
         //.debounce(500L)
         //.onEach { _isSearching.update { true } }
