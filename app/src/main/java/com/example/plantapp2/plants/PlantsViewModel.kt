@@ -29,14 +29,14 @@ class PlantsViewModel (
     }
 
 
-/*
+
     private val _searchText = MutableStateFlow("")
     val searchText =_searchText.asStateFlow()
 
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
-    private val _plants = MutableStateFlow()
+    private val _plants = MutableStateFlow(Response().plants)
     val plants = searchText
         //.debounce(500L)
         //.onEach { _isSearching.update { true } }
@@ -68,5 +68,5 @@ class PlantsViewModel (
             emit(response)
         }
     }
-     */*/
+     */
 }
