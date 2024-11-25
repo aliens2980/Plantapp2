@@ -21,7 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.plantapp2.AffirmationsApp
+import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
