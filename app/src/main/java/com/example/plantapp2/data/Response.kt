@@ -4,3 +4,4 @@ data class Response(
     var plants: List<Plant>? = null,
     var exception: Exception? = null
 )
+
