@@ -2,6 +2,7 @@ package com.example.plantapp2.plants
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.example.plantapp2.data.Plant
 //import com.example.plantapp2.data.FirebaseCallback
 import com.example.plantapp2.plants.PlantsRepository
 import kotlinx.coroutines.flow.collect
@@ -14,6 +15,10 @@ class PlantsViewModel (
     fun getResponseUsingCallback(callback: FirebaseCallback) = repository.getResponseFromFirestoreUsingCallback(callback)
 */
     fun getResponseUsingLiveData() = repository.getResponseFromFirestoreUsingLiveData()
+
+    suspend fun getPlantDetailsByName(name: String): Plant? {
+        return repository.getPlantByName(name)
+    }
 
     /*
     val responseLiveData = liveData(Dispatchers.IO) {

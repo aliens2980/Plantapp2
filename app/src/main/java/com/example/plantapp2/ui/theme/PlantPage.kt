@@ -53,14 +53,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
+import com.example.plantapp2.data.Plant
 //import com.example.plantapp2.data.FirebaseCallback
 import com.example.plantapp2.data.Response
 import com.example.plantapp2.plants.PlantsViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+
+
 
 
 /**
@@ -69,59 +73,51 @@ import kotlinx.coroutines.tasks.await
  * @return the information page of a plant
  */
 
+@Composable
+fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, plantName: String?, viewModel: PlantsViewModel = viewModel()) {
+    var plant by remember { mutableStateOf<Plant?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    @Composable
-
-    fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
-
-        var imageUrl by remember { mutableStateOf<String?>(null) }
-        var name by remember { mutableStateOf<String?>(null) }
-        var nameLatin by remember { mutableStateOf<String?>(null) }
-        var info by remember { mutableStateOf<String?>(null) }
-        var water by remember { mutableStateOf<Int?>(null) }
-        var gradeText by remember { mutableStateOf<String?>(null) }
-        var sun by remember { mutableStateOf<Int?>(null) }
-        var isLoading by remember { mutableStateOf(true) }
-        var errorMessage by remember { mutableStateOf<String?>(null) }
-        val firestore = FirebaseFirestore.getInstance()
-
-        // Load plant data
-        LaunchedEffect(Unit) {
+    LaunchedEffect(plantName) {
+        if (plantName != null) {
             try {
-                val result = firestore.collection("plants")
-                    .document("0")
-                    .get()
-                    .await()
-                imageUrl = result.getString("img")
-                name = result.getString("name")
-                nameLatin = result.getString("nameLatin")
-                info = result.getString("info")
-                water = result.getLong("water")?.toInt()
-                gradeText = result.getString("gradeText")
-                sun = result.getLong("sun")?.toInt()
+                plant = viewModel.getPlantDetailsByName(plantName)
             } catch (e: Exception) {
-                errorMessage = "Failed to load data: ${e.message}"
-            } finally {
-                isLoading = false
+                errorMessage = "Error fetching plant details: ${e.message}"
             }
         }
+    }
+    when {
+        errorMessage != null -> {
+            Text("Error: $errorMessage", modifier = Modifier.padding(16.dp))
+        }
+        plant == null -> {
+            Text("Loading...", modifier = Modifier.padding(16.dp))
+        }
+        else -> {
+            // Plant is available, display its details
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Name: ${plant?.name}", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Latin Name: ${plant?.nameLatin}", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Info: ${plant?.info ?: "No additional information"}", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Sunlight: ${plant?.sun ?: "Not specified"}", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Water: ${plant?.water ?: "Not specified"}", modifier = Modifier.padding(bottom = 8.dp))
+                Column(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .background(Color(0xFFDAD7CD))
+                        .padding(horizontal = 8.dp) // Uniform padding for the entire page
+                    ) {
+                    Spacer(modifier = Modifier.height(2.dp))
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .background(Color(0xFFDAD7CD))
-                .padding(horizontal = 8.dp) // Uniform padding for the entire page
-        ) {
-            Spacer(modifier = Modifier.height(2.dp))
-
-            // Back Button
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
-            ) {
-                BackButton(navController = navController, modifier = Modifier)
-            }
+                // Back Button
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Start)
+                ) {
+                    BackButton(navController = navController, modifier = Modifier)
+                }
 
             Spacer(modifier = Modifier.height(1.dp))
 
@@ -134,7 +130,7 @@ import kotlinx.coroutines.tasks.await
             Spacer(modifier = Modifier.height(5.dp))
 
             // Plant Name and Latin Name
-            name?.let { plantName ->
+            plant.name?.let { plantName ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -549,30 +545,32 @@ fun LikeImage(modifier : Modifier = Modifier){
         }
     }
 }
+            @Composable
+            fun BackButton(navController: NavController, modifier: Modifier) {
+                Box (
+                    modifier = Modifier
+                        .fillMaxSize()
+
+                ) {
+                    IconButton(
+                        onClick = { navController.popBackStack() },
+                        modifier = Modifier
+                        //.align(Alignment.TopStart)
+                        //.padding(16.dp)
+                        //.offset(4.dp, 15.dp)  //to move it by specific coordinates
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            tint = Color.DarkGray,
+                            contentDescription = "Go Back",
+                            modifier = Modifier.size(100.dp),
+
+                            )
+                    }
+                }
+            }}}}
 
 
-@Composable
-fun BackButton(navController: NavController, modifier: Modifier) {
-    Box (
-        modifier = Modifier
-            .fillMaxSize()
 
-    ) {
-        IconButton(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier
-                //.align(Alignment.TopStart)
-                //.padding(16.dp)
-                //.offset(4.dp, 15.dp)  //to move it by specific coordinates
-        ) {
-            Icon(
-                imageVector = Icons.Default.Clear,
-                tint = Color.DarkGray,
-                contentDescription = "Go Back",
-                modifier = Modifier.size(100.dp),
 
-            )
-        }
-    }
-}
 

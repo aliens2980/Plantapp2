@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.data.Response
 import com.example.plantapp2.utils.Constants.PLANTS_REF
+import kotlinx.coroutines.tasks.await
 
 
 class PlantsRepository(
@@ -49,6 +50,21 @@ class PlantsRepository(
         }
         return mutableLiveData
     }
+    suspend fun getPlantByName(name: String): Plant? {
+        return try {
+            val snapshot = plantRef.whereEqualTo("name", name).get().await()
+
+            val documents = snapshot.documents
+            if (documents.isNotEmpty()) {
+                documents.first().toObject(Plant::class.java)
+            } else {
+                null // If no plant is found
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 
     /*
 

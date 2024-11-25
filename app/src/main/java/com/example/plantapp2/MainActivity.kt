@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.plants.PlantsScreen
 //import com.example.plantapp2.navigation.components.PlantNavGraph
+import com.example.plantapp2.data.Plant
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
 
@@ -140,10 +141,13 @@ class MainActivity : ComponentActivity() {
                                 navController = navController
                             )
                         }
-                        composable("plantPage") {
+
+                        composable("plantPage/{plantName}") { backStackEntry ->
+                            val plantName = backStackEntry.arguments?.getString("plantName") ?: "Unknown"
                             PlantInfoPage(
                                 modifier = Modifier.fillMaxSize(),
-                                navController = navController
+                                navController = navController,
+                                plantName = plantName
                             )
                         }
                     }
