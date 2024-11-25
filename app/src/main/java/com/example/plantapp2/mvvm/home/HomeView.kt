@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.plantapp2.Models.Plant
+import com.example.plantapp2.data.Plant
 
 /*
     This file is for all visual logic. Visual logic entails everything that has to do

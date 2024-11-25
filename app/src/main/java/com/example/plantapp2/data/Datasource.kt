@@ -1,7 +1,4 @@
-package com.example.plantapp2.Data
-
-import com.example.plantapp2.Models.Affirmation
-import com.example.plantapp2.R
+package com.example.plantapp2.data
 
 /**
 class Datasource() {
