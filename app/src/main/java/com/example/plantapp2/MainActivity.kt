@@ -40,7 +40,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.plants.PlantsScreen
 //import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.ui.theme.Plantapp2Theme
-import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
+import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
+
+//import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
 
 
 data class BottomNavItem(
@@ -63,7 +65,7 @@ fun Plantapp2Theme(content: @Composable () -> Unit) {
         }
     }
 }
-
+/*
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +75,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-/*
+*/
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +136,7 @@ class MainActivity : ComponentActivity() {
                             CenteredBed(length = 240, width = 360)
                         }
                         composable("affirmations") {
-                            AffirmationsApp(
+                            ScrollablePlantList(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController
                             )
@@ -241,7 +244,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-*/
-*/
-
+        */

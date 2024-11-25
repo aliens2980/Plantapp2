@@ -2,6 +2,7 @@ package com.example.plantapp2.Models
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
+/*
 data class Affirmation(
     val depth: Int? = null,
     val gradeImg: String = "",
@@ -28,3 +29,4 @@ data class Affirmation(
         }
     }
 }
+*/

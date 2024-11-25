@@ -21,10 +21,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
+//import com.example.plantapp2.ui.theme.scrollablePlantList.AffirmationsApp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
+import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
 
 data class BottomNavItem(
     val title: String,
@@ -84,7 +85,7 @@ fun Menubar() {
         }
 
         ) { innerPadding->
-            AffirmationsApp(
+            ScrollablePlantList(
                 modifier = Modifier.padding(innerPadding),
                 navController = rememberNavController(),
             )

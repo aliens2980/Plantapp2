@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.plantapp2.Models.Affirmation
+//import com.example.plantapp2.Models.Affirmation
+import com.example.plantapp2.data.Plant
 
 @Composable
 fun PlantList(
-    affirmationLIST: List<Affirmation>,
+    plantList: List<Plant>,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -27,9 +28,9 @@ fun PlantList(
             .padding(vertical = 8.dp) // Adds vertical padding for aesthetics
             .background(Color(0xFF344e41)) //background color
     ) {
-        items(affirmationLIST) { affirmation ->
+        items(plantList) { plant ->
             PlantCard(
-                affirmation = affirmation,
+                plant = plant,
                 modifier = Modifier
                     .fillMaxWidth() // Ensure card spans the full width
                     .padding(8.dp)

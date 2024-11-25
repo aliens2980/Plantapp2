@@ -19,10 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.plantapp2.Models.Affirmation
+//import com.example.plantapp2.Models.Affirmation
+import com.example.plantapp2.data.Plant
 
 @Composable
-fun PlantCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
+fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp), // Rounded corners for the card
@@ -31,15 +32,15 @@ fun PlantCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
     ) {
         Column {
             AsyncImage(
-                model = affirmation.img,
-                contentDescription = affirmation.name,
+                model = plant.img,
+                contentDescription = plant.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp), // Ensure consistent image height
                 contentScale = ContentScale.Crop // Crop the image to fit
             )
             Text(
-                text = affirmation.name,
+                text = plant.name,
                 modifier = Modifier.padding(16.dp),
                 //style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Start, // Align text to the star

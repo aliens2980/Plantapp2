@@ -74,22 +74,6 @@ import kotlinx.coroutines.tasks.await
 
     fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
 
-        lateinit var viewModel: PlantsViewModel
-
-    /*
-        fun getResponseUsingCallback() {
-            viewModel.getResponseUsingCallback(object : FirebaseCallback {
-                override fun onResponse(response: Response) {
-                    print(response)
-                }
-            })
-        }
-*/
-
-
-
-
-
         var imageUrl by remember { mutableStateOf<String?>(null) }
         var name by remember { mutableStateOf<String?>(null) }
         var nameLatin by remember { mutableStateOf<String?>(null) }
