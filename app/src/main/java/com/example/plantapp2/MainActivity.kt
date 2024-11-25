@@ -147,7 +147,7 @@ class MainActivity : ComponentActivity() {
                             PlantInfoPage(
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
-                                plantName = plantName
+                                getPlantName = plantName
                             )
                         }
                     }
