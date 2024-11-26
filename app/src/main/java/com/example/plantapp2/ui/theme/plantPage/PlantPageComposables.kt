@@ -164,10 +164,7 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Must be watered (inches per week): $information",
-            modifier = Modifier
-                //.widthIn(max = maxWidth)
-                //.heightIn(max = maxHeight)
-                .padding(4.dp),
+            modifier = Modifier.padding(4.dp),
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Light,
@@ -182,7 +179,6 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
 @Composable
 fun SunImage() {
     val boxModifier = Modifier   //how to move the box with the potato image around
-    //.offset(x = 20.dp, y = 600.dp)
     Box(
         modifier = boxModifier
     ) {
@@ -200,8 +196,7 @@ fun SunImage() {
 @Composable
 fun SunText(information: Int, modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .padding(8.dp)
+        modifier = modifier.padding(8.dp)
     ) {
         Text(
             text = "Must receive sun (hours per day): $information",
