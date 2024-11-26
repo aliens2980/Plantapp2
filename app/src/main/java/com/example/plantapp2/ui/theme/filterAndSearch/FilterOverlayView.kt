@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 
 @Composable
@@ -38,13 +39,14 @@ fun FilterOverlay(
                 modifier = Modifier
                     .background(Color.White)
                     .padding(16.dp)
+                    .padding(vertical = 30.dp)
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 var selectedGrade by remember { mutableStateOf("") }
                 Text(
-                    "Type:",
+                    "Difficulty:",
                     modifier = Modifier.align(Alignment.Start),
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
@@ -60,15 +62,27 @@ fun FilterOverlay(
 
                     Checkbox(
                         checked = selectedGrade == "Easy",
-                        onCheckedChange = { selectedGrade = if (it) "Easy" else "" })
+                        onCheckedChange = { selectedGrade = if (it) "Easy" else "" },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = darkGreen
+                        )
+                    )
                     Text("Easy")
                     Checkbox(
                         checked = selectedGrade == "Medium",
-                        onCheckedChange = { selectedGrade = if (it) "Medium" else "" })
+                        onCheckedChange = { selectedGrade = if (it) "Medium" else "" },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = darkGreen
+                        )
+                    )
                     Text("Medium")
                     Checkbox(
                         checked = selectedGrade == "Hard",
-                        onCheckedChange = { selectedGrade = if (it) "Hard" else "" })
+                        onCheckedChange = { selectedGrade = if (it) "Hard" else "" },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = darkGreen
+                        )
+                    )
                     Text("Hard")
                 }
 
@@ -88,7 +102,12 @@ fun FilterOverlay(
                     onValueChange = { selectedWater = it.toInt() },
                     valueRange = 0f..3f,
                     steps = 3,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    colors = SliderDefaults.colors(
+                        thumbColor = darkGreen,
+                        activeTrackColor = darkGreen,
+                    )
+
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -108,7 +127,11 @@ fun FilterOverlay(
                     onValueChange = { selectedSun = it.toInt() },
                     valueRange = 0f..10f,
                     steps = 10,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    colors = SliderDefaults.colors(
+                        thumbColor = darkGreen,
+                        activeTrackColor = darkGreen,
+                    )
                 )
 
                 // Apply button
@@ -116,6 +139,9 @@ fun FilterOverlay(
                     onClick = {
                         onFilterApply( selectedSun, selectedWater, selectedGrade)
                     },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = darkGreen,
+                    ),
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
                     Text("Apply Filters")

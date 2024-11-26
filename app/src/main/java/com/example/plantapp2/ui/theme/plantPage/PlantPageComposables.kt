@@ -198,7 +198,7 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
     ) {
 
         Text(
-            text = "Must be watered (inches a week): $information",
+            text = "Must be watered (inches per week): $information",
             modifier = Modifier,
                 //.widthIn(max = maxWidth)
                 //.heightIn(max = maxHeight)
@@ -300,7 +300,7 @@ fun GradeText(information: String, modifier: Modifier = Modifier) {
         val maxHeight = maxHeight
 
         Text(
-            text = "Is graded to be: $information",
+            text = "Difficulty: $information",
             modifier = Modifier
                 .widthIn(max = maxWidth)
                 .heightIn(max = maxHeight)
