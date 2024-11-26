@@ -16,7 +16,18 @@ data class Plant(
         "${nameLatin.first()}",
         "$name ${sun.toString()}",
         "$name ${water.toString()}",
-        "$name $gradeText"
+        "$name $gradeText",
+        "$nameLatin ${sun.toString()}",
+        "$nameLatin ${water.toString()}",
+        "$nameLatin $gradeText",
+        "$name $nameLatin",
+        "$name$nameLatin",
+        "$name${sun.toString()}",
+        "$name${water.toString()}",
+        "$name$gradeText",
+        "$nameLatin${sun.toString()}",
+        "$nameLatin${water.toString()}",
+        "$nameLatin$gradeText"
         )
         return matchingCombinations.any {
             it.contains(query, ignoreCase = true)

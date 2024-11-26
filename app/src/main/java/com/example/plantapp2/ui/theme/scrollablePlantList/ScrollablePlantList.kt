@@ -1,6 +1,7 @@
 package com.example.plantapp2.ui.theme.scrollablePlantList
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,8 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -23,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,17 +50,17 @@ fun ScrollablePlantList(
     var showFilterOverlay by remember { mutableStateOf(false) }
 
     // States for applied filters
-    var filterText by rememberSaveable { mutableStateOf("") }
     var sunExposure by rememberSaveable { mutableIntStateOf(0) }
     var grade by rememberSaveable { mutableStateOf("") }
+    var waterNeeds by rememberSaveable { mutableIntStateOf(0) }
 
     // Filtering logic
     val filteredPlants = response?.plants?.filter { plant ->
         val matchesSearch = searchQuery.isBlank() || plant.doesMatchSearchQuery(searchQuery)
-        val matchesFilterText = filterText.isBlank() || plant.name.contains(filterText, ignoreCase = true)
         val matchesSunExposure = sunExposure == 0 || plant.sun == sunExposure
+        val matchesWaterNeeds = waterNeeds == 0 || plant.water == waterNeeds
         val matchesSelectedGrade = grade.isBlank() || plant.gradeText.equals(grade, ignoreCase = true)
-        matchesSearch && matchesFilterText && matchesSunExposure && matchesSelectedGrade
+        matchesSearch  && matchesSunExposure && matchesWaterNeeds && matchesSelectedGrade
     } ?: response?.plants ?: emptyList() // Show all plants by default if no filters are applied
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -67,8 +73,22 @@ fun ScrollablePlantList(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search for plants") },
-                modifier = Modifier.weight(1f)
+                label = { Text("Search...") },
+                modifier = Modifier.weight(1f),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                },
+                trailingIcon ={
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                },
+                singleLine = true,
+                shape = RoundedCornerShape(25.dp)
             )
             Column {
                 IconButton(
@@ -104,19 +124,23 @@ fun ScrollablePlantList(
         // Filter overlay
         FilterOverlay(
             showOverlay = showFilterOverlay,
-            onFilterApply = { nameFilter, sunFilter, gradeFilter ->
-                filterText = nameFilter
+            onFilterApply = {  sunFilter, waterFilter, gradeFilter ->
                 sunExposure = sunFilter
+                waterNeeds = waterFilter
                 grade = gradeFilter
                 showFilterOverlay = false // Close the overlay
             }
         )
 
         // Plant list or feedback
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(2.dp))
         when {
             response == null -> {
-                Text("Loading...", modifier = Modifier.padding(16.dp))
+                Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Center)
+                    )
+                }
             }
 
             response?.exception != null -> {
@@ -131,7 +155,7 @@ fun ScrollablePlantList(
             }
 
             else -> {
-                Text("No plants match your filters.", modifier = Modifier.padding(16.dp))
+                Text("No results", modifier = Modifier.padding(16.dp))
             }
         }
     }
