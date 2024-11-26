@@ -1,5 +1,5 @@
 package com.example.plantapp2
-/*import com.example.plantapp2.ui.theme.toggleLikeState
+import com.example.plantapp2.ui.theme.toggleLikeState
 
 
 import org.junit.Test
@@ -36,4 +36,3 @@ class ToggleLikeStateTest {
     }
 
 }
-*/
