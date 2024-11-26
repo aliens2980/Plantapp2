@@ -1,11 +1,10 @@
-package com.example.plantapp2.ui.theme
+package com.example.plantapp2.ui.theme.plantPage
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -22,12 +21,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,15 +47,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
+import com.example.plantapp2.data.Plant
+//import com.example.plantapp2.data.FirebaseCallback
+import com.example.plantapp2.plants.PlantsViewModel
 
 
 /**
@@ -67,152 +65,193 @@ import kotlinx.coroutines.tasks.await
  * @return the information page of a plant
  */
 
+@Composable
+fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, getPlantName: String?, viewModel: PlantsViewModel = viewModel()) {
+    var plant by remember { mutableStateOf<Plant?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    val plantName = plant?.name
+    val imageUrl = plant?.img
+    val nameLatin = plant?.nameLatin
+    val info = plant?.info
+    val water = plant?.water
+    val sun = plant?.sun
+    val gradeText = plant?.gradeText
+    val lorem = "Lorem Ipsum er ganske enkelt fyldtekst fra print- og typografiindustrien. Lorem Ipsum har været standard fyldtekst siden 1500-tallet, hvor en ukendt trykker sammensatte en tilfældig spalte for at trykke en bog til sammenligning af forskellige skrifttyper. Lorem Ipsum har ikke alene overlevet fem århundreder, men har også vundet indpas i elektronisk typografi uden væsentlige ændringer. Sætningen blev gjordt kendt i 1960'erne med lanceringen af Letraset-ark, som indeholdt afsnit med Lorem Ipsum, og senere med layoutprogrammer som Aldus PageMaker, som også indeholdt en udgave af Lorem Ipsum.\n" +
+            "\n" +
+            "Hvorfor bruger vi det?\n" +
+            "Det er en kendsgerning, at man bliver distraheret af læsbart indhold på en side, når man betragter dens layout. Meningen med at bruge Lorem Ipsum er, at teksten indeholder mere eller mindre almindelig tekstopbygning i modsætning til \"Tekst her - og mere tekst her\", mens det samtidigt ligner almindelig tekst. Mange layoutprogrammer og webdesignere bruger Lorem Ipsum som fyldtekst. En søgning på Lorem Ipsum afslører mange websider, som stadig er på udviklingsstadiet. Der har været et utal af variationer, som er opstået enten på grund af fejl og andre gange med vilje (som blandt andet et resultat af humor).\n" +
+            "\n" +
+            "\n" +
+            "Hvor kommer det fra?\n" +
+            "I modsætning til hvad mange tror, er Lorem Ipsum ikke bare tilfældig tekst. Det stammer fra et stykke litteratur på latin fra år 45 f.kr., hvilket gør teksten over 2000 år gammel. Richard McClintock, professor i latin fra Hampden-Sydney universitet i Virginia, undersøgte et af de mindst kendte ord \"consectetur\" fra en del af Lorem Ipsum, og fandt frem til dets oprindelse ved at studere brugen gennem klassisk litteratur. Lorem Ipsum stammer fra afsnittene 1.10.32 og 1.10.33 fra \"de Finibus Bonorum et Malorum\" (Det gode og ondes ekstremer), som er skrevet af Cicero i år 45 f.kr. Bogen, som var meget populær i renæssancen, er en afhandling om etik. Den første linie af Lorem Ipsum \"Lorem ipsum dolor sit amet...\" kommer fra en linje i afsnit 1.10.32.\n" +
+            "\n" +
+            "Standardafsnittet af Lorem Ipsum, som er brugt siden 1500-tallet, er gengivet nedenfor for de, der er interesserede. Afsnittene 1.10.32 og 1.10.33 fra \"de Finibus Bonorum et Malorum\" af Cicero er også gengivet i deres nøjagtige udgave i selskab med den engelske udgave fra oversættelsen af H. Rackham fra 1914."
 
-    @Composable
-    fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier) {
-        var imageUrl by remember { mutableStateOf<String?>(null) }
-        var name by remember { mutableStateOf<String?>(null) }
-        var nameLatin by remember { mutableStateOf<String?>(null) }
-        var info by remember { mutableStateOf<String?>(null) }
-        var water by remember { mutableStateOf<Int?>(null) }
-        var gradeText by remember { mutableStateOf<String?>(null) }
-        var sun by remember { mutableStateOf<Int?>(null) }
-        var isLoading by remember { mutableStateOf(true) }
-        var errorMessage by remember { mutableStateOf<String?>(null) }
-        val firestore = FirebaseFirestore.getInstance()
-
-        // Load plant data
-        LaunchedEffect(Unit) {
+    LaunchedEffect(getPlantName) {
+        if (getPlantName != null) {
             try {
-                val result = firestore.collection("plants")
-                    .document("0")
-                    .get()
-                    .await()
-                imageUrl = result.getString("img")
-                name = result.getString("name")
-                nameLatin = result.getString("nameLatin")
-                info = result.getString("info")
-                water = result.getLong("water")?.toInt()
-                gradeText = result.getString("gradeText")
-                sun = result.getLong("sun")?.toInt()
+                plant = viewModel.getPlantDetailsByName(getPlantName)
             } catch (e: Exception) {
-                errorMessage = "Failed to load data: ${e.message}"
-            } finally {
-                isLoading = false
+                errorMessage = "Error fetching plant details: ${e.message}"
             }
-        }
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .background(Color(0xFFDAD7CD))
-                .padding(horizontal = 8.dp) // Uniform padding for the entire page
-        ) {
-            Spacer(modifier = Modifier.height(2.dp))
-
-            // Back Button
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Start)
-            ) {
-                BackButton(navController = navController, modifier = Modifier)
-            }
-
-            Spacer(modifier = Modifier.height(1.dp))
-
-            // Plant Image
-            imageUrl?.let {
-                PlantImage(url = it, modifier = Modifier
-                )
-            }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
-            // Plant Name and Latin Name
-            name?.let { plantName ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 4.dp, end = 4.dp) // Align to the start with some padding
-                ) {
-                    PageTitle(name = plantName, modifier = Modifier.align(Alignment.Start))
-
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-
-                        nameLatin?.let { latinName ->
-                            PageTitleLatin(
-                                nameLatin = latinName,
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(120.dp))
-
-                        LikeImage(modifier = Modifier.size(50.dp))
-                    }
-
-                }
-            }
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Column(
-                modifier = Modifier
-            ) {
-                // Info Section
-                info?.let {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        InformationImage(modifier = Modifier.size(48.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        InfoText(information = it)
-                    }
-                }
-
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Grading Section
-                gradeText?.let {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        GradeImage(modifier = Modifier.size(48.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        GradeText(information = it)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Watering Section
-                water?.let {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        WaterCanImage(modifier = Modifier.size(48.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        WaterCanText(information = it)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Sunlight Section
-                sun?.let {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        SunImage(modifier = Modifier.size(48.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        SunText(information = it)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
+    when {
+        errorMessage != null -> {
+            Text("Error: $errorMessage", modifier = Modifier.padding(16.dp))
+        }
 
+        plant == null -> {
+            Text("Loading...", modifier = Modifier.padding(16.dp))
+        }
+
+        else -> {
+            // Plant is available, display its details
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Name: ${plant?.name}", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Latin Name: ${plant?.nameLatin}", modifier = Modifier.padding(bottom = 8.dp))
+                Text(
+                    "Info: ${plant?.info ?: "No additional information"}",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    "Sunlight: ${plant?.sun ?: "Not specified"}",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                Text(
+                    "Water: ${plant?.water ?: "Not specified"}",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+
+            }
+
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .background(Color(0xFFDAD7CD))
+                    .padding(horizontal = 8.dp) // Uniform padding for the entire page
+            ) {
+                Spacer(modifier = Modifier.height(2.dp))
+
+                // Back Button
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start)
+                ) {
+                    BackButton(navController = navController, modifier = Modifier)
+                }
+
+                Spacer(modifier = Modifier.height(1.dp))
+
+                // Plant Image
+                imageUrl?.let {
+                    PlantImage(
+                        url = it, modifier = Modifier
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                // Plant Name and Latin Name
+                plantName.let { plantName ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 4.dp,
+                                end = 4.dp
+                            ) // Align to the start with some padding
+                    ) {
+                        if (plantName != null) {
+                            PageTitle(name = plantName, modifier = Modifier.align(Alignment.Start))
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            nameLatin?.let { latinName ->
+                                PageTitleLatin(
+                                    nameLatin = latinName,
+                                    modifier = Modifier.weight(1f)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(120.dp))
+
+                            LikeImage(modifier = Modifier.size(50.dp))
+                        }
+
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Column(
+                    modifier = Modifier
+                ) {
+                    // Info Section
+                    info?.let {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            InformationImage(modifier = Modifier.size(48.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            InfoText(information = it)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Grading Section
+                    gradeText?.let {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            GradeImage(modifier = Modifier.size(48.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            GradeText(information = it)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Watering Section
+                    water?.let {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            WaterCanImage(modifier = Modifier.size(48.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            WaterCanText(information = it)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Sunlight Section
+                    sun?.let {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            SunImage(modifier = Modifier.size(48.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            SunText(information = it)
+                        }
+                    }
+
+                    lorem.let {Row(verticalAlignment = Alignment.CenterVertically) {
+                        SunImage(modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Lorem(information = it)
+                    }
+                    }}
+
+
+
+
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+        }
+    }
 
 
 //The name of the plant
@@ -421,6 +460,8 @@ fun SunImage(modifier: Modifier) {
 }
 
 
+
+
 //Sun text box
 @Composable
 fun SunText(information: Int, modifier: Modifier = Modifier) {
@@ -475,6 +516,33 @@ fun GradeImage(modifier: Modifier) {
 
 }
 
+@Composable
+fun Lorem(information: String, modifier: Modifier = Modifier) {
+    BoxWithConstraints(
+        modifier = modifier
+            //.offset(x = 65.dp, y = 440.dp)
+            //.background(Color.White)
+            //.border(BorderStroke(1.dp, Color.Black))
+            .padding(8.dp)
+    ) {
+        val maxWidth = 200.dp
+        val maxHeight = maxHeight
+
+        Text(
+            text = "Is graded to be: $information",
+            modifier = Modifier
+                .widthIn(max = maxWidth)
+                .heightIn(max = maxHeight)
+                .padding(4.dp),
+            style = TextStyle(   //to edit and customize the text inside
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = FontFamily.Default,
+                color = Color.DarkGray
+            )
+        )
+    }
+}
 
 //Grade text box
 @Composable
@@ -571,4 +639,3 @@ fun BackButton(navController: NavController, modifier: Modifier) {
         }
     }
 }
-
