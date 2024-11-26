@@ -213,15 +213,39 @@ fun GridCell(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-        } else {
+        } else if (row == 1 && column == 1){
             // Default to the dirt image
             Image(
-                painter = painterResource(id = R.drawable.dirt),
-                contentDescription = "Dirt tile",
+                painter = painterResource(id = R.drawable.celery_bed), // Celery image
+                contentDescription = "celery plant",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
-        }
+        } else if (row == 1 && column == 4){
+            // Default to the dirt image
+            Image(
+                painter = painterResource(id = R.drawable.cauliflower_bed), // Cauliflower image
+                contentDescription = "cauliflower plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else if (row == 2 && column == 1){
+            // Default to the dirt image
+            Image(
+                painter = painterResource(id = R.drawable.tomato_bed), // Tomato image
+                contentDescription = "tomato plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else {
+        // Default to the dirt image
+        Image(
+            painter = painterResource(id = R.drawable.dirt),
+            contentDescription = "Dirt tile",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
     }
 }
 
