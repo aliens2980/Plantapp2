@@ -1,4 +1,4 @@
-package com.example.plantapp2.ui.theme
+package com.example.plantapp2.ui.theme.styling
 
 import androidx.compose.ui.graphics.Color
 

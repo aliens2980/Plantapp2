@@ -1,4 +1,4 @@
-package com.example.plantapp2.ui.theme
+package com.example.plantapp2.ui.theme.plantPage
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

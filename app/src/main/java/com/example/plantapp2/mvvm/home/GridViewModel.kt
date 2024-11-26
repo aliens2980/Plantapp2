@@ -1,4 +1,4 @@
-package com.example.plantapp2.ui.theme
+package com.example.plantapp2.mvvm.home
 
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateListOf
