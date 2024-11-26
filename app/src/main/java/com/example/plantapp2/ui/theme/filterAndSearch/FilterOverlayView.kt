@@ -42,23 +42,37 @@ fun FilterOverlay(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                // Filter by sun exposure
-                var selectedSun by remember { mutableIntStateOf(0) }
+                var selectedGrade by remember { mutableStateOf("") }
                 Text(
-                "Filter by Sun Exposure: $selectedSun",
+                    "Type:",
                     modifier = Modifier.align(Alignment.Start),
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
                 )
-                Slider(
-                    value = selectedSun.toFloat(),
-                    onValueChange = { selectedSun = it.toInt() },
-                    valueRange = 0f..10f,
-                    steps = 10,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
-                )
+
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+
+                    Checkbox(
+                        checked = selectedGrade == "Easy",
+                        onCheckedChange = { selectedGrade = if (it) "Easy" else "" })
+                    Text("Easy")
+                    Checkbox(
+                        checked = selectedGrade == "Medium",
+                        onCheckedChange = { selectedGrade = if (it) "Medium" else "" })
+                    Text("Medium")
+                    Checkbox(
+                        checked = selectedGrade == "Hard",
+                        onCheckedChange = { selectedGrade = if (it) "Hard" else "" })
+                    Text("Hard")
+                }
+
+                Spacer(modifier = Modifier.height(30.dp))
 
                 var selectedWater by remember { mutableIntStateOf(0) }
                 Text(
@@ -76,34 +90,26 @@ fun FilterOverlay(
                     steps = 3,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
                 )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // Filter by sun exposure
+                var selectedSun by remember { mutableIntStateOf(0) }
                 Text(
-                    "Type:",
+                    "Filter by Sun Exposure: $selectedSun",
                     modifier = Modifier.align(Alignment.Start),
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
                 )
-                var selectedGrade by remember { mutableStateOf("") }
-
-                Row (verticalAlignment = Alignment.CenterVertically) {
-
-                    Checkbox(
-                        checked = selectedGrade == "Easy",
-                        onCheckedChange = { selectedGrade = if (it) "Easy" else "" })
-                    Text("Easy")
-                    Checkbox(
-                        checked = selectedGrade == "Medium",
-                        onCheckedChange = { selectedGrade = if (it) "Medium" else "" })
-                    Text("Medium")
-                    Checkbox(
-                        checked = selectedGrade == "Hard",
-                        onCheckedChange = { selectedGrade = if (it) "Hard" else "" })
-                    Text("Hard")
-                }
-
-
-
+                Slider(
+                    value = selectedSun.toFloat(),
+                    onValueChange = { selectedSun = it.toInt() },
+                    valueRange = 0f..10f,
+                    steps = 10,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                )
 
                 // Apply button
                 Button(
