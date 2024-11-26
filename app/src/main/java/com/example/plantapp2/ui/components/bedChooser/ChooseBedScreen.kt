@@ -5,10 +5,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.plantapp2.Data.Bed as Bed1
+import com.example.plantapp2.Data.generateSampleBeds
 
 @Composable
 fun ChooseBedScreen() {
+    val _bedList = generateSampleBeds()
+    val bedList = _bedList.toMutableList()
     //List of available beds
 
     LazyVerticalGrid(

@@ -9,11 +9,12 @@ import com.example.plantapp2.Data.Bed
 import com.example.plantapp2.Data.LocalPlant
 import com.example.plantapp2.Data.generateSamplePlants
 
+/*
 class ChoosePlantViewModel : ViewModel() {
     private val _localBed = MutableLiveData<List<Bed>>()
-    private val localPlants: LiveData<List<LocalPlant>> = _localPlants
+    private val localBed: LiveData<List<LocalPlant>> = _localBed
 
-    val bedList: LiveData<List<LocalPlant>> = localPlants.map { it.filter { plant -> plant.isFavorite } }
+    val bedList: LiveData<List<LocalPlant>> = localBed.map { beds ->   }
 
     private val _showFavoritePlants = MutableLiveData(true)
     val showFavoritePlants: LiveData<Boolean> = _showFavoritePlants
@@ -30,3 +31,5 @@ class ChoosePlantViewModel : ViewModel() {
         _showFavoritePlants.value = showFavorites
     }
 }
+
+ */

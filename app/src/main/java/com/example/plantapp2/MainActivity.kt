@@ -32,8 +32,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.plantapp2.ui.components.createBed.MainBedCreationScreen
-import com.example.plantapp2.ui.theme.CenteredBed
+import com.example.plantapp2.ui.theme.Bed
 import com.example.plantapp2.ui.theme.PlantInfoPage
 import com.example.plantapp2.ui.theme.Plantapp2Theme
 
@@ -53,7 +52,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             Plantapp2Theme {
-                CenteredBed(length = 240, width = 360)
+                Bed(length = 240, width = 360)
 
                 val navController = rememberNavController()
                 val item = listOf(
@@ -98,6 +97,7 @@ class MainActivity : ComponentActivity() {
                                             imageVector = if (selectedIremIndex == index) item.selectedIcon else item.unselectedIcon,
                                             contentDescription = item.title
                                         )
+
                                     }
                                 )
                             }
@@ -106,8 +106,7 @@ class MainActivity : ComponentActivity() {
 
                     ) { innerPadding ->
                         when (selectedIremIndex) {
-                            //0 -> CenteredBed(length = 240, width = 360)
-                            0 -> MainBedCreationScreen()
+                            0 -> Bed(length = 240, width = 360)
                             1 -> NavHost(
                                 navController = navController,
                                 startDestination = "affirmations"
@@ -139,7 +138,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         Plantapp2Theme {
-            CenteredBed(length = 240, width = 360)
+            Bed(length = 240, width = 360)
         }
     }
 }
