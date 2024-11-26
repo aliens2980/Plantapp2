@@ -39,8 +39,7 @@ fun PlantList(
                     .padding(8.dp)
                     .clickable {
                         navController.navigate("plantPage/${plant.name}")
-                    },
-                navController = navController
+                    }
             )
         }
     }

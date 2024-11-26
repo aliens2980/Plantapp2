@@ -141,7 +141,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                         .fillMaxWidth()
                         .align(Alignment.Start)
                 ) {
-                    BackButton(navController = navController, modifier = Modifier)
+                    BackButton(navController = navController)
                 }
 
                 Spacer(modifier = Modifier.height(1.dp))
@@ -149,7 +149,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                 // Plant Image
                 imageUrl?.let {
                     PlantImage(
-                        url = it, modifier = Modifier
+                        url = it
                     )
                 }
 
@@ -166,7 +166,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                             ) // Align to the start with some padding
                     ) {
                         if (plantName != null) {
-                            PageTitle(name = plantName, modifier = Modifier.align(Alignment.Start))
+                            PageTitle(name = plantName)
                         }
 
                         Row(
@@ -177,13 +177,12 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
 
                             nameLatin?.let { latinName ->
                                 PageTitleLatin(
-                                    nameLatin = latinName,
-                                    modifier = Modifier.weight(1f)
+                                    nameLatin = latinName
                                 )
                             }
                             Spacer(modifier = Modifier.width(120.dp))
 
-                            LikeImage(modifier = Modifier.size(50.dp))
+                            LikeImage()
                         }
 
                     }
@@ -197,7 +196,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                     // Info Section
                     info?.let {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            InformationImage(modifier = Modifier.size(48.dp))
+                            InformationImage()
                             Spacer(modifier = Modifier.width(8.dp))
                             InfoText(information = it)
                         }
@@ -208,7 +207,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                     // Grading Section
                     gradeText?.let {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            GradeImage(modifier = Modifier.size(48.dp))
+                            GradeImage()
                             Spacer(modifier = Modifier.width(8.dp))
                             GradeText(information = it)
                         }
@@ -219,7 +218,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                     // Watering Section
                     water?.let {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            WaterCanImage(modifier = Modifier.size(48.dp))
+                            WaterCanImage()
                             Spacer(modifier = Modifier.width(8.dp))
                             WaterCanText(information = it)
                         }
@@ -230,14 +229,14 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                     // Sunlight Section
                     sun?.let {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            SunImage(modifier = Modifier.size(48.dp))
+                            SunImage()
                             Spacer(modifier = Modifier.width(8.dp))
                             SunText(information = it)
                         }
                     }
 
                     lorem.let {Row(verticalAlignment = Alignment.CenterVertically) {
-                        SunImage(modifier = Modifier.size(48.dp))
+                        SunImage()
                         Spacer(modifier = Modifier.width(8.dp))
                         Lorem(information = it)
                     }
@@ -256,7 +255,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
 
 //The name of the plant
 @Composable
-fun PageTitle(name: String, modifier: Modifier) {
+fun PageTitle(name: String) {
     val textBoxModifier = Modifier
         //.offset(x = 20.dp, y = 260.dp)   //to move the text box
     Text(
@@ -276,7 +275,7 @@ fun PageTitle(name: String, modifier: Modifier) {
 
 //The name of the plant
 @Composable
-fun PageTitleLatin(nameLatin: String, modifier: Modifier) {
+fun PageTitleLatin(nameLatin: String) {
     Text(
         text = " $nameLatin",
         modifier = Modifier,
@@ -293,7 +292,7 @@ fun PageTitleLatin(nameLatin: String, modifier: Modifier) {
 
 
 @Composable
-fun PlantImage(url: String, modifier: Modifier = Modifier) {
+fun PlantImage(url: String) {
     Box(
         modifier = Modifier
             .offset(x = 150.dp, y = 10.dp) // Position the entire component
@@ -344,7 +343,7 @@ fun PlantImage(url: String, modifier: Modifier = Modifier) {
 
 //Information image about the best matched plants
 @Composable
-fun InformationImage(modifier: Modifier) {
+fun InformationImage() {
     val boxModifier = Modifier   //how to move the box with the potato image around
         //.offset(x = 20.dp, y = 360.dp)
     Box(
@@ -391,7 +390,7 @@ fun InfoText(information: String, modifier: Modifier = Modifier) {
 
 //Watering amount image
 @Composable
-fun WaterCanImage(modifier: Modifier) {
+fun WaterCanImage() {
     val boxModifier = Modifier   //how to move the box with the potato image around
         //.offset(x = 15.dp, y = 510.dp)
     Box(
@@ -442,7 +441,7 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
 
 //Sun image to show how much sun the plant needs
 @Composable
-fun SunImage(modifier: Modifier) {
+fun SunImage() {
     val boxModifier = Modifier   //how to move the box with the potato image around
         //.offset(x = 20.dp, y = 600.dp)
     Box(
@@ -494,10 +493,10 @@ fun SunText(information: Int, modifier: Modifier = Modifier) {
 
 //Grade scale image to show if its easy or hard
 @Composable
-fun GradeImage(modifier: Modifier) {
+fun GradeImage() {
     val boxModifier = Modifier   //how to move the box with the potato image around
         //.offset(x = 20.dp, y = 440.dp)
-    val imageModifierGrade = Modifier
+    Modifier
         .size(width = 70.dp, height = 70.dp)
         .border(BorderStroke(1.dp, Color.Black))
         .background(Color.Blue)
@@ -581,9 +580,9 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 
 
 @Composable
-fun LikeImage(modifier : Modifier = Modifier){
+fun LikeImage() {
     var isSelect by remember { mutableStateOf(false) }
-    val iconModifier = Modifier
+    Modifier
         //.size(50.dp)
         .clickable { isSelect = !isSelect }
 
@@ -616,7 +615,7 @@ fun LikeImage(modifier : Modifier = Modifier){
 
 
 @Composable
-fun BackButton(navController: NavController, modifier: Modifier) {
+fun BackButton(navController: NavController) {
     Box (
         modifier = Modifier
             .fillMaxSize()
