@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -86,7 +87,8 @@ fun ScrollablePlantList(
                         contentDescription = "Close Icon"
                     )
                 },
-                singleLine = true
+                singleLine = true,
+                shape = RoundedCornerShape(25.dp)
             )
             Column {
                 IconButton(
@@ -131,7 +133,7 @@ fun ScrollablePlantList(
         )
 
         // Plant list or feedback
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(2.dp))
         when {
             response == null -> {
                 Box(modifier = Modifier.fillMaxSize()){
