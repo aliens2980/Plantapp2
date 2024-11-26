@@ -138,7 +138,7 @@ fun ScrollablePlantList(
             }
 
             else -> {
-                Text("No plants match your filters.", modifier = Modifier.padding(16.dp))
+                Text("No results", modifier = Modifier.padding(16.dp))
             }
         }
     }
