@@ -33,9 +33,6 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun FilterScreen(navController: NavHostController) {
 
-
-
-
     Scaffold { contentPadding ->
         Row (modifier = Modifier.padding(4.dp)) {
             IconButton(onClick = {navController.popBackStack()},
