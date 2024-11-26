@@ -90,8 +90,6 @@ fun ScrollablePlantList(
             }
         }
 
-
-
         // Filter overlay
         FilterOverlay(
             showOverlay = showFilterOverlay,

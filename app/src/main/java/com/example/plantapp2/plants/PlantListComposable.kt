@@ -1,5 +1,5 @@
 package com.example.plantapp2.plants
-
+/*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -48,3 +48,4 @@ fun PlantsScreen(viewModel: PlantsViewModel = viewModel()) {
         }
     }
 }
+*/

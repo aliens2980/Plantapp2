@@ -39,7 +39,7 @@ import com.example.plantapp2.ui.theme.CenteredBed
 import com.example.plantapp2.ui.theme.PlantInfoPage
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.plantapp2.plants.PlantsScreen
+//import com.example.plantapp2.plants.PlantsScreen
 //import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.ui.theme.Plantapp2Theme
