@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,17 +44,17 @@ fun ScrollablePlantList(
     var showFilterOverlay by remember { mutableStateOf(false) }
 
     // States for applied filters
-    var filterText by rememberSaveable { mutableStateOf("") }
-    var sunExposure by rememberSaveable { mutableStateOf(0) }
+    var sunExposure by rememberSaveable { mutableIntStateOf(0) }
     var grade by rememberSaveable { mutableStateOf("") }
+    var waterNeeds by rememberSaveable { mutableIntStateOf(0) }
 
     // Filtering logic
     val filteredPlants = response?.plants?.filter { plant ->
         val matchesSearch = searchQuery.isBlank() || plant.doesMatchSearchQuery(searchQuery)
-        val matchesFilterText = filterText.isBlank() || plant.name.contains(filterText, ignoreCase = true)
         val matchesSunExposure = sunExposure == 0 || plant.sun == sunExposure
+        val matchesWaterNeeds = waterNeeds == 0 || plant.water == waterNeeds
         val matchesSelectedGrade = grade.isBlank() || plant.gradeText.equals(grade, ignoreCase = true)
-        matchesSearch && matchesFilterText && matchesSunExposure && matchesSelectedGrade
+        matchesSearch  && matchesSunExposure && matchesWaterNeeds && matchesSelectedGrade
     } ?: response?.plants ?: emptyList() // Show all plants by default if no filters are applied
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -66,7 +67,7 @@ fun ScrollablePlantList(
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Search for plants") },
+                label = { Text("Search...") },
                 modifier = Modifier.weight(1f)
             )
             Column {
@@ -103,9 +104,9 @@ fun ScrollablePlantList(
         // Filter overlay
         FilterOverlay(
             showOverlay = showFilterOverlay,
-            onFilterApply = { nameFilter, sunFilter, gradeFilter ->
-                filterText = nameFilter
+            onFilterApply = {  sunFilter, waterFilter, gradeFilter ->
                 sunExposure = sunFilter
+                waterNeeds = waterFilter
                 grade = gradeFilter
                 showFilterOverlay = false // Close the overlay
             }

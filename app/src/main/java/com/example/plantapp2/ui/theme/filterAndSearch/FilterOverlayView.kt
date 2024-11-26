@@ -1,5 +1,6 @@
 package com.example.plantapp2.ui.theme.filterAndSearch
 
+import android.graphics.Paint.Align
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
@@ -8,6 +9,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterStart
+import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -21,7 +24,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun FilterOverlay(
     showOverlay: Boolean,
-    onFilterApply: (String, Int, String) -> Unit // Lambda to handle filter application
+    onFilterApply: (Int, Int, String) -> Unit // Lambda to handle filter application
 ) {
     if (showOverlay) {
         Box(
@@ -38,21 +41,17 @@ fun FilterOverlay(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Apply Filters", style = MaterialTheme.typography.bodySmall)
-
-                // Filter by name
-                var filterText by remember { mutableStateOf(TextFieldValue("")) }
-                BasicTextField(
-                    value = filterText,
-                    onValueChange = { filterText = it },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                    singleLine = true
-                )
-                Text("Filter by Name: ${filterText.text}")
 
                 // Filter by sun exposure
-                var selectedSun by remember { mutableStateOf(0) }
-                Text("Filter by Sun Exposure: $selectedSun")
+                var selectedSun by remember { mutableIntStateOf(0) }
+                Text(
+                "Filter by Sun Exposure: $selectedSun",
+                    modifier = Modifier.align(Alignment.Start),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                )
                 Slider(
                     value = selectedSun.toFloat(),
                     onValueChange = { selectedSun = it.toInt() },
@@ -60,8 +59,26 @@ fun FilterOverlay(
                     steps = 10,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
                 )
+
+                var selectedWater by remember { mutableIntStateOf(0) }
+                Text(
+                    "Filter by Watering Needs: $selectedWater",
+                    modifier = Modifier.align(Alignment.Start),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                )
+                Slider(
+                    value = selectedWater.toFloat(),
+                    onValueChange = { selectedWater = it.toInt() },
+                    valueRange = 0f..3f,
+                    steps = 3,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                )
                 Text(
                     "Type:",
+                    modifier = Modifier.align(Alignment.Start),
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
@@ -91,7 +108,7 @@ fun FilterOverlay(
                 // Apply button
                 Button(
                     onClick = {
-                        onFilterApply(filterText.text, selectedSun, selectedGrade)
+                        onFilterApply( selectedSun, selectedWater, selectedGrade)
                     },
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
