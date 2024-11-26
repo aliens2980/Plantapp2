@@ -9,7 +9,7 @@ data class Plant(
     val informationImg: String = "",
     val name: String = "",
     val nameLatin: String = "",
-    val prio: String = "",
+    val prio: List<String> = emptyList(),
     val sun: Int? = null,
     val water: Int? = null
 ) {
