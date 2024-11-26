@@ -1,6 +1,5 @@
 package com.example.plantapp2.ui.theme.plantPage
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,7 +33,7 @@ import com.example.plantapp2.plants.PlantsViewModel
 
 /**
  * @author s235064
- * @param PlantPage
+ * @param //PlantPage
  * @return the information page of a plant
  */
 
@@ -108,7 +106,7 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Column () {
+                            Column {
                                 if (plantName != null) {
                                     PageTitle(name = plantName)
                                 }

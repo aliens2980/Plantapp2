@@ -27,7 +27,6 @@ fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
         modifier = modifier,
         shape = RoundedCornerShape(12.dp), // Rounded corners for the card
         colors = CardDefaults.cardColors(Color(0xFFDAD7CD))
-        //elevation = 4.dp // Add elevation for shadow effect
     ) {
         Column {
             AsyncImage(
@@ -41,7 +40,6 @@ fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
             Text(
                 text = plant.name,
                 modifier = Modifier.padding(16.dp),
-                //style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Start, // Align text to the star
                 style = TextStyle (
                     fontSize = 25.sp,

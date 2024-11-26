@@ -20,7 +20,6 @@ fun PlantList(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-
     // Default to empty list if plantList is null
     val nonNullPlantList = plantList ?: emptyList()
 
