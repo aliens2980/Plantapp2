@@ -18,11 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.data.Plant
 
 @Composable
-fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
+fun PlantCard(plant: Plant, modifier: Modifier = Modifier, navController: NavController) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(12.dp), // Rounded corners for the card

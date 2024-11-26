@@ -27,9 +27,10 @@ class PlantsViewModel (
     suspend fun getPlantDetailsByName(name: String): Plant? {
         return repository.getPlantByName(name)
     }
+}
 
 
-
+/*
     private val _searchText = MutableStateFlow("")
     val searchText =_searchText.asStateFlow()
 
@@ -70,3 +71,5 @@ class PlantsViewModel (
     }
      */
 }
+
+ */

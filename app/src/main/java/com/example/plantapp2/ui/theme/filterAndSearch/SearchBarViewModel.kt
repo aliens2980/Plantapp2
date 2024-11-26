@@ -2,6 +2,7 @@ package com.example.plantapp2.ui.theme.filterAndSearch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.plantapp2.data.Response
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,24 +14,26 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.time.debounce
 
+/*
 @OptIn(FlowPreview::class)
 class SearchBarViewModel: ViewModel() {
 
+
     private val _searchText = MutableStateFlow("")
-    val searchText =_searchText.asStateFlow()
+    val searchText = _searchText.asStateFlow()
 
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
-    private val _plants = MutableStateFlow(plant)
-    val plantss = searchText
+    private val _plants = MutableStateFlow(Response.plants)
+    val plants = searchText
         //.debounce(500L)
         //.onEach { _isSearching.update { true } }
-        .combine(_plants) {text, plantss ->
-            if(text.isBlank()) {
-                plantss
+        .combine(_plants) { text, plants ->
+            if (text.isBlank()) {
+                plants
             } else {
-                plantss.filter {
+                plants?.filter {
                     it.doesMatchSearchQuery(text)
                 }
             }
@@ -41,11 +44,12 @@ class SearchBarViewModel: ViewModel() {
             SharingStarted.WhileSubscribed(5000),
             _plants.value
         )
+
     fun onSearchTextChange(text: String) {
         _searchText.value = text
     }
 }
-
+/*
 data class Plants(
     val name: String,
     val type: String,
@@ -78,3 +82,7 @@ private val plant = listOf(
     Plants("Tomato", "Grøntsag", "Rød", 80.0, 50.0, true,"\uD83C\uDF45"),
     Plants("Agurk", "Grøntsag", "Grøn", 25.0, 30.0, false,"\uD83E\uDD52")
 )
+
+
+ */
+ */

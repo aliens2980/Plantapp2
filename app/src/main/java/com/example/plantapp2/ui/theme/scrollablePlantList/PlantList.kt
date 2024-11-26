@@ -16,7 +16,7 @@ import com.example.plantapp2.data.Plant
 
 @Composable
 fun PlantList(
-    plantList: List<Plant>?,
+    plantList: List<Plant>,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -39,7 +39,8 @@ fun PlantList(
                     .padding(8.dp)
                     .clickable {
                         navController.navigate("plantPage/${plant.name}")
-                    }
+                    },
+                navController = navController
             )
         }
     }

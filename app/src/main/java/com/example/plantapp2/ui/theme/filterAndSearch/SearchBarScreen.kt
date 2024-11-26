@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
+/*
 @Composable
 fun MainSearch() {
     val viewModel = viewModel<SearchBarViewModel>()
     val searchText by viewModel.searchText.collectAsState()
-    val plants by viewModel.plantss.collectAsState()
+    //val plants by viewModel.plantss.collectAsState()
     val isSearching by viewModel.isSearching.collectAsState()
     Column(
         modifier = Modifier
@@ -66,8 +66,12 @@ fun MainSearch() {
     }
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun SearchScreenPreview (){
     MainSearch()
 }
+
+        */

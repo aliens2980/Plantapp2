@@ -41,7 +41,10 @@ fun MainSearch(navController: NavHostController) {
         mutableStateOf("")
     }
     var active by remember { mutableStateOf(false) }
+}
 
+
+    /*
     data class Plant(
         val name: String,
         val type: String,
@@ -155,3 +158,5 @@ fun MainSearch(navController: NavHostController) {
 fun SearchBarPreview (){
     MainSearch(navController = rememberNavController())
 }
+
+     */
