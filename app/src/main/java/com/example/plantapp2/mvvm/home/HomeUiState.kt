@@ -6,5 +6,4 @@ import com.example.plantapp2.data.Plant
 data class HomeUiState(
     val plants: MutableList<Plant> = mutableListOf(),
     val grid: MutableList<Boolean> = mutableListOf()
-
 )

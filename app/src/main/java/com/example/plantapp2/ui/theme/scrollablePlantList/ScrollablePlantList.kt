@@ -1,5 +1,6 @@
 package com.example.plantapp2.ui.theme.scrollablePlantList
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -81,12 +82,14 @@ fun ScrollablePlantList(
                         contentDescription = "Search Icon"
                     )
                 },
-                trailingIcon ={
+                trailingIcon = if(searchQuery.isNotEmpty()) {
+                {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close Icon"
+                        contentDescription = "Close Icon",
+                        modifier = Modifier.clickable{searchQuery = ""}
                     )
-                },
+                }} else null,
                 singleLine = true,
                 shape = RoundedCornerShape(25.dp)
             )

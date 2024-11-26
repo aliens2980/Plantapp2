@@ -21,7 +21,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,11 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.plantapp2.data.BottomNavItem
 import com.example.plantapp2.ui.theme.bed.CenteredBed
 import com.example.plantapp2.ui.theme.plantPage.PlantInfoPage
-import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
-import com.example.plantapp2.data.BottomNavItem
+import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                         unselectedIcon = Icons.Outlined.Settings
                     )
                 )
-                var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+                var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
                 Scaffold(
                     bottomBar = {

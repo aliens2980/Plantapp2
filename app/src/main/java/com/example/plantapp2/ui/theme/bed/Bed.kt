@@ -41,7 +41,7 @@ import com.example.plantapp2.ui.theme.styling.darkGreen
 
 /**
  *@author s235064
- * @param CenteredBed
+ * @param //CenteredBed
  *
  */
 
