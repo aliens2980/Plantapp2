@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.plantapp2.ui.theme.Bed
+import com.example.plantapp2.ui.theme.bed.Bed
 
 import org.junit.Test
 import org.junit.runner.RunWith
