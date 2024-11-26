@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -71,7 +73,20 @@ fun ScrollablePlantList(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
                 label = { Text("Search...") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                },
+                trailingIcon ={
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                },
+                singleLine = true
             )
             Column {
                 IconButton(
