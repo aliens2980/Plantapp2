@@ -1,20 +1,8 @@
 package com.example.plantapp2.plants
 
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import com.example.plantapp2.data.Plant
-import com.example.plantapp2.data.Response
 //import com.example.plantapp2.data.FirebaseCallback
-import com.example.plantapp2.plants.PlantsRepository
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
+import androidx.lifecycle.ViewModel
+import com.example.plantapp2.data.Plant
 
 class PlantsViewModel (
     private val repository: PlantsRepository = PlantsRepository()

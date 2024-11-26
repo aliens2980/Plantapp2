@@ -1,12 +1,9 @@
 package com.example.plantapp2.data
 
 data class Plant(
-    val depth: Int? = null,
-    val gradeImg: String = "",
     val gradeText: String = "",
     val img: String = "",
     val info: String = "",
-    val informationImg: String = "",
     val name: String = "",
     val nameLatin: String = "",
     val prio: List<String> = emptyList(),
@@ -16,17 +13,14 @@ data class Plant(
     fun doesMatchSearchQuery(query: String): Boolean {
         val matchingCombinations = listOf(
         "${name.first()}",
-        "$name ${depth.toString()}",
         "${nameLatin.first()}",
-        "$name $prio",
-        "$name ${sun.toString()}"
+        "$name ${sun.toString()}",
+        "$name ${water.toString()}",
+        "$name $gradeText"
         )
         return matchingCombinations.any {
             it.contains(query, ignoreCase = true)
         }
     }
-
-
-
 }
 
