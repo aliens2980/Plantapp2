@@ -199,10 +199,10 @@ fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
 
         Text(
             text = "Must be watered (inches per week): $information",
-            modifier = Modifier,
+            modifier = Modifier
                 //.widthIn(max = maxWidth)
                 //.heightIn(max = maxHeight)
-                //.padding(4.dp),
+                .padding(4.dp),
             style = TextStyle(   //to edit and customize the text inside
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Light,

@@ -122,15 +122,18 @@ fun ScrollablePlantList(
         }
 
         // Filter overlay
-        FilterOverlay(
-            showOverlay = showFilterOverlay,
-            onFilterApply = {  sunFilter, waterFilter, gradeFilter ->
-                sunExposure = sunFilter
-                waterNeeds = waterFilter
-                grade = gradeFilter
-                showFilterOverlay = false // Close the overlay
-            }
-        )
+        if (showFilterOverlay) {
+            FilterOverlay(
+                showOverlay = true,
+                onFilterApply = { sunFilter, waterFilter, gradeFilter ->
+                    sunExposure = sunFilter
+                    waterNeeds = waterFilter
+                    grade = gradeFilter
+                    showFilterOverlay = false // Close the overlay after applying filters
+                },
+                onClose = { showFilterOverlay = false } // Close the overlay when the close button is clicked
+            )
+        }
 
         // Plant list or feedback
         Spacer(modifier = Modifier.height(2.dp))

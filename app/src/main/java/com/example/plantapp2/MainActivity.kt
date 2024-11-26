@@ -108,6 +108,8 @@ class MainActivity : ComponentActivity() {
                                 getPlantName = plantName
                             )
                         }
+
+
                     }
                 }
             }
