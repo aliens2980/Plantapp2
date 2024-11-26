@@ -205,14 +205,51 @@ fun GridCell(
             .clickable { onClick() }
             .testTag("Cell-$row-$column")
     ) {
+        // Check if this is the specific tile for potatoes
+        if (row == 2 && column == 3) {
+            // Show potato image for the hardcoded tile
+            Image(
+                painter = painterResource(id = R.drawable.potato_bed), // Potato image
+                contentDescription = "Potato plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else if (row == 1 && column == 1){
+            // Default to the dirt image
+            Image(
+                painter = painterResource(id = R.drawable.celery_bed), // Celery image
+                contentDescription = "celery plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else if (row == 1 && column == 4){
+            // Default to the dirt image
+            Image(
+                painter = painterResource(id = R.drawable.cauliflower_bed), // Cauliflower image
+                contentDescription = "cauliflower plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else if (row == 2 && column == 1){
+            // Default to the dirt image
+            Image(
+                painter = painterResource(id = R.drawable.tomato_bed), // Tomato image
+                contentDescription = "tomato plant",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        } else {
+        // Default to the dirt image
         Image(
             painter = painterResource(id = R.drawable.dirt),
-            contentDescription = "Grid cell image",
+            contentDescription = "Dirt tile",
             contentScale = ContentScale.Crop,
-            modifier = Modifier  //.fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         )
     }
+    }
 }
+
 
 
 
