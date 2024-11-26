@@ -25,8 +25,5 @@ data class Plant(
             it.contains(query, ignoreCase = true)
         }
     }
-
-
-
 }
 

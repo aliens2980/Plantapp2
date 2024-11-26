@@ -31,10 +31,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.ui.theme.bed.CenteredBed
 import com.example.plantapp2.ui.theme.plantPage.PlantInfoPage
-//import com.example.plantapp2.navigation.components.PlantNavGraph
 import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
 import com.example.plantapp2.data.BottomNavItem
+import com.example.plantapp2.ui.settings.SettingsMainScreen
+import com.example.plantapp2.ui.settings.addBed.BedCreationViewModel
+import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +72,21 @@ class MainActivity : ComponentActivity() {
                             items.forEachIndexed { index, item ->
                                 NavigationBarItem(
                                     selected = selectedItemIndex == index,
-                                    onClick = { selectedItemIndex = index },
+                                    onClick = {
+                                        selectedItemIndex = index
+                                        // Navigate to the appropriate screen
+                                        when (index) {
+                                            0 -> navController.navigate("centeredBed") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                            1 -> navController.navigate("affirmations") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                            2 -> navController.navigate("settings") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                        }
+                                    },
                                     label = { Text(text = item.title) },
                                     icon = {
                                         Icon(
@@ -107,6 +123,18 @@ class MainActivity : ComponentActivity() {
                                 modifier = Modifier.fillMaxSize(),
                                 navController = navController,
                                 getPlantName = plantName
+                            )
+                        }
+                        composable("settings") {
+                            SettingsMainScreen(
+                                onProfileEdit = { /* Add navigation or action */ },
+                                onViewBeds = { navController.navigate("createBed") }
+                            )
+                        }
+                        composable("createBed") {
+                            MainBedCreationScreen(
+                                onSaveBed = { navController.popBackStack() }, // Return to Settings after saving
+                                onCancel = { navController.popBackStack() }   // Return to Settings on cancel
                             )
                         }
                     }
