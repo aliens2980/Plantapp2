@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.mvvm.home.GridViewModel
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 
 /**
@@ -280,7 +281,7 @@ fun DottedLine() {
         var startX = 0f
         while (startX < canvasWidth) {
             drawLine(
-                color = Color(0xFF344e41),
+                color = darkGreen,
                 start = androidx.compose.ui.geometry.Offset(startX, 0f),
                 end = androidx.compose.ui.geometry.Offset(startX + lineLength, 0f),
                 strokeWidth = 2.dp.toPx()
