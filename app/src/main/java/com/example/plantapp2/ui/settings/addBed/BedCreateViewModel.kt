@@ -52,6 +52,4 @@ class BedCreationViewModel : ViewModel() {
             Log.e("BedCreation", "Error saving bed: ${e.message}", e)
         }
     }
-
-
 }

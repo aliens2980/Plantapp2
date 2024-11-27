@@ -26,6 +26,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -73,7 +74,6 @@ class MainActivity : ComponentActivity() {
                                     selected = selectedItemIndex == index,
                                     onClick = {
                                         selectedItemIndex = index
-                                        // Navigate to the appropriate screen
                                         when (index) {
                                             0 -> navController.navigate("centeredBed") {
                                                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
@@ -126,8 +126,8 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("settings") {
                             SettingsMainScreen(
-                                onProfileEdit = { /* Add navigation or action */ },
-                                onViewBeds = { navController.navigate("createBed") }
+                                context = LocalContext.current,
+                                onViewBeds = { navController.navigate("createBed") } // Navigate to createBed
                             )
                         }
                         composable("createBed") {

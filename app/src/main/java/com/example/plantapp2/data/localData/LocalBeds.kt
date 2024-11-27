@@ -10,7 +10,7 @@ data class LocalBeds(
     val length: Int,
     val width: Int,
     val selectedCells: List<Pair<Int, Int>>,
-    val plants: Map<LocalPlant, PlaceInBed> // Map of plants and their positions
+    val plants: Map<LocalPlant, Int> = emptyMap() // Ensure default value is an empty map
 )
 
 

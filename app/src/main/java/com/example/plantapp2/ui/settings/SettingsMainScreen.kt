@@ -3,24 +3,27 @@ package com.example.plantapp2.ui.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.ui.settings.components.SettingsBeds
 import com.example.plantapp2.ui.settings.components.SettingsProfile
+import android.content.Context
 
 
 
 @Composable
 fun SettingsMainScreen(
-    onProfileEdit: () -> Unit = {},
     onViewBeds: () -> Unit, // Pass navigation callback
-    viewModel: SettingsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    context: Context,
 ) {
+    val viewModel: SettingsViewModel = viewModel(
+        factory = SettingsViewModelFactory(context )
+    )
     var isProfileExpanded by remember { mutableStateOf(false) }
     var isBedsExpanded by remember { mutableStateOf(false) }
 
@@ -66,12 +69,12 @@ fun SettingsMainScreen(
                     text = "Beds",
                     style = MaterialTheme.typography.headlineSmall
                 )
+
             }
             if (isBedsExpanded) {
                 SettingsBeds(
                     onAddBedClicked = onViewBeds, // Pass navigation callback here
-                    viewModel = viewModel
-                )
+                    viewModel = viewModel                )
             }
         }
     }
