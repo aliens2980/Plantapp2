@@ -1,10 +1,11 @@
 package com.example.plantapp2.data.localData
 
-data class LocalPlant(
-    val name: String,
-    val image: Int,
-    var isFavorite: Boolean, // Mutable to allow toggling favorite status
-    val size: Int, // Represents the size of the plant
-    val compatiblePlants: List<String> = emptyList() // List of plant names it works well with
-)
+import kotlinx.serialization.Serializable
 
+@Serializable
+data class LocalPlant(
+    val id: Int,
+    val name: String,
+    val isLiked: Boolean,
+    val details: String // Add other properties as needed
+)

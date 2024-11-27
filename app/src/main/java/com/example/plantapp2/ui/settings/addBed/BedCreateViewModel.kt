@@ -1,7 +1,9 @@
 package com.example.plantapp2.ui.settings.addBed
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.localData.LocalBeds
+import com.example.plantapp2.utils.saveJsonToFile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -32,22 +34,24 @@ class BedCreationViewModel : ViewModel() {
         _bedName.value = name
     }
 
-    fun saveBed() {
-        val name = _bedName.value
-        val length = _bedLength.value
-        val width = _bedWidth.value
+    fun saveBed(context: Context, selectedCells: List<Pair<Int, Int>>) {
+        val length = bedLength.value
+        val width = bedWidth.value
+        val name = bedName.value
 
-        if (name.isNotBlank() && length > 0 && width > 0) {
-            _newBed = LocalBeds(
-                id = 0, // Replace with unique ID generator
+        if (name.isNotBlank() && selectedCells.isNotEmpty()) {
+            val bed = LocalBeds(
+                id = System.currentTimeMillis().toInt(),
                 name = name,
                 length = length,
                 width = width,
-                plantsInBed = mutableListOf()
+                selectedCells = selectedCells,
+                plants = mapOf() // Placeholder for plant mappings
             )
-            println("Bed saved: $name, Length: $length, Width: $width")
+            saveJsonToFile(context, "bed_${bed.id}.json", bed)
+            println("Bed saved locally: $bed")
         } else {
-            println("Failed to save bed. Please check your inputs.")
+            println("Failed to save bed. Name or cells are invalid.")
         }
     }
 }

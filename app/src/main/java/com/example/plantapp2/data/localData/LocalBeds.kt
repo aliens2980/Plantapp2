@@ -1,11 +1,15 @@
 package com.example.plantapp2.data.localData
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LocalBeds(
     val id: Int,
     val name: String,
-    val length: Int, // Number of rows
-    val width: Int, // Number of columns
-    val plantsInBed: MutableList<CellPlant> = mutableListOf() // Mutable for dynamic updates
+    val length: Int,
+    val width: Int,
+    val selectedCells: List<Pair<Int, Int>>, // List of selected cells
+    val plants: Map<Pair<Int, Int>, String> // Map of cell coordinates to plant IDs
 )
 
 data class CellPlant(

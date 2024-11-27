@@ -37,12 +37,20 @@ class BedDimensionsViewModel : ViewModel() {
         _cellState.value = List(rows) { MutableList(cols) { false } }
     }
 
-
     fun toggleCell(row: Int, col: Int) {
         val grid = _cellState.value.map { it.toMutableList() }.toMutableList()
         grid[row][col] = !grid[row][col]
         _cellState.value = grid
     }
+
+    fun getSelectedCells(): List<Pair<Int, Int>> {
+        return cellState.value.flatMapIndexed { rowIndex, row ->
+            row.mapIndexedNotNull { colIndex, isSelected ->
+                if (isSelected) rowIndex to colIndex else null
+            }
+        }
+    }
+
 
     fun applySelectAll() {
         _cellState.value = _cellState.value.map { row -> row.map { true }.toMutableList() }
@@ -66,11 +74,14 @@ class BedDimensionsViewModel : ViewModel() {
     fun applyLShapeFill() {
         val rows = _cellState.value.size
         val cols = _cellState.value.firstOrNull()?.size ?: 0
+        val halfRows = (rows / 2).coerceAtLeast(1) // Top half of rows
+        val halfCols = (cols / 2).coerceAtLeast(1) // Left half of columns
 
         _cellState.value = List(rows) { row ->
             MutableList(cols) { col ->
-                row == 0 || col == 0 // Fill the top row and leftmost column
+                row < halfRows || col < halfCols // Fill top half rows or left half columns
             }
         }
     }
 }
+

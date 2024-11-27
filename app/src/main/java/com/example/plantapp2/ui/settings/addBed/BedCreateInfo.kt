@@ -41,14 +41,14 @@ fun BedCreationInfo(
             placeholder = { Text("Enter bed name") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 8.dp)
         )
 
         // Bed Dimensions Inputs
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 4.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             // Length Input
