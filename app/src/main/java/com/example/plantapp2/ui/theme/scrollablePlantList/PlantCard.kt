@@ -23,12 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.plantapp2.data.Plant
+import com.example.plantapp2.plants.PlantsViewModel
 import com.example.plantapp2.ui.theme.plantPage.LikeImage
 
 @Composable
-fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
+fun PlantCard(plant: Plant, modifier: Modifier = Modifier, viewModel: PlantsViewModel) {
     val context = LocalContext.current
     Card(
         modifier = modifier,
@@ -58,7 +60,7 @@ fun PlantCard(plant: Plant, modifier: Modifier = Modifier) {
                 )
                 Spacer(Modifier.weight(1f))
 
-                LikeImage(plantName = plant.name, context = context) }
+                LikeImage(plant = plant, viewModel = viewModel) }
 
         }
     }

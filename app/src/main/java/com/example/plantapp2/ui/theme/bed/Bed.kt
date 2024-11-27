@@ -124,7 +124,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             DottedLine()
             Spacer(modifier = Modifier.height(8.dp))
             FavoritePlantsScreen(context = LocalContext.current) // Pass the context
-            Row(            modifier = Modifier.horizontalScroll(rememberScrollState()) // Main vertical scrolling for the page
+            Row( modifier = Modifier.horizontalScroll(rememberScrollState()) // Main vertical scrolling for the page
             ) {
                 FavoritePlantList(context = context)
             }

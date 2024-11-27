@@ -11,14 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.plantapp2.data.Plant
+import com.example.plantapp2.plants.PlantsViewModel
 
 @Composable
 fun PlantList(
     plantList: List<Plant>,
     navController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: PlantsViewModel
 ) {
     // Default to empty list if plantList is null
     val nonNullPlantList = plantList ?: emptyList()
@@ -33,6 +36,7 @@ fun PlantList(
         items(nonNullPlantList) { plant ->
             PlantCard(
                 plant = plant,
+                viewModel = viewModel,
                 modifier = Modifier
                     .fillMaxWidth() // Ensure card spans the full width
                     .padding(8.dp)

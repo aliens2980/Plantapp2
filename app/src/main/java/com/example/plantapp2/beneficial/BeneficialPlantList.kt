@@ -13,6 +13,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -23,20 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.plantapp2.data.localData.LocalPlant
 import com.example.plantapp2.favorite.getPlantByName
+import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
-fun BeneficialPlantList (context: Context) {
-    val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
-    val priorityList = sharedPrefs.all.filter { it.value as? Boolean == true }.keys
+fun BeneficialPlantScroll (viewModel: FavoritePlantsViewModel) {
+    val favoritePlants by viewModel.favoritePlants.observeAsState(emptyList())
     var result = mutableListOf<String>()
-    priorityList.forEach{plantName ->
-        val prioPlant = getPlantByName(plantName)
-        prioPlant?.prio?.forEach{ element ->
-            result = (result + element).toMutableList()
-        }
-    }
-    result = result.distinct().toMutableList()
 
     Row (modifier = Modifier.fillMaxWidth().background(Color(0xFF344e41)) //background color
     ) {
@@ -92,3 +88,5 @@ fun BeneficialPlantList (context: Context) {
         }
     }
 }
+
+

@@ -1,6 +1,7 @@
 package com.example.plantapp2.plants.favorites
 
 import android.content.Context
+import androidx.compose.runtime.Composable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,5 +39,15 @@ class FavoritePlantsViewModel(private val context: Context) : ViewModel() {
             _favoritePlants.value = emptyList()
         }
     }
+
+    private fun loadPrioritisedList(listOfFavPlants: List<LocalPlant>) {
+        listOfFavPlants.forEach{plant ->
+            plant.priority.forEach{ element ->
+                result = (result + element).toMutableList()
+            }
+        }
+        result = result.distinct().toMutableList()
+    }
+
 }
 

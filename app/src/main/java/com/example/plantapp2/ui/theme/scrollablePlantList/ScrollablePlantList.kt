@@ -158,6 +158,7 @@ fun ScrollablePlantList(
                 PlantList(
                     plantList = filteredPlants,
                     navController = navController,
+                    viewModel = viewModel,
                     modifier = Modifier.fillMaxSize())
             }
 

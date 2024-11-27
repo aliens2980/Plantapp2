@@ -1,4 +1,5 @@
-package com.example.plantapp2.plants.favorites
+package com.example.plantapp2.beneficial
+
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,9 +16,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.plantapp2.plants.favorites.FavoritePlantCard
+import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
-fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
+fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
     val favoritePlants by viewModel.favoritePlants.observeAsState(emptyList())
 
     Column(
@@ -49,14 +52,7 @@ fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
 }
 
 @Composable
-fun FavoritePlantsScreen(context: Context) {
+fun BeneficialPlantsScreen(context: Context) {
     val viewModel = FavoritePlantsViewModel(context)
-    FavoritePlantsScroll(viewModel = viewModel)
+    BeneficialPlantsScroll(viewModel = viewModel)
 }
-
-
-
-
-
-
-
