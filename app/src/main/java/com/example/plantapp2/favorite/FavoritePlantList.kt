@@ -15,6 +15,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,17 +28,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
 
 @Composable
-fun FavoritePlantList(context: Context, viewModel: PlantsViewModel = viewModel()
-) {
+fun FavoritePlantList(context: Context) {
     val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
 
     // Get all the plant names that are marked as favorites
     val favoritePlants = sharedPrefs.all.filter { it.value as? Boolean == true }.keys
-
-    // Display the favorite plants in a list
     Row (modifier = Modifier.fillMaxWidth().background(Color(0xFF344e41)) //background color
     ) {
         if (favoritePlants.isEmpty()) {
@@ -56,23 +56,22 @@ fun FavoritePlantList(context: Context, viewModel: PlantsViewModel = viewModel()
                 if (plant != null) {
                     Card(
                         modifier = Modifier.padding(10.dp),
-                        shape = RoundedCornerShape(12.dp), // Rounded corners for the card
+                        shape = RoundedCornerShape(12.dp),
                         colors = CardDefaults.cardColors(Color(0xFFDAD7CD))
                     ) {
                         Column {
                             AsyncImage(
-                                model = plant.img, // Ensure this is a valid URL or image resource
+                                model = plant.img,
                                 contentDescription = plant.name,
                                 modifier = Modifier
                                     .width(125.dp)
-                                    .height(100.dp)
-                                    , // Ensure consistent image height
-                                contentScale = ContentScale.Crop // Crop the image to fit
+                                    .height(100.dp),
+                                contentScale = ContentScale.Crop
                             )
                             Text(
                                 text = plant.name,
                                 modifier = Modifier.padding(10.dp),
-                                textAlign = TextAlign.Start, // Align text to the start
+                                textAlign = TextAlign.Start,
                                 style = TextStyle(
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold,
@@ -85,12 +84,16 @@ fun FavoritePlantList(context: Context, viewModel: PlantsViewModel = viewModel()
                 } else {
                     Text("Plant is not available")
                 }
-
             }
-
         }
     }
-
 }
-
+/*
+@Composable
+fun getPlantByName(plantName: String, viewModel: PlantsViewModel = viewModel()
+): Plant? {
+    val response by viewModel.getResponseUsingLiveData().observeAsState()
+    return response?.plants?.find { it.name.equals(plantName, ignoreCase = true) }
+}
+*/
 

@@ -138,10 +138,6 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 BeneficialPlantList(context = context)
             }
 
-
-            Spacer(modifier = Modifier.height(300.dp)) // Space for extra content
-            testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image
-
         }
 
     }

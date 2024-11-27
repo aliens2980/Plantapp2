@@ -22,11 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.plantapp2.data.Plant
 import com.example.plantapp2.favorite.getPlantByName
-import com.example.plantapp2.plants.PlantsViewModel
 
 @Composable
 fun BeneficialPlantList (context: Context) {
@@ -37,7 +34,6 @@ fun BeneficialPlantList (context: Context) {
         val prioPlant = getPlantByName(plantName)
         prioPlant?.prio?.forEach{ element ->
             result = (result + element).toMutableList()
-
         }
     }
     result = result.distinct().toMutableList()
