@@ -35,7 +35,6 @@ import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
 import com.example.plantapp2.data.BottomNavItem
 import com.example.plantapp2.ui.settings.SettingsMainScreen
-import com.example.plantapp2.ui.settings.addBed.BedCreationViewModel
 import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
 
 class MainActivity : ComponentActivity() {
