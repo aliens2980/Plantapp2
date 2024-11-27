@@ -21,7 +21,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -32,7 +32,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.plantapp2.data.BottomNavItem
 import com.example.plantapp2.ui.theme.bed.CenteredBed
 import com.example.plantapp2.ui.theme.plantPage.PlantInfoPage
+import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
+import com.example.plantapp2.data.BottomNavItem
+import com.example.plantapp2.ui.settings.SettingsMainScreen
+import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
 import com.example.plantapp2.ui.theme.styling.Plantapp2Theme
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         unselectedIcon = Icons.Outlined.Settings
                     )
                 )
-                var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
+                var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
 
                 Scaffold(
                     bottomBar = {
@@ -69,7 +73,21 @@ class MainActivity : ComponentActivity() {
                             items.forEachIndexed { index, item ->
                                 NavigationBarItem(
                                     selected = selectedItemIndex == index,
-                                    onClick = { selectedItemIndex = index },
+                                    onClick = {
+                                        selectedItemIndex = index
+                                        // Navigate to the appropriate screen
+                                        when (index) {
+                                            0 -> navController.navigate("centeredBed") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                            1 -> navController.navigate("affirmations") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                            2 -> navController.navigate("settings") {
+                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                            }
+                                        }
+                                    },
                                     label = { Text(text = item.title) },
                                     icon = {
                                         Icon(
@@ -108,8 +126,18 @@ class MainActivity : ComponentActivity() {
                                 getPlantName = plantName
                             )
                         }
-
-
+                        composable("settings") {
+                            SettingsMainScreen(
+                                onProfileEdit = { /* Add navigation or action */ },
+                                onViewBeds = { navController.navigate("createBed") }
+                            )
+                        }
+                        composable("createBed") {
+                            MainBedCreationScreen(
+                                onSaveBed = { navController.popBackStack() }, // Return to Settings after saving
+                                onCancel = { navController.popBackStack() }   // Return to Settings on cancel
+                            )
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.plantapp2.ui.theme.scrollablePlantList
 
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
