@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class LocalPlant(
     val id: Int,
     val name: String,
-    val isLiked: Boolean,
-    val details: String // Add other properties as needed
+    val details: String, // Add specific fields needed for local storage
+    val isLiked: Boolean = true
 )
+

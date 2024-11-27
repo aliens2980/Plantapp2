@@ -1,6 +1,7 @@
 package com.example.plantapp2.ui.settings.addBed
 
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,6 @@ fun MainBedCreationScreen(
     onSaveBed: () -> Unit,
     onCancel: () -> Unit
 ) {
-    // Retrieve the context from the Composable scope
     val context = LocalContext.current
 
     Scaffold(
@@ -40,60 +40,57 @@ fun MainBedCreationScreen(
                     .padding(innerPadding)
                     .padding(8.dp) // Reduced padding
             ) {
-                // Title
                 Text(
                     text = "Create Your Bed",
                     style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(bottom = 8.dp) // Reduced padding
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                // Bed creation inputs (name, length, width)
                 BedCreationInfo(
                     creationViewModel = creationViewModel,
                     dimensionsViewModel = dimensionsViewModel
                 )
 
-                Spacer(modifier = Modifier.height(8.dp)) // Reduced spacing
+                Spacer(modifier = Modifier.height(8.dp))
 
-                // Render the grid using BedDimensions
                 BedDimensions(
                     dimensionsViewModel = dimensionsViewModel,
                     creationViewModel = creationViewModel
                 )
 
-                Spacer(modifier = Modifier.height(8.dp)) // Reduced spacing
+                Spacer(modifier = Modifier.height(8.dp))
 
-                // Save and Cancel Buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween // Spread buttons evenly
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
                         onClick = {
-                            // Sync dimensions from BedDimensionsViewModel to BedCreationViewModel
+                            // Sync dimensions and extract selected cells
                             creationViewModel.updateBedLength(dimensionsViewModel.bedLength.value)
                             creationViewModel.updateBedWidth(dimensionsViewModel.bedWidth.value)
-
-                            // Extract selected cells from BedDimensionsViewModel
                             val selectedCells = dimensionsViewModel.getSelectedCells()
 
-                            // Save the bed using the provided context
                             try {
+                                Log.d(
+                                    "BedCreation",
+                                    "Saving bed: Name=${creationViewModel.bedName.value}, " +
+                                            "Length=${creationViewModel.bedLength.value}, " +
+                                            "Width=${creationViewModel.bedWidth.value}, " +
+                                            "SelectedCells=$selectedCells"
+                                )
                                 creationViewModel.saveBed(context, selectedCells)
-                                onSaveBed() // Navigate back or execute further action
+                                Log.d("BedCreation", "Bed saved successfully!")
+                                onSaveBed()
                             } catch (e: Exception) {
-                                println("Error saving bed: ${e.message}")
+                                Log.e("BedCreation", "Error saving bed: ${e.message}", e)
                             }
-                        },
-                        modifier = Modifier.weight(1f) // Equal button size
+                        }
+
                     ) {
-                        Text("Save")
+                        Text("Save Bed")
                     }
-                    Spacer(modifier = Modifier.width(8.dp)) // Spacing between buttons
-                    Button(
-                        onClick = { onCancel() },
-                        modifier = Modifier.weight(1f) // Equal button size
-                    ) {
+                    Button(onClick = { onCancel() }) {
                         Text("Cancel")
                     }
                 }
@@ -101,6 +98,7 @@ fun MainBedCreationScreen(
         }
     )
 }
+
 
 
 

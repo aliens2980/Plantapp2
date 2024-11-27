@@ -1,8 +1,6 @@
 package com.example.plantapp2.data
 
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Plant(
     val depth: Int? = null,
     val gradeImg: String = "",

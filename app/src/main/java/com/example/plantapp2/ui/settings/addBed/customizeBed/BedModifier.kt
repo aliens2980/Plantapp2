@@ -60,20 +60,6 @@ fun BedDimensions(
                 onCellClick = { row, col -> dimensionsViewModel.toggleCell(row, col) }
             )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Save Button
-        Button(onClick = {
-            val selectedCells = cellState.flatMapIndexed { rowIndex, row ->
-                row.mapIndexedNotNull { colIndex, isSelected ->
-                    if (isSelected) rowIndex to colIndex else null
-                }
-            }
-            creationViewModel.saveBed(context, selectedCells)
-        }) {
-            Text("Save Bed")
-        }
     }
 }
 

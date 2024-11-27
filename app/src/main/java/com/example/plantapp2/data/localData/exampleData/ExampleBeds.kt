@@ -1,8 +1,13 @@
 package com.example.plantapp2.data.localData.exampleData
 
 import com.example.plantapp2.data.localData.LocalBeds
+import com.example.plantapp2.data.localData.LocalPlant
+import com.example.plantapp2.data.localData.PlaceInBed
 
 fun generateSampleBeds(): List<LocalBeds> {
+    val tomatoPlant = LocalPlant(id = 1, name = "Tomato", isLiked = true, details = "Red and juicy")
+    val basilPlant = LocalPlant(id = 2, name = "Basil", isLiked = true, details = "Aromatic herb")
+
     return listOf(
         LocalBeds(
             id = 1,
@@ -10,24 +15,10 @@ fun generateSampleBeds(): List<LocalBeds> {
             length = 200,
             width = 300,
             selectedCells = listOf(0 to 0, 0 to 1, 1 to 0), // Example cell selections
-            plants = emptyMap() // No plants
-
-        ),
-        LocalBeds(
-            id = 2,
-            name = "Example Bed 2",
-            length = 100,
-            width = 50,
-            selectedCells = emptyList(), // No cells selected
-            plants = emptyMap() // No plants
-        ),
-        LocalBeds(
-            id = 3,
-            name = "Example Bed 3",
-            length = 240,
-            width = 360,
-            selectedCells = listOf(0 to 0, 1 to 1),
-            plants = emptyMap() // No plants
+            plants = mapOf(
+                tomatoPlant to PlaceInBed(row = 0, column = 0),
+                basilPlant to PlaceInBed(row = 0, column = 1)
+            )
         )
     )
 }

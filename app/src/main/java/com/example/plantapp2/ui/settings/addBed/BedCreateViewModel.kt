@@ -1,6 +1,7 @@
 package com.example.plantapp2.ui.settings.addBed
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.utils.saveJsonToFile
@@ -35,23 +36,22 @@ class BedCreationViewModel : ViewModel() {
     }
 
     fun saveBed(context: Context, selectedCells: List<Pair<Int, Int>>) {
-        val length = bedLength.value
-        val width = bedWidth.value
-        val name = bedName.value
+        val bed = LocalBeds(
+            id = System.currentTimeMillis().toInt(),
+            name = bedName.value,
+            length = bedLength.value,
+            width = bedWidth.value,
+            selectedCells = selectedCells,
+            plants = emptyMap() // Replace with actual plants mapping if available
+        )
 
-        if (name.isNotBlank() && selectedCells.isNotEmpty()) {
-            val bed = LocalBeds(
-                id = System.currentTimeMillis().toInt(),
-                name = name,
-                length = length,
-                width = width,
-                selectedCells = selectedCells,
-                plants = mapOf() // Placeholder for plant mappings
-            )
+        try {
             saveJsonToFile(context, "bed_${bed.id}.json", bed)
-            println("Bed saved locally: $bed")
-        } else {
-            println("Failed to save bed. Name or cells are invalid.")
+            Log.d("BedCreation", "Bed saved successfully: $bed")
+        } catch (e: Exception) {
+            Log.e("BedCreation", "Error saving bed: ${e.message}", e)
         }
     }
+
+
 }
