@@ -20,7 +20,9 @@ import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 
 
 @Composable
@@ -104,21 +106,39 @@ fun PlantInfoPage(
 
                 // Grading Section
                 plant?.gradeText?.let {
-                    InfoSection(title = "Grade", content = it)
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        GradeImage()
+                        InfoSection(title = "Grade", content = it)
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Watering Section
                 plant?.water?.let {
-                    InfoSection(title = "Watering (days)", content = "$it days")
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        WaterCanImage()
+                        InfoSection(title = "Watering (inches/week)", content = "$it inch(es)")
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Sunlight Section
                 plant?.sun?.let {
-                    InfoSection(title = "Sunlight (hours)", content = "$it hours")
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        SunImage()
+                        InfoSection(title = "Sunlight (hours/day)", content = "$it hours")
+                    }
                 }
             }
         }
@@ -140,7 +160,8 @@ fun PlantDetailsHeader(plant: Plant, viewModel: PlantsViewModel) {
             plant.nameLatin?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontStyle = FontStyle.Italic
                 )
             }
         }

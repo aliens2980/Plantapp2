@@ -1,6 +1,5 @@
 package com.example.plantapp2.ui.theme.scrollablePlantList
 
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,6 +54,7 @@ fun ScrollablePlantList(
     var sunExposure by rememberSaveable { mutableIntStateOf(0) }
     var grade by rememberSaveable { mutableStateOf("") }
     var waterNeeds by rememberSaveable { mutableIntStateOf(0) }
+
 
     // Filtering logic
     val filteredPlants = response?.plants?.filter { plant ->
@@ -133,7 +133,6 @@ fun ScrollablePlantList(
                     sunExposure = sunFilter
                     waterNeeds = waterFilter
                     grade = gradeFilter
-                    showFilterOverlay = false // Close the overlay after applying filters
                 },
                 onClose = { showFilterOverlay = false } // Close the overlay when the close button is clicked
             )

@@ -1,18 +1,13 @@
 package com.example.plantapp2.ui.theme.plantPage
 
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -20,7 +15,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,47 +32,13 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
 import com.example.plantapp2.ui.theme.styling.darkGreen
-
-
-@Composable
-fun PageTitle(name: String) {
-    Text(
-        text = name,
-        modifier = Modifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 35.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.DarkGray
-
-        )
-    )
-}
-
-//The name of the plant
-@Composable
-fun PageTitleLatin(nameLatin: String) {
-    Text(
-        text = nameLatin,
-        modifier = Modifier,
-        style = TextStyle(
-            fontSize = 25.sp,
-            fontFamily = FontFamily.Cursive,
-            color = Color.DarkGray
-
-        )
-    )
-}
 
 @Composable
 fun PlantImage(url: String) {
@@ -129,21 +89,6 @@ fun PlantImage(url: String) {
     }
 }
 
-//Information text box about the best matched plants
-@Composable
-fun InfoText(information: String) {
-    Text(
-        text = information,
-        modifier = Modifier,
-        style = TextStyle(
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Default,
-            color = Color.DarkGray
-        )
-    )
-}
-
 //Watering amount image
 @Composable
 fun WaterCanImage() {
@@ -156,26 +101,6 @@ fun WaterCanImage() {
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier.size(width = 45.dp, height = 45.dp)
-        )
-    }
-}
-
-//Water can text box
-@Composable
-fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .padding(8.dp)
-    ) {
-        Text(
-            text = "Must be watered (inches per week): $information",
-            modifier = Modifier.padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Default,
-                color = Color.DarkGray
-            )
         )
     }
 }
@@ -193,25 +118,6 @@ fun SunImage() {
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 45.dp, height = 45.dp)
-        )
-    }
-}
-
-//Sun text box
-@Composable
-fun SunText(information: Int, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.padding(8.dp)
-    ) {
-        Text(
-            text = "Must receive sun (hours per day): $information",
-            modifier = Modifier
-                .padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.DarkGray
-            )
         )
     }
 }
@@ -237,35 +143,10 @@ fun GradeImage() {
     }
 }
 
-//Grade text box
-@Composable
-fun GradeText(information: String, modifier: Modifier = Modifier) {
-    BoxWithConstraints(
-        modifier = modifier.padding(8.dp)
-    ) {
-        val maxWidth = 200.dp
-        val maxHeight = maxHeight
-        Text(
-            text = "Difficulty: $information",
-            modifier = Modifier
-                .widthIn(max = maxWidth)
-                .heightIn(max = maxHeight)
-                .padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Default,
-                color = Color.DarkGray
-            )
-        )
-    }
-}
-
 //Helper function to test LikeImage
 fun toggleLikeState(currentState: Boolean): Boolean {
     return !currentState
 }
-
 
 @Composable
 fun LikeImage(
@@ -311,7 +192,6 @@ fun LikeImage(
     }
 }
 
-
 @Composable
 fun BackButton(navController: NavController) {
     Box (
@@ -331,4 +211,3 @@ fun BackButton(navController: NavController) {
         }
     }
 }
-
