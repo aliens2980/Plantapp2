@@ -133,6 +133,7 @@ fun ScrollablePlantList(
                     sunExposure = sunFilter
                     waterNeeds = waterFilter
                     grade = gradeFilter
+                    showFilterOverlay = false
                 },
                 onClose = { showFilterOverlay = false } // Close the overlay when the close button is clicked
             )
