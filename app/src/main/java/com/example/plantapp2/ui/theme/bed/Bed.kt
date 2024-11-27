@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
+import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
 
@@ -63,18 +64,18 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 .fillMaxWidth()
 
         ){
+
+            //if no local beds {
             BedPageTitle(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-
             )
             BundleDeco(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-
             )
+            //else bedgrid 1
         }
-
 
 
         //Top section: Title
@@ -100,7 +101,6 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
 
         Spacer(modifier = Modifier.height(30.dp)) // Space between sections
 
-
         // Middle Section: Favourites title and other components
         Column(
             modifier = Modifier
@@ -116,10 +116,9 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             GreenLine()
             Spacer(modifier = Modifier.height(2.dp))
             DottedLine()
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             FavoritePlantsScreen(context = LocalContext.current) // Pass the context
 
-            Spacer(modifier = Modifier.height(300.dp)) // Space for extra content
             testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image
         }
     }

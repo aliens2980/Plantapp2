@@ -25,11 +25,6 @@ fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Favorite Plants",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
         if (favoritePlants.isEmpty()) {
             Text(

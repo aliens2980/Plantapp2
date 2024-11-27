@@ -35,18 +35,30 @@ class PlantsViewModel(
                 emptyList()
             }
 
-            // Update the list of plants
-            val updatedPlants = existingPlants.filter { it.name != plant.name } + plant
-            val json = Json.encodeToString(updatedPlants)
+            val updatedPlants = if (plant.isLiked) {
+                // Add or update the plant
+                existingPlants.filter { it.name != plant.name } + plant
+            } else {
+                // Remove the plant
+                existingPlants.filter { it.name != plant.name }
+            }
 
             // Save updated data
+            val json = Json.encodeToString(updatedPlants)
             file.writeText(json)
-            Log.d("savePlant", "Saved plant: ${plant.name} to file: ${file.absolutePath}")
-
+            Log.d("savePlant", "Updated favorites: ${updatedPlants.size} plants saved to ${file.absolutePath}")
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
+
+    fun toggleLike(context: Context, plant: Plant) {
+        val updatedPlant = plant.copy(isLiked = !plant.isLiked)
+        savePlant(context, updatedPlant)
+    }
+
+
     fun getLikedPlants(context: Context): List<Plant> {
         val fileName = "liked_plants.json"
         val file = File(context.filesDir, fileName)
@@ -57,5 +69,4 @@ class PlantsViewModel(
             emptyList()
         }
     }
-
 }

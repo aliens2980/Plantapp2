@@ -589,8 +589,14 @@ fun LikeImage(
     plant: Plant,
     viewModel: PlantsViewModel
 ) {
-    var isSelect by remember { mutableStateOf(plant.isLiked) }
     val context = LocalContext.current
+    var isSelect by remember { mutableStateOf(plant.isLiked) } // Default state from the plant
+
+    // Check if the plant is already liked in the favorites JSON
+    LaunchedEffect(Unit) {
+        val likedPlants = viewModel.getLikedPlants(context) // Fetch from JSON
+        isSelect = likedPlants.any { it.name == plant.name } // Set state based on JSON
+    }
 
     Box(modifier = modifier) {
         if (isSelect) {
@@ -602,7 +608,7 @@ fun LikeImage(
                     .size(50.dp)
                     .clickable {
                         isSelect = false
-                        viewModel.savePlant(context, plant.copy(isLiked = false)) // Call savePlant
+                        viewModel.savePlant(context, plant.copy(isLiked = false)) // Remove from favorites
                     }
             )
         } else {
@@ -614,12 +620,13 @@ fun LikeImage(
                     .size(50.dp)
                     .clickable {
                         isSelect = true
-                        viewModel.savePlant(context, plant.copy(isLiked = true)) // Call savePlant
+                        viewModel.savePlant(context, plant.copy(isLiked = true)) // Add to favorites
                     }
             )
         }
     }
 }
+
 
 
 
