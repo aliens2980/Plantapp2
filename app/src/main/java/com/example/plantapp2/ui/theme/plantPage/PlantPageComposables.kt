@@ -50,36 +50,6 @@ import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
-
-@Composable
-fun PageTitle(name: String) {
-    Text(
-        text = name,
-        modifier = Modifier,
-        style = TextStyle(   //to edit and customize the text inside
-            fontSize = 35.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.DarkGray
-
-        )
-    )
-}
-
-//The name of the plant
-@Composable
-fun PageTitleLatin(nameLatin: String) {
-    Text(
-        text = nameLatin,
-        modifier = Modifier,
-        style = TextStyle(
-            fontSize = 25.sp,
-            fontFamily = FontFamily.Cursive,
-            color = Color.DarkGray
-
-        )
-    )
-}
-
 @Composable
 fun PlantImage(url: String) {
     Box(
@@ -129,21 +99,6 @@ fun PlantImage(url: String) {
     }
 }
 
-//Information text box about the best matched plants
-@Composable
-fun InfoText(information: String) {
-    Text(
-        text = information,
-        modifier = Modifier,
-        style = TextStyle(
-            fontSize = 17.sp,
-            fontWeight = FontWeight.Light,
-            fontFamily = FontFamily.Default,
-            color = Color.DarkGray
-        )
-    )
-}
-
 //Watering amount image
 @Composable
 fun WaterCanImage() {
@@ -156,26 +111,6 @@ fun WaterCanImage() {
             contentDescription = "Information Image",
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier.size(width = 45.dp, height = 45.dp)
-        )
-    }
-}
-
-//Water can text box
-@Composable
-fun WaterCanText(information: Int, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .padding(8.dp)
-    ) {
-        Text(
-            text = "Must be watered (inches per week): $information",
-            modifier = Modifier.padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Default,
-                color = Color.DarkGray
-            )
         )
     }
 }
@@ -193,25 +128,6 @@ fun SunImage() {
             contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
             modifier = Modifier
                 .size(width = 45.dp, height = 45.dp)
-        )
-    }
-}
-
-//Sun text box
-@Composable
-fun SunText(information: Int, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.padding(8.dp)
-    ) {
-        Text(
-            text = "Must receive sun (hours per day): $information",
-            modifier = Modifier
-                .padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.DarkGray
-            )
         )
     }
 }
@@ -237,35 +153,10 @@ fun GradeImage() {
     }
 }
 
-//Grade text box
-@Composable
-fun GradeText(information: String, modifier: Modifier = Modifier) {
-    BoxWithConstraints(
-        modifier = modifier.padding(8.dp)
-    ) {
-        val maxWidth = 200.dp
-        val maxHeight = maxHeight
-        Text(
-            text = "Difficulty: $information",
-            modifier = Modifier
-                .widthIn(max = maxWidth)
-                .heightIn(max = maxHeight)
-                .padding(4.dp),
-            style = TextStyle(   //to edit and customize the text inside
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Light,
-                fontFamily = FontFamily.Default,
-                color = Color.DarkGray
-            )
-        )
-    }
-}
-
 //Helper function to test LikeImage
 fun toggleLikeState(currentState: Boolean): Boolean {
     return !currentState
 }
-
 
 @Composable
 fun LikeImage(
@@ -311,7 +202,6 @@ fun LikeImage(
     }
 }
 
-
 @Composable
 fun BackButton(navController: NavController) {
     Box (
@@ -331,4 +221,3 @@ fun BackButton(navController: NavController) {
         }
     }
 }
-
