@@ -39,15 +39,5 @@ class FavoritePlantsViewModel(private val context: Context) : ViewModel() {
             _favoritePlants.value = emptyList()
         }
     }
-
-    private fun loadPrioritisedList(listOfFavPlants: List<LocalPlant>) {
-        listOfFavPlants.forEach{plant ->
-            plant.priority.forEach{ element ->
-                result = (result + element).toMutableList()
-            }
-        }
-        result = result.distinct().toMutableList()
-    }
-
 }
 

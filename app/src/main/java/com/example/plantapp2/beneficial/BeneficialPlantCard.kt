@@ -21,9 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.plantapp2.data.localData.LocalPlant
+import com.example.plantapp2.favorite.getPlantByName
 
 @Composable
-fun BeneficialPlantCard(plant: LocalPlant) {
+fun BeneficialPlantCard(favPlant: String) {
+    val plant = getPlantByName(favPlant)
     Card(
         modifier = Modifier
             .size(110.dp, 150.dp), // Card size
@@ -37,21 +39,25 @@ fun BeneficialPlantCard(plant: LocalPlant) {
             horizontalAlignment = Alignment.CenterHorizontally // Centers content horizontally
         ) {
             // Plant Image
-            Image(
-                painter = rememberAsyncImagePainter(model = plant.image),
-                contentDescription = "${plant.name} Image",
-                modifier = Modifier
-                    .size(100.dp) // Image size
-                    .clip(RoundedCornerShape(8.dp)) // Rounded corners for the image
-            )
+            if (plant != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(model = plant.img),
+                    contentDescription = "${plant.name} Image",
+                    modifier = Modifier
+                        .size(100.dp) // Image size
+                        .clip(RoundedCornerShape(8.dp)) // Rounded corners for the image
+                )
+            }
             Spacer(modifier = Modifier.height(6.dp)) // Space between the image and text
             // Plant Name
-            Text(
-                text = plant.name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+            if (plant != null) {
+                Text(
+                    text = plant.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

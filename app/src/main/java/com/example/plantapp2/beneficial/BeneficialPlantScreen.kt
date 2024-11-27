@@ -16,12 +16,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.plantapp2.data.localData.LocalPlant
 import com.example.plantapp2.plants.favorites.FavoritePlantCard
 import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
 fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
     val favoritePlants by viewModel.favoritePlants.observeAsState(emptyList())
+    var beneficialPlants = getBeneficialPlants(favoritePlants)
 
     Column(
         modifier = Modifier
@@ -29,7 +31,7 @@ fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
             .padding(16.dp)
     ) {
 
-        if (favoritePlants.isEmpty()) {
+        if (beneficialPlants.isEmpty()) {
             Text(
                 text = "No favorite plants yet. Add plants to your favorites to see them here!",
                 style = MaterialTheme.typography.bodyMedium,
@@ -43,8 +45,8 @@ fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
-                items(favoritePlants) { plant ->
-                    FavoritePlantCard(plant)
+                items(beneficialPlants) { plant ->
+                    BeneficialPlantCard(plant)
                 }
             }
         }
@@ -56,3 +58,16 @@ fun BeneficialPlantsScreen(context: Context) {
     val viewModel = FavoritePlantsViewModel(context)
     BeneficialPlantsScroll(viewModel = viewModel)
 }
+
+fun getBeneficialPlants (listOfPlants: List<LocalPlant>): List<String> {
+    var beneficialPlants = mutableListOf<String>()
+    listOfPlants.forEach{ plant ->
+        plant.priority.forEach{ list ->
+            beneficialPlants = (beneficialPlants + list).toMutableList()
+        }
+    }
+    beneficialPlants = beneficialPlants.distinct().toMutableList()
+
+    return beneficialPlants
+}
+

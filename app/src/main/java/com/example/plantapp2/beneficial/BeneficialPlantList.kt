@@ -30,9 +30,8 @@ import com.example.plantapp2.favorite.getPlantByName
 import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
-fun BeneficialPlantScroll (viewModel: FavoritePlantsViewModel) {
+fun BeneficialPlantList (viewModel: FavoritePlantsViewModel) {
     val favoritePlants by viewModel.favoritePlants.observeAsState(emptyList())
-    var result = mutableListOf<String>()
 
     Row (modifier = Modifier.fillMaxWidth().background(Color(0xFF344e41)) //background color
     ) {
