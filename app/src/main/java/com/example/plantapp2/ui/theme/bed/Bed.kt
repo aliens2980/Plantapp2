@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,20 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
-import com.example.plantapp2.data.localData.LocalBeds
-
 import com.example.plantapp2.beneficial.BeneficialPlantsScreen
-import com.example.plantapp2.favorite.FavoritePlantList
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
 import com.example.plantapp2.ui.theme.styling.darkGreen
-
-
-/**
- *@author s235064
- * @param //CenteredBed
- *
- */
 
 @Composable
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
