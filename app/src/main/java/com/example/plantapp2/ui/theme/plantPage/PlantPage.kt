@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -183,8 +184,11 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                             }
                             Spacer(modifier = Modifier.width(120.dp))
 
-                            LikeImage(modifier = Modifier.size(50.dp))
-                        }
+                            LikeImage(
+                                modifier = Modifier.size(50.dp),
+                                plant = plant!!,
+                                viewModel = viewModel
+                            )                        }
 
                     }
                 }
@@ -579,40 +583,45 @@ fun toggleLikeState(currentState: Boolean): Boolean {
     return !currentState
 }
 
-
 @Composable
-fun LikeImage(modifier : Modifier = Modifier){
-    var isSelect by remember { mutableStateOf(false) }
-    val iconModifier = Modifier
-        //.size(50.dp)
-        .clickable { isSelect = !isSelect }
+fun LikeImage(
+    modifier: Modifier = Modifier,
+    plant: Plant,
+    viewModel: PlantsViewModel
+) {
+    var isSelect by remember { mutableStateOf(plant.isLiked) }
+    val context = LocalContext.current
 
-    Box(modifier = Modifier) {
+    Box(modifier = modifier) {
         if (isSelect) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                contentDescription = "Like",
+                contentDescription = "Liked",
                 tint = Color.Red,
                 modifier = Modifier
                     .size(50.dp)
-                    .align(Alignment.TopEnd)
-                    //.offset(x = 290.dp, y = 270.dp)
-                    .clickable { isSelect = !isSelect }
+                    .clickable {
+                        isSelect = false
+                        viewModel.savePlant(context, plant.copy(isLiked = false)) // Call savePlant
+                    }
             )
         } else {
             Icon(
                 imageVector = Icons.Outlined.FavoriteBorder,
-                contentDescription = "Unlike",
+                contentDescription = "Not Liked",
                 tint = Color.DarkGray,
                 modifier = Modifier
                     .size(50.dp)
-                    .align(Alignment.TopEnd)
-                    //.offset(x = 290.dp, y = 270.dp)
-                    .clickable { isSelect = !isSelect }
+                    .clickable {
+                        isSelect = true
+                        viewModel.savePlant(context, plant.copy(isLiked = true)) // Call savePlant
+                    }
             )
         }
     }
 }
+
+
 
 
 @Composable

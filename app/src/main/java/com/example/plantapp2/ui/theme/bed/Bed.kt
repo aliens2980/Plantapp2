@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.mvvm.home.GridViewModel
+import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
 
 
 /**
@@ -114,6 +116,8 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             GreenLine()
             Spacer(modifier = Modifier.height(2.dp))
             DottedLine()
+            Spacer(modifier = Modifier.height(10.dp))
+            FavoritePlantsScreen(context = LocalContext.current) // Pass the context
 
             Spacer(modifier = Modifier.height(300.dp)) // Space for extra content
             testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image

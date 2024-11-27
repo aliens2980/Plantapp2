@@ -21,7 +21,7 @@ fun SettingsBeds(
     onAddBedClicked: () -> Unit,
     viewModel: SettingsViewModel
 ) {
-    val beds by viewModel.beds.collectAsState()
+    //val beds by viewModel.beds.collectAsState()
 
     Column(
         modifier = Modifier
@@ -32,15 +32,7 @@ fun SettingsBeds(
             text = "Your Beds:",
             style = MaterialTheme.typography.headlineSmall
         )
-        Spacer(modifier = Modifier.height(8.dp))
 
-        beds.forEach { bed ->
-            Text(
-                text = "${bed.name} (${bed.length}x${bed.width} cm)",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { onAddBedClicked() }) { // Call onAddBedClicked here
