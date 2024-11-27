@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 import android.content.Context
 import android.util.Log
+import com.example.plantapp2.utils.JsonObject.jsonFormat
 import kotlinx.serialization.json.Json
 import java.io.File
 
@@ -31,10 +32,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
             val loadedBeds = bedFiles.mapNotNull { file ->
                 try {
                     val json = file.readText()
-                    val parsedBed = Json {
-                        allowStructuredMapKeys = true
-                    }.decodeFromString<LocalBeds>(json)
-                    parsedBed
+                    jsonFormat.decodeFromString<LocalBeds>(json) // Use shared JsonObject.jsonFormat
                 } catch (e: Exception) {
                     Log.e("LoadBeds", "Failed to load bed: ${file.name}, error: ${e.message}")
                     null // Skip the invalid bed
@@ -45,6 +43,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
             Log.d("LoadBeds", "No beds folder found or it's not a directory.")
         }
     }
+
 
 
 
