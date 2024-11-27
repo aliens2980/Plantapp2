@@ -23,14 +23,14 @@ fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(5.dp)
     ) {
 
         if (favoritePlants.isEmpty()) {
             Text(
-                text = "No favorite plants yet. Add plants to your favorites to see them here!",
+                text = "No favorite plants yet.\nAdd plants to your favorites to see them here!",
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(5.dp)
             )
         } else {
             LazyRow(
@@ -38,7 +38,7 @@ fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
+                //contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(favoritePlants) { plant ->
                     FavoritePlantCard(plant)

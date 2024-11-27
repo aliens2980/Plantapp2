@@ -39,5 +39,17 @@ class FavoritePlantsViewModel(private val context: Context) : ViewModel() {
             _favoritePlants.value = emptyList()
         }
     }
+
+    fun getBeneficialPlants (listOfPlants: List<LocalPlant>): List<String> {
+        var beneficialPlants = mutableListOf<String>()
+        listOfPlants.forEach{ plant ->
+            plant.priority.forEach{ list ->
+                beneficialPlants = (beneficialPlants + list).toMutableList()
+            }
+        }
+        beneficialPlants = beneficialPlants.distinct().toMutableList()
+
+        return beneficialPlants
+    }
 }
 

@@ -30,6 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun FavoritePlantList(context: Context) {
@@ -57,7 +58,7 @@ fun FavoritePlantList(context: Context) {
                     Card(
                         modifier = Modifier.padding(10.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(Color(0xFFDAD7CD))
+                        colors = CardDefaults.cardColors(darkGreen)
                     ) {
                         Column {
                             AsyncImage(

@@ -18,24 +18,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.data.localData.LocalPlant
 import com.example.plantapp2.plants.favorites.FavoritePlantCard
+import com.example.plantapp2.plants.favorites.FavoritePlantsScroll
 import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
 fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
     val favoritePlants by viewModel.favoritePlants.observeAsState(emptyList())
-    var beneficialPlants = getBeneficialPlants(favoritePlants)
+    val beneficialPlants = viewModel.getBeneficialPlants(favoritePlants)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(5.dp)
     ) {
 
         if (beneficialPlants.isEmpty()) {
             Text(
-                text = "No favorite plants yet. Add plants to your favorites to see them here!",
+                text = "No beneficial plants.\nAdd plants to your favorites to see their beneficial here!",
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(5.dp)
             )
         } else {
             LazyRow(
@@ -43,7 +44,6 @@ fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(beneficialPlants) { plant ->
                     BeneficialPlantCard(plant)
@@ -52,22 +52,9 @@ fun BeneficialPlantsScroll(viewModel: FavoritePlantsViewModel) {
         }
     }
 }
-
 @Composable
 fun BeneficialPlantsScreen(context: Context) {
     val viewModel = FavoritePlantsViewModel(context)
     BeneficialPlantsScroll(viewModel = viewModel)
-}
-
-fun getBeneficialPlants (listOfPlants: List<LocalPlant>): List<String> {
-    var beneficialPlants = mutableListOf<String>()
-    listOfPlants.forEach{ plant ->
-        plant.priority.forEach{ list ->
-            beneficialPlants = (beneficialPlants + list).toMutableList()
-        }
-    }
-    beneficialPlants = beneficialPlants.distinct().toMutableList()
-
-    return beneficialPlants
 }
 

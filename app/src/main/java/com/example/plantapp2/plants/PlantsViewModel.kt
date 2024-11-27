@@ -53,12 +53,6 @@ class PlantsViewModel(
     }
 
 
-    fun toggleLike(context: Context, plant: Plant) {
-        val updatedPlant = plant.copy(isLiked = !plant.isLiked)
-        savePlant(context, updatedPlant)
-    }
-
-
     fun getLikedPlants(context: Context): List<Plant> {
         val fileName = "liked_plants.json"
         val file = File(context.filesDir, fileName)
