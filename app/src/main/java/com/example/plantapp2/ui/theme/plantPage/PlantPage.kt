@@ -136,10 +136,13 @@ fun PlantDetailsHeader(plant: Plant, viewModel: PlantsViewModel) {
             }
         }
         LikeImage(
-
+            plant = plant,
+            viewModel = viewModel,
+            modifier = Modifier.size(50.dp)
         )
     }
 }
+
 
 @Composable
 fun InfoSection(title: String, content: String) {

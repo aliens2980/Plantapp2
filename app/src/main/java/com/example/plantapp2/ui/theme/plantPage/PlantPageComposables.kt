@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -43,6 +45,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
+import com.example.plantapp2.data.Plant
+import com.example.plantapp2.plants.PlantsViewModel
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
 
@@ -263,33 +267,49 @@ fun toggleLikeState(currentState: Boolean): Boolean {
 
 
 @Composable
-fun LikeImage() {
-    var isSelect by remember { mutableStateOf(false) }
-    Modifier.clickable { isSelect = !isSelect }
-    Box(modifier = Modifier) {
+fun LikeImage(
+    plant: Plant,
+    viewModel: PlantsViewModel,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    var isSelect by remember { mutableStateOf(plant.isLiked) } // Default state from the plant
+
+    // Check if the plant is already liked in the favorites JSON
+    LaunchedEffect(Unit) {
+        val likedPlants = viewModel.getLikedPlants(context) // Fetch from JSON
+        isSelect = likedPlants.any { it.name == plant.name } // Set state based on JSON
+    }
+
+    Box(modifier = modifier) {
         if (isSelect) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
-                contentDescription = "Like",
+                contentDescription = "Liked",
                 tint = Color.Red,
                 modifier = Modifier
                     .size(50.dp)
-                    .align(Alignment.TopEnd)
-                    .clickable { isSelect = !isSelect }
+                    .clickable {
+                        isSelect = false
+                        viewModel.savePlant(context, plant.copy(isLiked = false)) // Remove from favorites
+                    }
             )
         } else {
             Icon(
                 imageVector = Icons.Outlined.FavoriteBorder,
-                contentDescription = "Unlike",
+                contentDescription = "Not Liked",
                 tint = Color.DarkGray,
                 modifier = Modifier
                     .size(50.dp)
-                    .align(Alignment.TopEnd)
-                    .clickable { isSelect = !isSelect }
+                    .clickable {
+                        isSelect = true
+                        viewModel.savePlant(context, plant.copy(isLiked = true)) // Add to favorites
+                    }
             )
         }
     }
 }
+
 
 @Composable
 fun BackButton(navController: NavController) {
