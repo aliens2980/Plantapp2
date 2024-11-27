@@ -1,23 +1,11 @@
 package com.example.plantapp2.ui.theme.plantPage
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,24 +23,15 @@ import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 
 
-
-/**
- * @author s235064
- * @param //PlantPage
- * @return the information page of a plant
- */
-
 @Composable
-fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, getPlantName: String?, viewModel: PlantsViewModel = viewModel()) {
+fun PlantInfoPage(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    getPlantName: String?,
+    viewModel: PlantsViewModel = viewModel()
+) {
     var plant by remember { mutableStateOf<Plant?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    val plantName = plant?.name
-    val imageUrl = plant?.img
-    val nameLatin = plant?.nameLatin
-    val info = plant?.info
-    val water = plant?.water
-    val sun = plant?.sun
-    val gradeText = plant?.gradeText
 
     val context = LocalContext.current
 
@@ -66,17 +45,25 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
             }
         }
     }
+
     when {
         errorMessage != null -> {
-            Text("Error: $errorMessage", modifier = Modifier.padding(16.dp))
+            Text(
+                text = "Error: $errorMessage",
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
 
         plant == null -> {
-            Text("Loading...", modifier = Modifier.padding(16.dp))
+            Text(
+                text = "Loading...",
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
 
         else -> {
-
             Column(
                 modifier = modifier
                     .fillMaxSize()
@@ -85,113 +72,100 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
             ) {
                 Spacer(modifier = Modifier.height(2.dp))
 
-                Row{
+                // Back Button
+                Row {
                     BackButton(navController = navController)
                 }
 
-                Box (
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                ){ imageUrl?.let {
-                    PlantImage(
-                        url = it
-                    )
-                } }
 
 
-                Spacer(modifier = Modifier.height(5.dp))
-
-                plantName?.let { name ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column {
-                                PageTitle(name = name) // Pass name directly here
-                                nameLatin?.let { latinName ->
-                                    PageTitleLatin(nameLatin = latinName)
-                                }
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                horizontalAlignment = Alignment.End
-                            ) {
-                                // Call LikeImage and pass plantName
-                                LikeImage(plantName = name, context = context)
-                            }
-                        }
+                // Plant Image
+                Box(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                    plant?.img?.let {
+                        PlantImage(url = it)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Column(
-                    modifier = Modifier
-                ) {
-                    // Info Section
-                    info?.let {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Column {
-                                Text(
-                                    text = "Info",
-                                    modifier = Modifier,
-                                    style = TextStyle(
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color.DarkGray
-                                    )
-                                )
-
-                                InfoText(information = it)
-                            }
-
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(18.dp))
-
-                    //Grading Section
-                    gradeText?.let {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            GradeImage()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            GradeText(information = it)
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Watering Section
-                    water?.let {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            WaterCanImage()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            WaterCanText(information = it)
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Sunlight Section
-                    sun?.let {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            SunImage()
-                            Spacer(modifier = Modifier.width(8.dp))
-                            SunText(information = it)
-                        }
-                    }
-
-                    }
+                // Plant Name and Latin Name
+                plant?.let {
+                    PlantDetailsHeader(plant = it, viewModel = viewModel)
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Info Section
+                plant?.info?.let {
+                    InfoSection(title = "Info", content = it)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Grading Section
+                plant?.gradeText?.let {
+                    InfoSection(title = "Grade", content = it)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Watering Section
+                plant?.water?.let {
+                    InfoSection(title = "Watering (days)", content = "$it days")
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Sunlight Section
+                plant?.sun?.let {
+                    InfoSection(title = "Sunlight (hours)", content = "$it hours")
+                }
             }
         }
     }
+}
 
+@Composable
+fun PlantDetailsHeader(plant: Plant, viewModel: PlantsViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = plant.name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+            plant.nameLatin?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+        LikeImage(
+            plant = plant,
+            viewModel = viewModel,
+            modifier = Modifier.size(50.dp)
+        )
+    }
+}
+
+
+@Composable
+fun InfoSection(title: String, content: String) {
+    Column {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = Color.DarkGray
+            )
+        )
+        Text(
+            text = content,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}

@@ -37,9 +37,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
+import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.beneficial.BeneficialPlantList
 import com.example.plantapp2.favorite.FavoritePlantList
 import com.example.plantapp2.mvvm.home.GridViewModel
+import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
 
@@ -68,18 +70,18 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 .fillMaxWidth()
 
         ){
+
+            //if no local beds {
             BedPageTitle(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-
             )
             BundleDeco(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-
             )
+            //else bedgrid 1
         }
-
 
 
         //Top section: Title
@@ -120,6 +122,8 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             GreenLine()
             Spacer(modifier = Modifier.height(2.dp))
             DottedLine()
+            Spacer(modifier = Modifier.height(8.dp))
+            FavoritePlantsScreen(context = LocalContext.current) // Pass the context
             Row(            modifier = Modifier.horizontalScroll(rememberScrollState()) // Main vertical scrolling for the page
             ) {
                 FavoritePlantList(context = context)
@@ -138,6 +142,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 BeneficialPlantList(context = context)
             }
 
+            testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image
         }
 
     }

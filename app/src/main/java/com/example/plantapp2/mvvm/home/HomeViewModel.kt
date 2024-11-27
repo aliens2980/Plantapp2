@@ -30,6 +30,4 @@ class HomeViewModel : ViewModel() {
         val plantToReturn: Plant = Plant(name = "Jens")
         return plantToReturn
     }
-
-
 }
