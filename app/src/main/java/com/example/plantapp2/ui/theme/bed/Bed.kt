@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -35,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
+import com.example.plantapp2.beneficial.BeneficialPlantList
+import com.example.plantapp2.favorite.FavoritePlantList
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
@@ -47,9 +51,11 @@ import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
+    val context = LocalContext.current  // This gets the context from the Composable's environment
+
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            //.fillMaxSize()
             .verticalScroll(rememberScrollState()) // Main vertical scrolling for the page
             .background(Color(0xFFDAD7CD))
     ) {
@@ -99,7 +105,6 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
 
         Spacer(modifier = Modifier.height(30.dp)) // Space between sections
 
-
         // Middle Section: Favourites title and other components
         Column(
             modifier = Modifier
@@ -115,10 +120,30 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             GreenLine()
             Spacer(modifier = Modifier.height(2.dp))
             DottedLine()
+            Row(            modifier = Modifier.horizontalScroll(rememberScrollState()) // Main vertical scrolling for the page
+            ) {
+                FavoritePlantList(context = context)
+            }
+            DottedLine()
+            Spacer(modifier = Modifier.height(1.dp))
+            GreenLine()
+            Spacer(modifier = Modifier.height(10.dp))
+            FriendsTitle(modifier = Modifier.padding(start = 16.dp)) // Slight offset for alignment
+            Spacer(modifier = Modifier.height(10.dp))
+            GreenLine()
+            Spacer(modifier = Modifier.height(2.dp))
+            DottedLine()
+            Row(            modifier = Modifier.horizontalScroll(rememberScrollState()) // Main vertical scrolling for the page
+            ) {
+                BeneficialPlantList(context = context)
+            }
+
 
             Spacer(modifier = Modifier.height(300.dp)) // Space for extra content
             testImage(modifier = Modifier.align(Alignment.CenterHorizontally)) // Center the test image
+
         }
+
     }
 }
 
@@ -298,7 +323,21 @@ fun FavouritesTitle(modifier: Modifier) {
     )
 
 }
+@Composable
+fun FriendsTitle(modifier: Modifier) {
+    Text(
+        text = "Beneficial plants",
+        modifier = Modifier,
+        style = TextStyle(   //to edit and customize the text inside
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Cursive,
+            color = Color.DarkGray
 
+        )
+    )
+
+}
 
 /**
  * @author s235064

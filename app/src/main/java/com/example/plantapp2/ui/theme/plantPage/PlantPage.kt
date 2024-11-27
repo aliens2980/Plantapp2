@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.plantapp2.data.Plant
 import com.example.plantapp2.plants.PlantsViewModel
+//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+
 
 
 /**
@@ -48,6 +53,9 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
     val water = plant?.water
     val sun = plant?.sun
     val gradeText = plant?.gradeText
+
+    val context = LocalContext.current
+
 
     LaunchedEffect(getPlantName) {
         if (getPlantName != null) {
@@ -89,41 +97,33 @@ fun PlantInfoPage(navController: NavController, modifier: Modifier = Modifier, g
                         url = it
                     )
                 } }
-                // Plant Image
 
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                // Plant Name and Latin Name
-                plantName.let { plantName ->
+                plantName?.let { name ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column {
-                                if (plantName != null) {
-                                    PageTitle(name = plantName)
-                                }
+                                PageTitle(name = name) // Pass name directly here
                                 nameLatin?.let { latinName ->
-                                    PageTitleLatin(
-                                        nameLatin = latinName
-                                    )
+                                    PageTitleLatin(nameLatin = latinName)
                                 }
                             }
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth(),
-
                                 horizontalAlignment = Alignment.End
                             ) {
-                                LikeImage()
-
+                                // Call LikeImage and pass plantName
+                                LikeImage(plantName = name, context = context)
                             }
                         }
                     }

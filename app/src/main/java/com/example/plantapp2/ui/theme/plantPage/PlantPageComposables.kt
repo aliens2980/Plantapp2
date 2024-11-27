@@ -1,10 +1,10 @@
 package com.example.plantapp2.ui.theme.plantPage
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.plantapp2.R
+import com.example.plantapp2.data.Plant
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
 
@@ -261,7 +263,7 @@ fun toggleLikeState(currentState: Boolean): Boolean {
     return !currentState
 }
 
-
+/*
 @Composable
 fun LikeImage() {
     var isSelect by remember { mutableStateOf(false) }
@@ -288,6 +290,79 @@ fun LikeImage() {
                     .clickable { isSelect = !isSelect }
             )
         }
+    }
+}
+
+ */
+/*
+@Composable
+fun LikeImage(plantName: String, context: Context) {
+    var isLiked by remember { mutableStateOf(false) }
+
+    // This will check shared preferences if the plant is liked
+    LaunchedEffect(plantName) {
+        val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
+        isLiked = sharedPrefs.getBoolean(plantName, false)  // Get the saved like state
+    }
+
+    IconButton(
+        onClick = {
+            // Toggle the liked state
+            isLiked = !isLiked
+            // Save the liked state in shared preferences
+            val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
+            sharedPrefs.edit().putBoolean(plantName, isLiked).apply()
+        },
+        modifier = Modifier.size(50.dp)
+    ) {
+        Icon(
+            imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+            contentDescription = "Like",
+            tint = if (isLiked) Color.Red else Color.Gray,
+            modifier = Modifier.size(50.dp)
+
+        )
+    }
+}
+
+
+
+ */
+@Composable
+fun LikeImage(plantName: String, context: Context) {
+    var isLiked by remember { mutableStateOf(false) }
+
+    // This will check shared preferences if the plant is liked
+    LaunchedEffect(plantName) {
+        val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
+        isLiked = sharedPrefs.getBoolean(plantName, false)  // Get the saved like state
+    }
+
+    IconButton(
+        onClick = {
+            // Toggle the liked state
+            isLiked = !isLiked
+            // Save the liked state in shared preferences
+            val sharedPrefs = context.getSharedPreferences("plant_preferences", Context.MODE_PRIVATE)
+            sharedPrefs.edit().putBoolean(plantName, isLiked).apply()
+
+            // If liked, add to favorites list, else remove it
+            val favoritePlants = sharedPrefs.getStringSet("favorite_plants", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+            if (isLiked) {
+                favoritePlants.add(plantName)
+            } else {
+                favoritePlants.remove(plantName)
+            }
+            sharedPrefs.edit().putStringSet("favorite_plants", favoritePlants).apply()
+        },
+        modifier = Modifier.size(50.dp)
+    ) {
+        Icon(
+            imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+            contentDescription = "Like",
+            tint = if (isLiked) Color.Red else Color.Gray,
+            modifier = Modifier.size(50.dp)
+        )
     }
 }
 
