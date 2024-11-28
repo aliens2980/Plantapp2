@@ -38,7 +38,6 @@ fun FavoritePlantsScroll(viewModel: FavoritePlantsViewModel) {
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
-                //contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
                 items(favoritePlants) { plant ->
                     FavoritePlantCard(plant)
