@@ -7,10 +7,10 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class BedDimensionsViewModel : ViewModel() {
-    private val _bedLength = MutableStateFlow(100)
+    private val _bedLength = MutableStateFlow(200)
     val bedLength: StateFlow<Int> = _bedLength
 
-    private val _bedWidth = MutableStateFlow(100)
+    private val _bedWidth = MutableStateFlow(250)
     val bedWidth: StateFlow<Int> = _bedWidth
 
     private val _cellState = MutableStateFlow<List<MutableList<Boolean>>>(emptyList())

@@ -1,6 +1,7 @@
 package com.example.plantapp2.ui.settings.addBed.customizeBed
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Box
@@ -37,9 +38,10 @@ fun ZoomableFrame(
 
     Box(
         modifier = modifier
-            .background(Color.LightGray) // Fixed background color
+            .background(Color.Transparent) // Fixed background color
             .fillMaxWidth()
-            .height(300.dp), // Constrain height
+            .height(300.dp)
+            .border(3.dp, color = Color(0xFF344E41)), // Constrain height
         contentAlignment = Alignment.Center
     ) {
         // The grid content gets transformed, not the background

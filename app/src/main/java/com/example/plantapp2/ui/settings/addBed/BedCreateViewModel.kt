@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.localData.LocalBeds
+import com.example.plantapp2.data.localData.PlantInBed
 import com.example.plantapp2.utils.saveJsonToFile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,14 +36,14 @@ class BedCreationViewModel : ViewModel() {
         _bedName.value = name
     }
 
-    fun saveBed(context: Context, selectedCells: List<Pair<Int, Int>>) {
+    fun saveBed(context: Context, selectedCells: List<Pair<Int, Int>>, plantsInBed: List<PlantInBed> = emptyList()) {
         val bed = LocalBeds(
             id = System.currentTimeMillis().toInt(),
             name = bedName.value,
             length = bedLength.value,
             width = bedWidth.value,
             selectedCells = selectedCells,
-            plants = emptyMap() // Replace with actual plants mapping if available
+            plants = plantsInBed // Pass the list of plants in the bed
         )
 
         try {
@@ -52,4 +53,5 @@ class BedCreationViewModel : ViewModel() {
             Log.e("BedCreation", "Error saving bed: ${e.message}", e)
         }
     }
+
 }

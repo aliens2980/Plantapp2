@@ -9,24 +9,16 @@ data class LocalBeds(
     val name: String,
     val length: Int,
     val width: Int,
-    val selectedCells: List<Pair<Int, Int>>,
-    val plants: Map<LocalPlant, Int> = emptyMap() // Ensure default value is an empty map
+    val selectedCells: List<Pair<Int, Int>>, // Selected cells in the bed
+    val plants: List<PlantInBed> = emptyList() // Plants in the bed
 )
+
 
 
 @Serializable
-data class PlaceInBed(
-    val row: Int,
-    val column: Int
+data class PlantInBed(
+    val name: String,
+    val position: Pair<Int, Int> // Row and column in the bed
 )
 
-val plants: Map<String, PlaceInBed>
-    get() {
-        TODO()
-    }
 
-@Serializable
-data class CellPlant(
-    val localPlant: LocalPlant,
-    val placeInBed: PlaceInBed
-)

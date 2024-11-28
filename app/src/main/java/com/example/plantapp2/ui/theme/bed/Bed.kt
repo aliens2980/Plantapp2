@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,85 +39,99 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.beneficial.BeneficialPlantsScreen
 import com.example.plantapp2.mvvm.home.GridViewModel
+import com.example.plantapp2.mvvm.home.SavedBedsViewModelFactory
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
+import com.example.plantapp2.ui.home.SavedBedScreen
+import com.example.plantapp2.ui.home.SavedBedsViewModel
+import com.example.plantapp2.ui.settings.addBed.customizeBed.ZoomableFrame
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
     val context = LocalContext.current  // This gets the context from the Composable's environment
+    val viewModel: SavedBedsViewModel = viewModel(factory = SavedBedsViewModelFactory(context))
+    val beds by viewModel.beds.collectAsState()
+
+    val selectedBed = beds.firstOrNull()
 
     Column(
         modifier = Modifier
-            //.fillMaxSize()
-            .verticalScroll(rememberScrollState()) // Main vertical scrolling for the page
+            .verticalScroll(rememberScrollState())
             .background(Color(0xFFDAD7CD))
     ) {
+        Spacer(modifier = Modifier.height(1.dp))
 
-        Spacer(modifier = Modifier.height(1.dp)) // Space at the top
-
-        //The veggie image and title
+        // Title and Header Section
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-
-        ){
-
-            //if no local beds {
+            modifier = Modifier.fillMaxWidth()
+        ) {
             BedPageTitle(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
+                modifier = Modifier.align(Alignment.CenterStart)
             )
             BundleDeco(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
+                modifier = Modifier.align(Alignment.TopEnd)
             )
-            //else bedgrid 1
+            if (beds.isNotEmpty()) {
+                Text(
+                    text = "Selected Bed: ${selectedBed?.name ?: "None"}",
+                    modifier = Modifier.align(Alignment.CenterStart).padding(start = 18.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
-
-
-        //Top section: Title
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp) // Add horizontal padding
-        ) {
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        }
-
-
-        // Top Section: Garden Bed
+        // Top Section: Render the Bed grid or show a placeholder
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center // Center the grid horizontally
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
         ) {
-            Bed(length = length, width = width, gridSize = gridSize)
+            if (beds.isEmpty()) {
+                Bed(length, width)
+
+            } else {
+                selectedBed?.let { bed ->
+                    Box (modifier = Modifier.padding(horizontal = 16.dp)){
+                        ZoomableFrame {
+                            SavedBedScreen(
+                                length = bed.length,
+                                width = bed.width,
+                                cellState = bed.selectedCells
+                            )
+                        }
+                    }
+                }
+            }
         }
 
-        Spacer(modifier = Modifier.height(30.dp)) // Space between sections
+        if (beds.isEmpty()) {
+            Spacer(modifier = Modifier.height(30.dp))
+        }
 
-        // Middle Section: Favourites title and other components
+        // Favorites and Beneficial Plants Section
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp) // Add horizontal padding
+                .padding(horizontal = 16.dp)
         ) {
-            DottedLine()
-            Spacer(modifier = Modifier.height(1.dp))
-            GreenLine()
+            if (beds.isEmpty()) {
+                DottedLine()
+                Spacer(modifier = Modifier.height(1.dp))
+                GreenLine()
+            }
+
             Spacer(modifier = Modifier.height(5.dp))
-            FavouritesTitle(modifier = Modifier.padding(start = 16.dp)) // Slight offset for alignment
+            FavouritesTitle(modifier = Modifier.padding(start = 16.dp))
             Spacer(modifier = Modifier.height(2.dp))
-            FavoritePlantsScreen(context = LocalContext.current) // Pass the context
+            FavoritePlantsScreen(context = context)
 
             DottedLine()
             Spacer(modifier = Modifier.height(1.dp))
             GreenLine()
 
             Spacer(modifier = Modifier.height(5.dp))
-            FriendsTitle(modifier = Modifier.padding(start = 16.dp)) // Slight offset for alignment
+            FriendsTitle(modifier = Modifier.padding(start = 16.dp))
             Spacer(modifier = Modifier.height(2.dp))
             BeneficialPlantsScreen(context = context)
 
@@ -126,6 +141,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
         }
     }
 }
+
 
 
 @Composable
@@ -411,7 +427,7 @@ fun BundleDeco(modifier: Modifier) {
         contentDescription = null,
         modifier = Modifier
             .size(140.dp)
-            .offset(x=210.dp, y=20.dp)
+            .offset(x = 210.dp, y = 20.dp)
     )
 }
 

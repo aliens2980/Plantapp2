@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 import android.content.Context
 import android.util.Log
+import com.example.plantapp2.utils.JsonObject
 import com.example.plantapp2.utils.JsonObject.jsonFormat
 import kotlinx.serialization.json.Json
 import java.io.File
-
 
 class SettingsViewModel(private val context: Context) : ViewModel() {
     private val _beds = MutableStateFlow<List<LocalBeds>>(emptyList())
@@ -28,32 +28,35 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
         val bedsFolder = File(context.filesDir, "beds")
         if (bedsFolder.exists() && bedsFolder.isDirectory) {
             val bedFiles = bedsFolder.listFiles()?.filter { it.extension == "json" } ?: emptyList()
-            Log.d("LoadBeds", "Found files: ${bedFiles.map { it.name }}")
             val loadedBeds = bedFiles.mapNotNull { file ->
                 try {
                     val json = file.readText()
-                    jsonFormat.decodeFromString<LocalBeds>(json) // Use shared JsonObject.jsonFormat
+                    Json.decodeFromString<LocalBeds>(json)
                 } catch (e: Exception) {
                     Log.e("LoadBeds", "Failed to load bed: ${file.name}, error: ${e.message}")
-                    null // Skip the invalid bed
+                    null // Handle invalid JSON gracefully
                 }
             }
             _beds.value = loadedBeds
-        } else {
-            Log.d("LoadBeds", "No beds folder found or it's not a directory.")
         }
     }
 
 
 
 
-
     fun deleteBed(bed: LocalBeds) {
-        val bedFile = File(context.filesDir, "beds/${bed.name}.json")
+        val bedFile = File(context.filesDir, "beds/bed_${bed.id}.json")
         if (bedFile.exists()) {
-            bedFile.delete() // Delete the bed file
+            val deleted = bedFile.delete() // Delete the bed file
+            if (deleted) {
+                Log.d("DeleteBed", "Successfully deleted: ${bedFile.path}")
+            } else {
+                Log.e("DeleteBed", "Failed to delete: ${bedFile.path}")
+            }
+        } else {
+            Log.e("DeleteBed", "File not found: ${bedFile.path}")
         }
-        _beds.value = _beds.value.filterNot { it == bed } // Update the list
+        _beds.value = _beds.value.filterNot { it.id == bed.id } // Update the list
     }
 
 
@@ -64,4 +67,7 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
         )
     }
 }
+
+
+
 

@@ -37,7 +37,6 @@ import com.example.plantapp2.ui.theme.scrollablePlantList.ScrollablePlantList
 import com.example.plantapp2.data.BottomNavItem
 import com.example.plantapp2.ui.settings.SettingsMainScreen
 import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,15 +73,16 @@ class MainActivity : ComponentActivity() {
                                     selected = selectedItemIndex == index,
                                     onClick = {
                                         selectedItemIndex = index
+                                        // Navigate to the appropriate screen
                                         when (index) {
                                             0 -> navController.navigate("centeredBed") {
-                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                                popUpTo("centeredBed") { inclusive = false }
                                             }
                                             1 -> navController.navigate("affirmations") {
-                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                                popUpTo("affirmations") { inclusive = false }
                                             }
                                             2 -> navController.navigate("settings") {
-                                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                                popUpTo("settings") { inclusive = false }
                                             }
                                         }
                                     },
@@ -100,7 +100,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = if (selectedItemIndex == 0) "centeredBed" else "affirmations",
+                        startDestination = "centeredBed", // Static start destination
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Color(0xFFDAD7CD))
@@ -127,13 +127,14 @@ class MainActivity : ComponentActivity() {
                         composable("settings") {
                             SettingsMainScreen(
                                 context = LocalContext.current,
-                                onViewBeds = { navController.navigate("createBed") } // Navigate to createBed
+                                onViewBeds = { navController.navigate("viewBeds") },
+                                onAddBedClicked = { navController.navigate("createBed") } // Navigate to create bed
                             )
                         }
                         composable("createBed") {
                             MainBedCreationScreen(
-                                onSaveBed = { navController.popBackStack() }, // Return to Settings after saving
-                                onCancel = { navController.popBackStack() }   // Return to Settings on cancel
+                                onSaveBed = { navController.popBackStack() }, // Return to settings after saving
+                                onCancel = { navController.popBackStack() }  // Return to settings on cancel
                             )
                         }
                     }
@@ -142,3 +143,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

@@ -1,28 +1,29 @@
 package com.example.plantapp2.ui.settings
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.plantapp2.ui.settings.components.SettingsBeds
+import android.content.Context
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.plantapp2.ui.settings.components.SettingsBeds
-import com.example.plantapp2.ui.settings.components.SettingsProfile
-import android.content.Context
-
-
+import com.example.plantapp2.data.localData.SettingsProfile
+import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
 
 @Composable
 fun SettingsMainScreen(
-    onViewBeds: () -> Unit, // Pass navigation callback
+    onViewBeds: () -> Unit, // Callback for viewing beds
     context: Context,
+    onAddBedClicked: () -> Unit // Callback for navigating to bed creation
 ) {
     val viewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(context )
+        factory = SettingsViewModelFactory(context)
     )
     var isProfileExpanded by remember { mutableStateOf(false) }
     var isBedsExpanded by remember { mutableStateOf(false) }
@@ -31,7 +32,6 @@ fun SettingsMainScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .background(Color(0xFFF5F5F5))
     ) {
         // Profile Section
         item {
@@ -49,11 +49,12 @@ fun SettingsMainScreen(
                 )
             }
             if (isProfileExpanded) {
-                SettingsProfile(viewModel = viewModel)
+                SettingsProfile(
+                    name = "John Doe", // Replace with actual profile data if needed
+                    email = "john.doe@example.com" // Replace with actual profile data if needed
+                )
             }
         }
-
-        //Spacer(modifier = Modifier.height(16.dp))
 
         // Beds Section
         item {
@@ -69,17 +70,13 @@ fun SettingsMainScreen(
                     text = "Beds",
                     style = MaterialTheme.typography.headlineSmall
                 )
-
             }
             if (isBedsExpanded) {
                 SettingsBeds(
-                    onAddBedClicked = onViewBeds, // Pass navigation callback here
-                    viewModel = viewModel                )
+                    onAddBedClicked = onAddBedClicked, // Navigate to bed creation
+                    viewModel = viewModel
+                )
             }
         }
     }
 }
-
-
-
-
