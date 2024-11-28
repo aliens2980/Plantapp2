@@ -8,12 +8,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.json.Json
 import java.io.File
 
-class SavedBedsViewModel(private val context: Context) : ViewModel() {
+class SavedBedsViewModel(private val context: Context, BedId: Int) : ViewModel() {
     private val _beds = MutableStateFlow<List<LocalBeds>>(emptyList())
     val beds: StateFlow<List<LocalBeds>> = _beds
+    private var myBedId = BedId
+    var specficBed: StateFlow<LocalBeds> = loadSpecific(myBedId)
 
     init {
         loadBeds()
+        loadSpecific(myBedId)
+    }
+
+    private fun loadSpecific(myBedId: Int): StateFlow<LocalBeds> {
+        val bed: LocalBeds = beds.value.get(myBedId)
+        return MutableStateFlow<LocalBeds>(bed)
     }
 
     private fun loadBeds() {

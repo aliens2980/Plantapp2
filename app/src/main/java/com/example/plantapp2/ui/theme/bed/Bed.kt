@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.beneficial.BeneficialPlantsScreen
+import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.mvvm.home.SavedBedsViewModelFactory
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
@@ -49,10 +50,23 @@ import com.example.plantapp2.ui.theme.styling.darkGreen
 @Composable
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
     val context = LocalContext.current  // This gets the context from the Composable's environment
-    val viewModel: SavedBedsViewModel = viewModel(factory = SavedBedsViewModelFactory(context))
+    val bedID: Int = 2
+    val viewModel: SavedBedsViewModel = viewModel(factory = SavedBedsViewModelFactory(context, bedID ))
     val beds by viewModel.beds.collectAsState()
+    val gottenBed by viewModel.specficBed.collectAsState()
 
-    val selectedBed = beds.firstOrNull()
+    //val selectedBed =
+
+    fun CheckBed(): LocalBeds? {
+        if(beds.isEmpty()) {
+            val ActualBeds: LocalBeds? = beds.firstOrNull()
+            beds[2]
+            return ActualBeds
+        } else {
+            val ActualBeds: LocalBeds = gottenBed
+            return ActualBeds
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -71,9 +85,9 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             BundleDeco(
                 modifier = Modifier.align(Alignment.TopEnd)
             )
-            if (beds.isNotEmpty()) {
+            if (CheckBed() != null) {
                 Text(
-                    text = "Selected Bed: ${selectedBed?.name ?: "None"}",
+                    text = "Selected Bed: ${CheckBed()?.name ?: "None"}",
                     modifier = Modifier.align(Alignment.CenterStart).padding(start = 18.dp),
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -91,14 +105,16 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 Bed(length, width)
 
             } else {
-                selectedBed?.let { bed ->
+                CheckBed().let { bed ->
                     Box (modifier = Modifier.padding(horizontal = 16.dp)){
                         ZoomableFrame {
-                            SavedBedScreen(
-                                length = bed.length,
-                                width = bed.width,
-                                cellState = bed.selectedCells
-                            )
+                            if (bed != null) {
+                                SavedBedScreen(
+                                    length = bed.length,
+                                    width = bed.width,
+                                    cellState = bed.selectedCells
+                                )
+                            }
                         }
                     }
                 }
