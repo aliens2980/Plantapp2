@@ -2,11 +2,8 @@ package com.example.plantapp2.plants
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.Plant
-
-import com.example.plantapp2.utils.saveJsonToFile
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File

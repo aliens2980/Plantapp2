@@ -3,9 +3,8 @@ package com.example.plantapp2.utils
 import android.content.Context
 import android.util.Log
 import com.example.plantapp2.utils.JsonObject.jsonFormat
-import java.io.File
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import java.io.File
 
 
 inline fun <reified T> saveJsonToFile(context: Context, fileName: String, data: T) {

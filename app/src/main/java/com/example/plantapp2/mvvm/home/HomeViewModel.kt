@@ -5,25 +5,14 @@ import com.example.plantapp2.data.Plant
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class HomeViewModel : ViewModel() {
-
-    init {
-
-    }
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     fun addPlantToList(plant: Plant) {
         _uiState.value.plants.add(plant)
-    }
-
-    fun replaceWholePlantList(plants: MutableList<Plant>) {
-        _uiState.update { currentState ->
-            currentState.copy(plants = plants)
-        }
     }
 
     fun getPlantJens(): Plant {

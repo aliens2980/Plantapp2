@@ -1,16 +1,12 @@
 package com.example.plantapp2.ui.settings
 
+import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.localData.LocalBeds
-import com.example.plantapp2.data.localData.SettingsProfile
 import com.example.plantapp2.data.localData.exampleData.startProfile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-
-import android.content.Context
-import android.util.Log
-import com.example.plantapp2.utils.JsonObject
-import com.example.plantapp2.utils.JsonObject.jsonFormat
 import kotlinx.serialization.json.Json
 import java.io.File
 

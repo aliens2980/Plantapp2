@@ -1,9 +1,8 @@
 package com.example.plantapp2.ui.settings
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import android.content.Context
-import com.example.plantapp2.ui.home.SavedBedsViewModel
 
 
 class SettingsViewModelFactory(private val context: Context) : ViewModelProvider.Factory {

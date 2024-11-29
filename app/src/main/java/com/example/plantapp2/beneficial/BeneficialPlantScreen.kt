@@ -3,7 +3,6 @@ package com.example.plantapp2.beneficial
 import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,9 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.plantapp2.data.localData.LocalPlant
-import com.example.plantapp2.plants.favorites.FavoritePlantCard
-import com.example.plantapp2.plants.favorites.FavoritePlantsScroll
 import com.example.plantapp2.plants.favorites.FavoritePlantsViewModel
 
 @Composable
