@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.data.localData.SettingsProfile
 import com.example.plantapp2.ui.settings.addBed.MainBedCreationScreen
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun SettingsMainScreen(
@@ -40,12 +41,13 @@ fun SettingsMainScreen(
                     .fillMaxWidth()
                     .clickable { isProfileExpanded = !isProfileExpanded }
                     .padding(16.dp)
-                    .background(Color.White)
+                    .background(color = darkGreen)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "Profile",
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White
                 )
             }
             if (isProfileExpanded) {
@@ -63,12 +65,13 @@ fun SettingsMainScreen(
                     .fillMaxWidth()
                     .clickable { isBedsExpanded = !isBedsExpanded }
                     .padding(16.dp)
-                    .background(Color.White)
+                    .background(color = darkGreen)
                     .padding(16.dp)
             ) {
                 Text(
                     text = "Beds",
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White
                 )
             }
             if (isBedsExpanded) {

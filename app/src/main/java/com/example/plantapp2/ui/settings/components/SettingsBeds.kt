@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -59,7 +60,7 @@ fun SettingsBeds(
     ) {
         if (beds.isEmpty()) {
             Text(
-                text = "No beds created yet. Create one now!",
+                text = "No beds found.",
                 style = MaterialTheme.typography.bodyLarge
             )
 
@@ -85,8 +86,13 @@ fun SettingsBeds(
 
             Spacer(modifier = Modifier.height(16.dp))
         }
-        Button(onClick = onAddBedClicked) { // Navigate to create bed
-            Text("Add New Bed")
+        Button(
+            onClick = onAddBedClicked,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = darkGreen,
+            )
+        ) { // Navigate to create bed
+            Text("Create Bed")
         }
     }
 }
