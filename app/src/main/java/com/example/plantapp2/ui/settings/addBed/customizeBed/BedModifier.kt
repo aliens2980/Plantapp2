@@ -31,7 +31,6 @@ fun BedDimensions(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
     ) {
         // Render the buttons for predefined fills
         Row(
@@ -45,7 +44,7 @@ fun BedDimensions(
                 Text("Circle Fill")
             }
             Button(onClick = { dimensionsViewModel.applyLShapeFill() }) {
-                Text("L Shape Fill")
+                Text("L-Shape Fill")
             }
         }
 

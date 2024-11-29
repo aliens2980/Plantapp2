@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.ui.settings.addBed.customizeBed.BedDimensions
@@ -38,12 +39,11 @@ fun MainBedCreationScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(8.dp) // Reduced padding
+                    .padding(horizontal = 8.dp) // Reduced padding
             ) {
                 Text(
                     text = "Create Your Bed",
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    style = MaterialTheme.typography.headlineMedium
                 )
 
                 BedCreationInfo(
@@ -51,14 +51,14 @@ fun MainBedCreationScreen(
                     dimensionsViewModel = dimensionsViewModel
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                //Spacer(modifier = Modifier.height(8.dp))
 
                 BedDimensions(
                     dimensionsViewModel = dimensionsViewModel,
-                    creationViewModel = creationViewModel
+                    creationViewModel = creationViewModel,
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                //Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -90,7 +90,8 @@ fun MainBedCreationScreen(
                     ) {
                         Text("Save Bed")
                     }
-                    Button(onClick = { onCancel() }) {
+                    Button(onClick = { onCancel() }
+                        ) {
                         Text("Cancel")
                     }
                 }
