@@ -2,11 +2,11 @@ package com.example.plantapp2.ui.theme.bed
 
 import android.content.Context
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -39,7 +40,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.beneficial.BeneficialPlantsScreen
-import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.mvvm.home.SavedBedsViewModelFactory
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
@@ -61,9 +61,6 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
 
     val selectedBed = selectedBedName?.let { settingsViewModel.getBedFromName(it) }
 
-    if (selectedBedName == null) {
-
-    }
 
 
     Column(
@@ -78,17 +75,32 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             modifier = Modifier.fillMaxWidth()
         ) {
             BedPageTitle(
-                modifier = Modifier.align(Alignment.CenterStart)
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(bottom = 10.dp, start = 10.dp)
+
             )
             BundleDeco(
                 modifier = Modifier.align(Alignment.TopEnd)
             )
             if (beds.isNotEmpty()) {
-                Text(
-                    text = "Selected Bed: ${selectedBed?.name ?: "None"}",
-                    modifier = Modifier.align(Alignment.CenterStart).padding(start = 18.dp),
-                    style = MaterialTheme.typography.bodySmall
-                )
+                Box(
+                    modifier= Modifier
+                        .width(215.dp)
+                        .height(22.dp)
+                        .padding(start = 20.dp)
+                        .background(color = darkGreen, shape = RoundedCornerShape(15.dp))
+                        .align(Alignment.BottomStart)
+                        ) {
+                    Text(
+                        text = "Selected Bed: ${selectedBed?.name ?: "None"}",
+                        modifier = Modifier.align(Alignment.CenterStart).padding(start = 10.dp),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontSize = 15.sp,
+                        color = Color.White
+                    )
+                }
             }
         }
 
@@ -99,7 +111,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            if (beds.isEmpty()) {
+            if (selectedBed == null) {
                 Bed(length, width)
 
             } else {
@@ -117,7 +129,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             }
         }
 
-        if (beds.isEmpty()) {
+        if (selectedBedName == null) {
             Spacer(modifier = Modifier.height(30.dp))
         }
 
@@ -127,7 +139,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
         ) {
-            if (beds.isEmpty()) {
+            if (selectedBedName == null) {
                 DottedLine()
                 Spacer(modifier = Modifier.height(1.dp))
                 GreenLine()
@@ -313,7 +325,7 @@ fun DrawScope.drawGridLines(gridSize: Int) {
 
 /**
  * @author s235064
- * @param FavouritesTitle
+ * @param //FavouritesTitle
  */
 
 @Composable
@@ -347,7 +359,7 @@ fun FriendsTitle(modifier: Modifier) {
 
 /**
  * @author s235064
- * @param DottedLine
+ * @param //DottedLine
  */
 
 @Composable
@@ -375,27 +387,6 @@ fun DottedLine() {
 
 
 
-
-//Remove when favourites list is needed
-@Composable
-fun testImage(modifier: Modifier) {
-    val boxModifier = Modifier   //how to move the box with the potato image around
-    Box(
-        modifier = boxModifier
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.sun),
-            contentDescription = "Information Image",
-            contentScale = ContentScale.Crop,   //this makes us able to crop the picture into the size we want by .size
-            modifier = Modifier
-                .size(width = 45.dp, height = 45.dp)
-
-        )
-    }
-}
-
-
-
 @Composable
 fun BedPageTitle(modifier: Modifier) {
         Text(
@@ -403,7 +394,7 @@ fun BedPageTitle(modifier: Modifier) {
             modifier = modifier
                 .offset(x=10.dp, y=75.dp),
             style = TextStyle(   //to edit and customize the text inside
-                fontSize = 35.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.ExtraBold,
                 fontFamily = FontFamily.Default,
                 color = Color.DarkGray
