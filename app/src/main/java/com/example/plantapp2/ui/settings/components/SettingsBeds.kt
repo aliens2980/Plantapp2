@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -34,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.mvvm.home.SavedBedsViewModelFactory
 import com.example.plantapp2.ui.home.SavedBedsViewModel
 import com.example.plantapp2.ui.settings.SettingsViewModel
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun SettingsBeds(
@@ -87,7 +91,6 @@ fun SettingsBeds(
     }
 }
 
-
 @Composable
 fun BedItem(
     bedName: String,
@@ -120,7 +123,7 @@ fun BedItem(
         var selectedBedName by rememberSaveable { mutableStateOf("") }
 
         // Select or unselect the bed
-        Button(
+        IconButton(
             onClick = {
                 val sharedPrefs = context.getSharedPreferences("bed_preferences", Context.MODE_PRIVATE)
                 val editor = sharedPrefs.edit()
@@ -134,10 +137,17 @@ fun BedItem(
                 }
                 editor.apply()
 
+                rememberBedName = !rememberBedName // Toggle the selection state
+
                 selectedBedName = bedName
                 onSelectApply(selectedBedName) // Notify parent of the selected bed
-            }) {
-            Text("Select bed")
+            }, modifier = Modifier.size(50.dp)
+        ) {
+            Icon(
+                imageVector = if (rememberBedName) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircle,
+                contentDescription = "selected",
+                tint = if (rememberBedName) darkGreen else Color.Gray // Change color based on selection state
+            )
         }
 
         // Delete Bed
