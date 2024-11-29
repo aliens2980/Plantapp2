@@ -57,12 +57,13 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
     val settingsViewModel: SettingsViewModel = viewModel(factory = SettingsViewModelFactory(context))
     val beds by viewModel.beds.collectAsState()
 
-
-
     val selectedBedName = getSelectedBed(context)
 
     val selectedBed = selectedBedName?.let { settingsViewModel.getBedFromName(it) }
 
+    if (selectedBedName == null) {
+
+    }
 
 
     Column(
