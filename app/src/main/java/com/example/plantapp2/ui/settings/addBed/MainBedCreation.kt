@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.ui.settings.addBed.customizeBed.BedDimensions
 import com.example.plantapp2.ui.settings.addBed.customizeBed.BedDimensionsViewModel
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun MainBedCreationScreen(
@@ -85,12 +89,17 @@ fun MainBedCreationScreen(
                             } catch (e: Exception) {
                                 Log.e("BedCreation", "Error saving bed: ${e.message}", e)
                             }
-                        }
-
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = darkGreen
+                        )
                     ) {
                         Text("Save Bed")
                     }
-                    Button(onClick = { onCancel() }
+                    Button(onClick = { onCancel()},
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = darkGreen
+                        )
                         ) {
                         Text("Cancel")
                     }

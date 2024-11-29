@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.plantapp2.ui.settings.addBed.BedCreationViewModel
+import com.example.plantapp2.ui.theme.styling.darkGreen
 
 @Composable
 fun BedDimensions(
@@ -37,13 +39,25 @@ fun BedDimensions(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Button(onClick = { dimensionsViewModel.applySelectAll() }) {
+            Button(onClick = { dimensionsViewModel.applySelectAll() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = darkGreen,
+                )
+            ) {
                 Text("Select All")
             }
-            Button(onClick = { dimensionsViewModel.applyCircleFill() }) {
+            Button(onClick = { dimensionsViewModel.applyCircleFill() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = darkGreen,
+                )
+            ) {
                 Text("Circle Fill")
             }
-            Button(onClick = { dimensionsViewModel.applyLShapeFill() }) {
+            Button(onClick = { dimensionsViewModel.applyLShapeFill() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = darkGreen,
+                )
+            ) {
                 Text("L-Shape Fill")
             }
         }
