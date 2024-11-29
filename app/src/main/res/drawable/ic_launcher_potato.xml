@@ -1,0 +1,85 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+
+    <!-- Gulerodens Krop med Rundede Vinkler -->
+    <group
+        android:rotation="45"
+        android:pivotX="30"
+        android:pivotY="35"
+        android:translationX="0dp"
+        android:translationY="0dp">
+
+        <!-- Gulerod Trekant med Rundede Hjørner -->
+        <path
+            android:pathData="M36,50
+                              C32,45 28,30 28,26
+                              L44,26
+                              C40,30 36,45 36,50
+                              Z"
+            android:fillColor="#FFA500"
+            android:strokeColor="#B84700"
+            android:strokeWidth="1" />
+
+        <!-- Gulerodens Teksturlinjer -->
+        <path
+            android:pathData="M32,40
+                              L38,40
+                              M31,35
+                              L39,35"
+            android:strokeColor="#B84700"
+            android:strokeWidth="1" />
+
+        <!-- Blade af Gulerod -->
+        <path
+            android:pathData="M36,26
+                              C32,12 28,9 30,15
+                              C29,12 27,16 29,18
+                              C28,19 30,21 32,20
+                              C33,22 35,21 36,24
+                              C37,22 39,23 38,25
+                              C39,26 37,26 36,26
+                              Z
+                              M33,18
+                              C31,14 30,16 32,18
+                              C31,20 30,21 32,22
+                              C30,22 31,24 33,23
+                              C34,24 36,23 35,21
+                              C36,19 34,18 33,18Z"
+            android:fillColor="#228B22"
+            android:strokeColor="#006400"
+            android:strokeWidth="1" />
+    </group>
+
+    <!-- Spejling af Blade -->
+    <group
+        android:rotation="45"
+        android:pivotX="36"
+        android:pivotY="36"
+        android:translationX="0dp"
+        android:translationY="0dp"
+        android:scaleX="-1">
+
+        <path
+            android:pathData="M36,26
+                              C32,12 28,9 30,15
+                              C29,12 27,16 29,18
+                              C28,19 30,21 32,20
+                              C33,22 35,21 36,24
+                              C37,22 39,23 38,25
+                              C39,26 37,26 36,26
+                              Z
+                              M33,18
+                              C31,14 30,16 32,18
+                              C31,20 30,21 32,22
+                              C30,22 31,24 33,23
+                              C34,24 36,23 35,21
+                              C36,19 34,18 33,18Z"
+            android:fillColor="#228B22"
+            android:strokeColor="#006400"
+            android:strokeWidth="1" />
+    </group>
+
+</vector>
