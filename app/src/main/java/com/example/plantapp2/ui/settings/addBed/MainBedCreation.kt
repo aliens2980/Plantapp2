@@ -55,14 +55,10 @@ fun MainBedCreationScreen(
                     dimensionsViewModel = dimensionsViewModel
                 )
 
-                //Spacer(modifier = Modifier.height(8.dp))
-
                 BedDimensions(
                     dimensionsViewModel = dimensionsViewModel,
                     creationViewModel = creationViewModel,
                 )
-
-                //Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
