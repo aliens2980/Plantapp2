@@ -3,6 +3,7 @@ package com.example.plantapp2.ui.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.example.plantapp2.data.localData.LocalBeds
+import com.example.plantapp2.ui.theme.bed.getSelectedBed
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.json.Json
@@ -11,6 +12,8 @@ import java.io.File
 class SavedBedsViewModel(private val context: Context) : ViewModel() {
     private val _beds = MutableStateFlow<List<LocalBeds>>(emptyList())
     val beds: StateFlow<List<LocalBeds>> = _beds
+
+    val selectedBedName = getSelectedBed(context)
 
     init {
         loadBeds()
@@ -38,5 +41,9 @@ class SavedBedsViewModel(private val context: Context) : ViewModel() {
             bedFile.delete()
             _beds.value = _beds.value.filter { it.id != bedId }
         }
+    }
+
+    fun getBedFromName(bedName: String): LocalBeds? {
+        return _beds.value.find { it.name == bedName }
     }
 }

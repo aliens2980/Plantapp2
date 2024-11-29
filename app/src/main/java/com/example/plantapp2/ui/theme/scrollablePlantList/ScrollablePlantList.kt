@@ -45,6 +45,7 @@ fun ScrollablePlantList(
     modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: PlantsViewModel = viewModel()
+
 ) {
     val response by viewModel.getResponseUsingLiveData().observeAsState()
     var searchQuery by rememberSaveable { mutableStateOf("") }

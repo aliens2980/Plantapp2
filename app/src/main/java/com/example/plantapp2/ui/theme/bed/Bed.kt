@@ -1,5 +1,6 @@
 package com.example.plantapp2.ui.theme.bed
 
+import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
@@ -38,11 +39,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.plantapp2.R
 import com.example.plantapp2.beneficial.BeneficialPlantsScreen
+import com.example.plantapp2.data.localData.LocalBeds
 import com.example.plantapp2.mvvm.home.GridViewModel
 import com.example.plantapp2.mvvm.home.SavedBedsViewModelFactory
 import com.example.plantapp2.plants.favorites.FavoritePlantsScreen
 import com.example.plantapp2.ui.home.SavedBedScreen
 import com.example.plantapp2.ui.home.SavedBedsViewModel
+import com.example.plantapp2.ui.settings.SettingsViewModel
+import com.example.plantapp2.ui.settings.SettingsViewModelFactory
 import com.example.plantapp2.ui.settings.addBed.customizeBed.ZoomableFrame
 import com.example.plantapp2.ui.theme.styling.darkGreen
 
@@ -50,9 +54,23 @@ import com.example.plantapp2.ui.theme.styling.darkGreen
 fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
     val context = LocalContext.current  // This gets the context from the Composable's environment
     val viewModel: SavedBedsViewModel = viewModel(factory = SavedBedsViewModelFactory(context))
+    val settingsViewModel: SettingsViewModel = viewModel(factory = SettingsViewModelFactory(context))
+
+    val selectedBedName = getSelectedBed(context)
+    val namename = selectedBedName?.let { settingsViewModel.getBedFromName(it) }
+
+    val sharedPrefs = context.getSharedPreferences("bed_preferences", Context.MODE_PRIVATE)
+
+    // Get all the plant names that are marked as favorites
+    val favoriteBeds = sharedPrefs.all.filter { it.value as? Boolean == true }.keys
+
+
     val beds by viewModel.beds.collectAsState()
 
-    val selectedBed = beds.firstOrNull()
+    var bed by remember { mutableStateOf<LocalBeds?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+
+
 
     Column(
         modifier = Modifier
@@ -73,7 +91,7 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
             )
             if (beds.isNotEmpty()) {
                 Text(
-                    text = "Selected Bed: ${selectedBed?.name ?: "None"}",
+                    text = "Selected Bed: ${namename?.name ?: "None"}",
                     modifier = Modifier.align(Alignment.CenterStart).padding(start = 18.dp),
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -91,8 +109,8 @@ fun CenteredBed(length: Int, width: Int, gridSize: Int = 60) {
                 Bed(length, width)
 
             } else {
-                selectedBed?.let { bed ->
-                    Box (modifier = Modifier.padding(horizontal = 16.dp)){
+                namename?.let { bed ->
+                    Box(modifier = Modifier.padding(horizontal = 16.dp)) {
                         ZoomableFrame {
                             SavedBedScreen(
                                 length = bed.length,
@@ -432,4 +450,10 @@ fun BundleDeco(modifier: Modifier) {
 }
 
 
+fun getSelectedBed(context: Context): String? {
+    // Access SharedPreferences to get the name of the selected bed
+    val sharedPrefs = context.getSharedPreferences("bed_preferences", Context.MODE_PRIVATE)
 
+    // Retrieve the selected bed name (null if not selected)
+    return sharedPrefs.getString("current_bed", null)
+}

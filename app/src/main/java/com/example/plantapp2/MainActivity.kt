@@ -133,7 +133,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("createBed") {
                             MainBedCreationScreen(
-                                onSaveBed = { navController.popBackStack() }, // Return to settings after saving
+                                onSaveBed = { navController.navigate("settings") }, // Return to settings after saving
                                 onCancel = { navController.popBackStack() }  // Return to settings on cancel
                             )
                         }

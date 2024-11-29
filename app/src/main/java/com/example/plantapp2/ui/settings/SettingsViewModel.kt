@@ -18,7 +18,6 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
     private val _beds = MutableStateFlow<List<LocalBeds>>(emptyList())
     val beds: StateFlow<List<LocalBeds>> = _beds
     private val _settingsProfile = MutableStateFlow(startProfile())
-    val settingsProfile: StateFlow<SettingsProfile> = _settingsProfile
 
     init {
         loadBedsFromFolder()
@@ -65,6 +64,10 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
             name = newName,
             email = newEmail
         )
+    }
+
+    fun getBedFromName(bedName: String): LocalBeds? {
+        return _beds.value.find { it.name == bedName }
     }
 }
 
